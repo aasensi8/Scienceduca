@@ -5,3 +5,4 @@
 @media print{.sc-sidebar,.sc-menu-button,.sc-sidebar-backdrop{display:none!important}body.sc-sidebar-ready{padding-left:0!important;padding-bottom:0}}
 
 @media(min-width:901px) and (hover:hover) and (pointer:fine){.sc-sidebar:not(:hover):not(:focus-within):not(.sc-open)>*{visibility:hidden}.sc-sidebar:hover>*,.sc-sidebar:focus-within>*,.sc-sidebar.sc-open>*{visibility:visible}}
+.sc-sidebar{background-image:linear-gradient(#181818dc,#181818dc),url('chalk-texture.jpg')}.sc-menu-button{width:52px;height:52px}.sc-menu-button:hover{background:#e13342}
