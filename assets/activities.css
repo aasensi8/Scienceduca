@@ -16,3 +16,6 @@ h1,h2,h3,summary,.tag,.logo{color:#f7f5f0}.logo{background:none;-webkit-text-fil
 .theme-btn{display:none}.tag{background:#302b2b}.primary{text-shadow:none}.intro p,label,footer{color:var(--muted)}
 .lg{width:230px;height:88px;border:0;border-radius:6px;background:#101010 url('scienceduca-banner.png') center/contain no-repeat;box-shadow:none}
 body{background-image:linear-gradient(#141414dc,#141414dc),url('chalk-texture.jpg')!important}
+/* Raised panels and controls keep the activities legible while adding depth. */
+.card,.density-game article,.density-game section,.status-bar{background-image:linear-gradient(145deg,#ffffff0b,transparent 48%,#0000001c)!important;box-shadow:inset 0 1px #ffffff20,0 12px 24px #0005,0 2px 4px #0004}.density-lab .stage,.density-game .stage-art{box-shadow:inset 0 2px 8px #0003,0 1px #ffffff20}button:not(.sc-menu-button){box-shadow:inset 0 1px #ffffff40,0 3px 0 #761a23,0 6px 12px #0005}button.secondary,.quiet{box-shadow:inset 0 1px #ffffff25,0 3px 0 #111,0 6px 12px #0005}input,select,textarea{box-shadow:inset 0 2px 5px #0009,0 1px #ffffff16}.tile,.stat{box-shadow:inset 0 1px #ffffff25,0 5px 12px #0006}
+@media print{.card,section,article{box-shadow:none!important;background-image:none!important}}

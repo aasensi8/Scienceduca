@@ -6,3 +6,4 @@
 
 @media(min-width:901px) and (hover:hover) and (pointer:fine){.sc-sidebar:not(:hover):not(:focus-within):not(.sc-open)>*{visibility:hidden}.sc-sidebar:hover>*,.sc-sidebar:focus-within>*,.sc-sidebar.sc-open>*{visibility:visible}}
 .sc-sidebar{background-image:linear-gradient(#181818dc,#181818dc),url('chalk-texture.jpg')}.sc-menu-button{width:52px;height:52px}.sc-menu-button:hover{background:#e13342}
+.sc-sidebar{box-shadow:inset -1px 0 #ffffff1a,8px 0 30px #000b}.sc-menu-button{background-image:linear-gradient(#ffffff25,#00000020);box-shadow:inset 0 1px #ffffff77,0 4px 0 #79151e,0 9px 20px #0009}.sc-sidebar .sc-sidebar-nav a:hover,.sc-sidebar .sc-sidebar-nav a[aria-current=page]{box-shadow:inset 3px 0 #ff737b,inset 0 1px #ffffff22,0 4px 9px #0005}
