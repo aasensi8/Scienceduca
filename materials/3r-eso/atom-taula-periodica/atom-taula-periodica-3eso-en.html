@@ -4,160 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The atom and the periodic table · Physics and chemistry</title>
-<style>
-:root{color-scheme:light;--ink:#17253c;--paper:#f4f6fb;--blue:#203eaa;--line:#ccd5eb;--yellow:#ffe075;--dark:#101d39}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 system-ui,sans-serif}
-a{color:var(--blue)} a:hover{text-decoration-thickness:2px}
-:focus-visible{outline:3px solid #a44b00;outline-offset:4px}
-.wrap{width:min(70rem,calc(100% - 2rem));margin:auto}
-header{background:var(--dark);color:white;padding:.75rem 0}
-.language-link{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;margin-inline-start:auto;color:white;border:1px solid #aab9d8;border-radius:.45rem;padding:.25rem .65rem;font-weight:700}
-.language-flag{display:block;width:1.7rem;height:.95rem;flex:none;border:1px solid #ffffff40;border-radius:.15rem}
-.senyera{background:repeating-linear-gradient(to bottom,#fcdd09 0 calc(100% / 9),#da121a calc(100% / 9) calc(200% / 9),#fcdd09 calc(200% / 9) calc(100% / 3),#da121a calc(100% / 3) calc(400% / 9),#fcdd09 calc(400% / 9) calc(500% / 9),#da121a calc(500% / 9) calc(200% / 3),#fcdd09 calc(200% / 3) calc(700% / 9),#da121a calc(700% / 9) calc(800% / 9),#fcdd09 calc(800% / 9) 100%)}
-.brand-bar{display:flex;align-items:center;gap:.8rem}
-.brand-logo{display:block;width:clamp(7.5rem,23vw,12rem);height:auto;flex:none;border-radius:.25rem}
-@media(max-width:460px){.brand-bar{align-items:flex-start;flex-direction:column;gap:.45rem}}
-.brand{margin:0;font-weight:700;color:#e1e8ff}
-.intro{display:grid;gap:1.5rem}
-.intro-copy{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:var(--dark);color:white;border-radius:.9rem;overflow:hidden}
-.intro-text{padding:clamp(1.3rem,3.5vw,2.75rem)}
-.intro-image{position:relative;min-height:14rem}
-.intro-image img{position:absolute;width:100%;height:100%;object-fit:cover}
-.sim-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:1.4rem;align-items:center}
-.atom-plot .shell-motion{position:absolute;inset:0;animation:orbit var(--period) linear infinite}
-.atom-plot[data-paused] .shell-motion{animation-play-state:paused}
-@keyframes orbit{to{transform:rotate(1turn)}}
-[data-motion-toggle]{background:white;color:var(--blue);margin-top:.35rem}
-
-.intro h1{color:var(--yellow);font-size:clamp(2rem,4.1vw,3.75rem);line-height:1.04;letter-spacing:-.045em;margin:0 0 1.2rem}
-.intro-copy p{max-width:38ch}
-article.objectives{padding:clamp(1.1rem,3vw,2rem);background:#e8edff;border-color:#c4d0ed}
-.objectives ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0;padding:0;list-style:none}
-.objectives li{padding:.85rem 1rem;border:1px solid #ccd5eb;border-left:.25rem solid var(--blue);border-radius:.55rem;background:#fff}
-.objectives strong{display:block;color:#203eaa;margin-bottom:.15rem}
-@media(max-width:640px){.objectives ul{grid-template-columns:1fr}}
-.intro-copy a{color:white}
-article.opening-reflection{display:grid;grid-template-columns:clamp(4rem,9vw,6rem) minmax(0,1fr);align-items:center;gap:clamp(1.25rem,4vw,3.5rem);padding:clamp(1.25rem,4vw,2.75rem);background:#32263d;color:#fff7f1;border-color:#32263d}
-.reflection-portrait{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 34%;border-radius:50%;border:.2rem solid #ffb39b}
-.opening-reflection h2{font-size:1rem;color:#ffb39b;margin:0 0 .8rem}
-.opening-reflection figure,.opening-reflection blockquote{margin:0}
-.opening-reflection blockquote p{font:700 clamp(1.65rem,4vw,3.2rem)/1.12 system-ui,sans-serif;letter-spacing:-.035em;max-width:20ch;margin:0 0 1rem}
-.opening-reflection figcaption{color:#f2e6ee}
-.opening-reflection a{color:#ffe075}
-@media(max-width:580px){article.opening-reflection{grid-template-columns:1fr}.reflection-portrait{width:4rem}}
-@media print{article.opening-reflection{background:white;color:var(--ink)}.opening-reflection h2,.opening-reflection figcaption,.opening-reflection a{color:var(--ink)}}
-.unit-contents ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem 2rem;margin:0;padding-left:1.65rem}
-.unit-contents li::marker{font-weight:750;color:var(--blue)}
-.topic{margin-top:1rem}
-.particle-discovery{list-style:none;padding:0;margin:.7rem 0}
-.particle-discovery li{display:grid;grid-template-columns:2.7rem minmax(0,1fr);align-items:start;gap:.7rem;margin:.7rem 0}
-.particle-symbol{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;font-weight:800;background:#dfe7ff;color:#1c3587}
-.particle-symbol.positive{background:#ffcebd;color:#512011}
-.particle-symbol.neutral{background:#e2e7f1;color:#17253c}
-.quark-diagrams{display:flex;flex-wrap:wrap;gap:.75rem;margin:.75rem 0}
-.quark-diagrams figure{flex:1;min-width:8.5rem;margin:0;padding:.55rem;text-align:center;background:#edf1fb;border-radius:.65rem}
-.quark-diagrams strong{display:inline-grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:50%;background:#ffcebd;color:#512011}
-.quark-diagrams .down{background:#d0dafe;color:#162d80}
-
-.mass-unit{position:relative;display:inline-block}
-.mass-unit button{padding:.02rem .28rem;background:#fff;color:var(--blue);font-weight:700}
-.mass-unit [role="tooltip"]{display:none;position:absolute;z-index:2;top:100%;left:50%;transform:translateX(-50%);width:12rem;text-align:left;background:var(--dark);color:white;font-weight:400;line-height:1.4;padding:.65rem;border-radius:.45rem;box-shadow:0 .2rem .65rem #101d3940}
-.mass-unit:hover [role="tooltip"],.mass-unit:focus-within [role="tooltip"]{display:block}
-.mass-unit[data-dismissed] [role="tooltip"]{display:none}
-.mass-calculator .atom-plot{max-width:12rem}
-.lab-materials{align-items:center;margin-bottom:1rem}
-.lab-materials figure{margin:0}
-.lab-materials img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:.65rem}
-.lab-materials figcaption{margin-top:.3rem}
-.drop-mass{font:inherit;width:8ch;padding:.3rem .45rem;border:1px solid #6376a1;border-radius:.35rem}
-.drop-results{min-width:24rem}
-
-.charge-figure,.drop-figure{margin:.8rem 0 0}
-.charge-cases{display:grid;gap:.4rem}
-.charge-case{display:grid;grid-template-columns:minmax(5rem,1fr) minmax(9rem,1.5fr);align-items:center;gap:.35rem .6rem;background:#edf1fb;border-radius:.45rem;padding:.35rem .55rem}
-.charge-particles{display:flex;gap:.22rem;flex-wrap:wrap}
-.charge-particles i{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;font-style:normal;font-weight:750;background:#ffcebd;color:#512011}
-.charge-particles .minus{background:#d0dafe;color:#162d80}
-.drop-figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;text-align:center}
-.drop-group{background:#edf5ff;border-radius:.5rem;padding:.25rem}
-.drop-group span{display:block;font-size:1rem;color:#203eaa;letter-spacing:.13em;white-space:nowrap}
-
-@media(max-width:640px){.unit-contents ol{grid-template-columns:1fr}}
-.knowledge-check{border-left:.25rem solid var(--blue)}
-.reflection-questions{margin:.6rem 0 0;padding-left:1.65rem}
-.reflection-questions li+li{margin-top:.4rem}
-.reflection-questions li::marker{color:var(--blue);font-weight:750}
-.final-check{margin-top:1rem}
-.atom-plot{position:relative;width:min(100%,16rem);aspect-ratio:1;margin:.5rem auto;background:radial-gradient(circle,#2e4c88,#111f41 75%);border-radius:50%}
-.atom-plot .ring{position:absolute;inset:var(--inset);border:1px dashed #93a9e0;border-radius:50%}
-.atom-plot i{position:absolute;width:4%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--particle)}
-.proton{--particle:#ffab8f}.neutron{--particle:#c8d5fc}.electron{--particle:#ffe075}
-.legend{display:flex;gap:.4rem 1rem;flex-wrap:wrap;margin:.4rem 0;font-size:.9rem}
-.legend span::before{content:"";display:inline-block;width:.65rem;height:.65rem;margin-right:.35rem;border-radius:50%;background:var(--particle);border:1px solid #445679}
-nav a[aria-current="page"]{color:var(--dark);text-decoration-thickness:3px;text-underline-offset:.28rem}
-[hidden]{display:none!important}
-nav{background:white;border-bottom:1px solid var(--line);padding:.65rem 0}
-nav .wrap{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
-nav a{padding:.25rem 0;font-weight:650}
-main{padding:2rem 0} section{margin-bottom:2.5rem;scroll-margin-top:1rem}
-.card,details.session{background:white;border:1px solid var(--line);border-radius:.9rem;padding:1.1rem 1.25rem}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start}
-summary{cursor:pointer;font-weight:750} details.session{margin-bottom:.65rem}
-summary span{color:var(--blue);display:block;font-size:.9rem}
-details p:last-child{margin-bottom:0}
-.lab{background:#e8edff;border-radius:.9rem;padding:1.25rem}
-.controls{display:flex;flex-wrap:wrap;gap:.8rem}
-label{font-weight:650} input[type=number]{display:block;width:6rem}
-input,textarea,button{font:inherit}
-textarea,input[type=number]{background:white;color:var(--ink);border:1px solid #6376a1;border-radius:.4rem;padding:.4rem .55rem}
-textarea{display:block;width:100%;min-height:5rem;margin:.3rem 0 1rem}
-button{cursor:pointer;border:1px solid var(--blue);background:var(--blue);color:white;border-radius:.45rem;padding:.45rem .8rem}
-button[aria-pressed=true]{background:var(--yellow);color:var(--dark);border-color:var(--dark)}
-.result{background:white;border-left:.25rem solid var(--blue);padding:.65rem .85rem;margin:1rem 0;border-radius:.25rem}
-.table-scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%}
-caption{text-align:left;margin-bottom:.5rem}
-th,td{padding:.35rem;text-align:center;border-bottom:1px solid var(--line)}
-th{background:#edf1fb} td button{min-width:3rem}
-fieldset{border:1px solid var(--line);border-radius:.55rem;margin:0 0 1rem;padding:.65rem 1rem}
-fieldset label{display:block;font-weight:450;padding:.2rem 0}
-footer{border-top:1px solid var(--line);padding:1.5rem 0 2rem}
-.skip{position:absolute;left:1rem;top:-6rem;background:white;padding:.45rem}.skip:focus{top:1rem}
-@media(max-width:640px){.grid,.intro-copy,.sim-layout{grid-template-columns:1fr}}
-@media print{header,.intro-copy{background:white;color:black;padding:.5rem}.brand,.intro h1,.intro-copy a{color:black}nav,button,.skip{display:none}.grid{display:block}.card,.lab,.session{break-inside:avoid;margin-bottom:1rem}}
-.atomic-timeline{list-style:none;padding:0 0 0 1.4rem;margin:1.25rem 0;border-left:2px solid #9eafe4;display:grid;gap:.65rem}
-.atomic-timeline li{position:relative}
-.atomic-timeline li::before{content:"";position:absolute;left:-1.83rem;top:1.15rem;width:.7rem;height:.7rem;border:2px solid white;border-radius:50%;background:var(--blue)}
-.atomic-timeline button{display:grid;grid-template-columns:minmax(8rem,10rem) 1fr;gap:.05rem .85rem;text-align:left;width:100%;background:white;color:var(--ink);border-color:var(--line);padding:.65rem .85rem}
-.atomic-timeline button:hover{border-color:var(--blue);background:#e8edff}
-.timeline-date{color:var(--blue);font-weight:750}
-.timeline-person{grid-column:2}
-.milestone-dialog{width:min(44rem,calc(100% - 2rem));max-height:85vh;padding:0;border:1px solid var(--line);border-radius:.9rem;color:var(--ink)}
-.milestone-dialog::backdrop{background:#101d39aa}
-.milestone-content{padding:1.2rem}
-.milestone-content form{position:sticky;top:0;float:right;margin:0 0 .4rem .6rem}
-.milestone-content h3{font-size:1.55rem;margin:.25rem 0 .8rem}
-.model-view{margin:1rem 0;background:#edf1fb;border-radius:.65rem;padding:.65rem}
-.model-view canvas{display:block;width:100%;height:auto;max-height:15rem;object-fit:contain;background:#101d39;border-radius:.45rem}
-.model-view figcaption{margin:.45rem 0}
-.model-view-controls{display:flex;flex-wrap:wrap;gap:.45rem}
-.model-view-controls button{background:white;color:var(--blue)}
-.milestone-image{margin:1rem 0}
-.milestone-image img{display:block;width:auto;max-width:100%;max-height:29rem;margin:auto;border-radius:.5rem}
-.milestone-image figcaption{margin-top:.45rem}
-@media(max-width:540px){.atomic-timeline button{grid-template-columns:1fr}.timeline-person{grid-column:1}}
-</style>
+<link rel="stylesheet" href="../../../assets/site.css?v=20261114-download">
+<link rel="stylesheet" href="../../../assets/atomic-unit.css">
+<link rel="icon" type="image/png" sizes="64x64" href="../../../assets/favicon-64.png?v=20261114-cat">
+<link rel="apple-touch-icon" href="../../../assets/favicon-192.png?v=20261114-cat">
+<script src="../../../assets/site.js?v=20261114-eso3" defer></script>
 </head>
 <body>
 <a class="skip" href="#contingut">Skip to content</a>
-<header><div class="wrap brand-bar"><img class="brand-logo" alt="SciencEduca" width="1254" height="480" src="../../../assets/scienceduca-banner.png"><p class="brand">Physics and chemistry · Year 3 ESO · The atom and the periodic table</p><a class="language-link" href="atom-taula-periodica-3eso.html" lang="ca"><span class="language-flag senyera" aria-hidden="true"></span><span>Català</span></a></div></header>
-<nav aria-label="Sections"><div class="wrap"><a href="#inici">Home</a><a href="#electricitat">Matter and electricity</a><a href="#atom">Atom</a><a href="#models">Models</a><a href="#configuracio">Electron configuration</a><a href="#taula">Periodic table</a><a href="#repas">Self-assessment</a><a href="#glossary">Glossary</a></div></nav>
-<main id="contingut" class="wrap" tabindex="-1">
+<header class="site-header"><div class="container header-inner"><a class="brand" href="../../../index.html" aria-label="Scienceduca · Inici"><img src="../../../assets/scienceduca-banner.png" alt="ScienceEduca" width="1254" height="480"></a><nav class="nav" id="main-nav" aria-label="Navegació principal"><a href="../../../index.html">Inici</a><div class="nav-group"><button class="nav-toggle" aria-expanded="false" aria-controls="materials-menu" aria-current="page">Materials didàctics <span aria-hidden="true">⌄</span></button><div class="dropdown" id="materials-menu"><a href="../../../materials/index.html">Tots els materials</a><a href="../index.html">3r d’ESO</a><a href="../../../materials/fisica/index.html">Física</a><a href="../../../materials/quimica/index.html">Química</a></div></div><div class="nav-group"><button class="nav-toggle" aria-expanded="false" aria-controls="games-menu">Jocs <span aria-hidden="true">⌄</span></button><div class="dropdown" id="games-menu"><a href="../../../jocs/index.html">Tots els jocs</a><a href="../../../jocs/elementa/index.html">Elementcat · Taula periòdica</a><a href="../../../jocs/densitat/index.html">Operació Arquímedes · Densitat</a></div></div></nav><button class="theme-toggle" data-theme-toggle aria-label="Activa el mode fosc" aria-pressed="false">☾</button><button class="mobile-toggle" data-menu-toggle aria-label="Obre el menú" aria-expanded="false" aria-controls="main-nav">☰</button></div></header>
+<main id="contingut" class="container atomic-unit" tabindex="-1">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span aria-hidden="true">/</span><a href="../../index.html">Teaching materials</a><span aria-hidden="true">/</span><a href="../index.html">Year 3 ESO</a></nav>
+<div class="unit-page-heading"><h1>The atom and the periodic table</h1><a class="unit-language" href="atom-taula-periodica-3eso.html" lang="ca"><span class="language-flag senyera" aria-hidden="true"></span><span>Català</span></a></div>
+<nav class="unit-nav" aria-label="Unit sections"><a href="#inici">Home</a><a href="#electricitat">Matter and electricity</a><a href="#atom">Atom</a><a href="#models">Models</a><a href="#configuracio">Electron configuration</a><a href="#taula">Periodic table</a><a href="#repas">Self-assessment</a><a href="#glossary">Glossary</a></nav>
+
 <section id="inici" class="intro">
 <div class="intro-copy">
 <div class="intro-text">
-<h1>What is all the matter around us made of?</h1>
+<h2>What is all the matter around us made of?</h2>
 <p>Choose an object near you. What do you think it would be made of if you could see it at the atomic scale?</p>
 <p>Make a prediction. Then change one particle in the simulation and explain what happens.</p>
 <a href="#temari-titol">Explore the unit contents</a>
@@ -583,12 +447,13 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0 2rem}
 </section>
 <section id="glossary"><h2>Key vocabulary</h2><dl class="card"><dt><strong>Matter</strong></dt><dd style="margin:0 0 .65rem">Anything that has mass and occupies space.</dd><dt><strong>Atom</strong></dt><dd style="margin:0 0 .65rem">The smallest unit of an element that can take part in a chemical change.</dd><dt><strong>Element</strong></dt><dd style="margin:0 0 .65rem">A substance defined by the number of protons in its atoms.</dd><dt><strong>Nucleus</strong></dt><dd style="margin:0 0 .65rem">The small, dense centre of an atom, containing protons and usually neutrons.</dd><dt><strong>Proton</strong></dt><dd style="margin:0 0 .65rem">A positively charged particle in the nucleus.</dd><dt><strong>Neutron</strong></dt><dd style="margin:0 0 .65rem">A particle in the nucleus with no electrical charge.</dd><dt><strong>Electron</strong></dt><dd style="margin:0 0 .65rem">A negatively charged elementary particle found around the nucleus.</dd><dt><strong>Atomic number (Z)</strong></dt><dd style="margin:0 0 .65rem">The number of protons. It identifies the element.</dd><dt><strong>Mass number (A)</strong></dt><dd style="margin:0 0 .65rem">The total number of protons and neutrons in a nucleus.</dd><dt><strong>Isotope</strong></dt><dd style="margin:0 0 .65rem">One of the forms of an element with the same proton count and a different neutron count.</dd><dt><strong>Ion</strong></dt><dd style="margin:0 0 .65rem">An atom or group of atoms that has gained or lost electrons and has a net charge.</dd><dt><strong>Cation and anion</strong></dt><dd style="margin:0 0 .65rem">A cation is a positive ion. An anion is a negative ion.</dd><dt><strong>Relative charge</strong></dt><dd style="margin:0 0 .65rem">Charge measured in units of the elementary charge. A proton has relative charge +1 and an electron −1.</dd><dt><strong>Atomic mass unit (u)</strong></dt><dd style="margin:0 0 .65rem">One twelfth of the mass of a carbon-12 atom.</dd><dt><strong>Molecule</strong></dt><dd style="margin:0 0 .65rem">A group of atoms joined by chemical bonds, such as H₂O.</dd><dt><strong>Electron shell</strong></dt><dd style="margin:0 0 .65rem">A group of electron states with the same principal energy-level number.</dd><dt><strong>Electron configuration</strong></dt><dd style="margin:0 0 .65rem">The arrangement of electrons in the available shells and subshells.</dd><dt><strong>Orbital</strong></dt><dd style="margin:0 0 .65rem">A description of the probability of finding an electron in different regions.</dd><dt><strong>Valence electron</strong></dt><dd style="margin:0 0 .65rem">For the elements used here, an electron in the outermost occupied shell that can affect bonding.</dd><dt><strong>Group</strong></dt><dd style="margin:0 0 .65rem">A column of the periodic table.</dd><dt><strong>Period</strong></dt><dd style="margin:0 0 .65rem">A row of the periodic table.</dd><dt><strong>Quark</strong></dt><dd style="margin:0 0 .65rem">An elementary particle that helps make up protons and neutrons.</dd><dt><strong>Uncertainty</strong></dt><dd style="margin:0 0 .65rem">The estimated range of doubt associated with a measurement.</dd></dl></section>
 </main>
-<footer><div class="wrap"><a href="https://iupac.org/what-we-do/periodic-table-of-elements/">IUPAC periodic table</a></div></footer>
+<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand" href="../../../index.html"><img src="../../../assets/scienceduca-banner.png" alt="ScienceEduca" width="1254" height="480"></a><p>Un espai per aprendre ciència, fent ciència.</p></div><p>Materials didàctics i jocs educatius · Un projecte d’iAducació</p></div><div class="license">Els continguts educatius originals, llevat que s’indiqui una altra llicència, es publiquen sota <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca">CC BY-SA 4.0 · Reconeixement-CompartirIgual</a>. Podeu compartir-los i adaptar-los citant iAducació, enllaçant la llicència, indicant els canvis i mantenint la mateixa llicència. Se n’exclouen els continguts de tercers i el codi font.</div></div></footer>
 <script>
+(() => {
 'use strict';
 const atoms = ['H hydrogen','He helium','Li lithium','Be beryllium','B boron','C carbon','N nitrogen','O oxygen','F fluorine','Ne neon','Na sodium','Mg magnesium','Al aluminium','Si silicon','P phosphorus','S sulfur','Cl chlorine','Ar argon','K potassium','Ca calcium'];
 const pages = [...document.querySelectorAll('main > section')];
-const pageLinks = [...document.querySelectorAll('nav a')];
+const pageLinks = [...document.querySelectorAll('.unit-nav a')];
 function showPage(focusHeading = false) {
   const target = document.getElementById(location.hash.slice(1));
   const selected = target?.closest('main > section') ?? pages[0];
@@ -613,7 +478,7 @@ window.addEventListener('hashchange', () => {
   if (location.hash !== '#contingut') showPage(true);
 });
 showPage();
-const languageLink = document.querySelector('.language-link');
+const languageLink = document.querySelector('.unit-language');
 function syncLanguageLink() {
   languageLink.hash = ['#contingut', '#glossary'].includes(location.hash) ? '#inici' : location.hash;
 }
@@ -987,6 +852,7 @@ document.querySelector('#quiz').addEventListener('submit', (event) => {
   total.textContent = `${score} out of ${questions.length} correct.`;
   document.querySelector('#quiz-result').replaceChildren(total, list);
 });
+})();
 </script>
 </body>
 </html>
