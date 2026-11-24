@@ -371,7 +371,7 @@
 <div class="lab topic" id="simulador-isotops" aria-labelledby="simulador-isotops-titol">
 <h4 id="simulador-isotops-titol">Relative atomic mass simulator</h4>
 <p>Choose how many isotopes to include, then enter each mass and percentage abundance. The percentages must add up to 100%. You can use a decimal point or comma.</p>
-<form id="isotope-mass-form">
+<form id="isotope-mass-form" data-decimal-input>
 <label for="isotope-count">Number of isotopes</label>
 <select id="isotope-count"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
 <div class="table-scroll" role="region" aria-label="Relative atomic mass simulator" tabindex="0"><table>
@@ -857,7 +857,7 @@ function updateIsotopeMass() {
     if (!active) continue;
     const mass = positiveMass(massInput.value);
     const text = abundanceInput.value.trim().replace(',', '.');
-    const abundance = /^(?:\\d+(?:\\.\\d+)?|\\.\\d+)$/.test(text) ? Number(text) : NaN;
+    const abundance = /^(?:\d+(?:\.\d+)?|\.\d+)$/.test(text) ? Number(text) : NaN;
     entries.push({mass, abundance});
   }
   const total = entries.reduce((sum, entry) => sum + entry.abundance, 0);
