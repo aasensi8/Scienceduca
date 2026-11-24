@@ -367,7 +367,26 @@
 <article class="card topic" id="masses"><h3>Atomic masses of the elements</h3><p>The <strong>mass number (A)</strong> counts protons and neutrons. The <strong>average atomic mass</strong> is a weighted average of the isotope masses, measured in atomic mass units (u).</p><h4>Worked example: carbon</h4><p>In a simplified sample, about 99% of the atoms are carbon-12 and 1% are carbon-13. We omit the traces of carbon-14 and use rounded isotope masses of 12 u and 13 u.</p><figure class="mass-abundance"><figcaption>Out of every 100 carbon atoms in the simplified sample</figcaption>
 <div class="mass-abundance-bar" aria-hidden="true"><span></span><span></span></div>
 <ul><li><span class="mass-key-12" aria-hidden="true"></span><strong>99%</strong> · carbon-12 (≈ 12 u)</li><li><span class="mass-key-13" aria-hidden="true"></span><strong>1%</strong> · carbon-13 (≈ 13 u)</li></ul></figure>
-<p class="result">Average atomic mass ≈ 0.99 × 12 u + 0.01 × 13 u = <strong>12.01 u</strong>.</p><p>The result is much closer to 12 u because carbon-12 is much more abundant.</p></article>
+<p class="result">Average atomic mass ≈ <math><mfrac><mrow><mn>99</mn><mo>×</mo><mn>12</mn><mtext>&nbsp;u</mtext><mo>+</mo><mn>1</mn><mo>×</mo><mn>13</mn><mtext>&nbsp;u</mtext></mrow><mn>100</mn></mfrac></math> = <strong>12.01 u</strong>.</p><p>The result is much closer to 12 u because carbon-12 is much more abundant.</p>
+<div class="lab topic" id="simulador-isotops" aria-labelledby="simulador-isotops-titol">
+<h4 id="simulador-isotops-titol">Relative atomic mass simulator</h4>
+<p>Choose how many isotopes to include, then enter each mass and percentage abundance. The percentages must add up to 100%. You can use a decimal point or comma.</p>
+<form id="isotope-mass-form">
+<label for="isotope-count">Number of isotopes</label>
+<select id="isotope-count"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+<div class="table-scroll" role="region" aria-label="Relative atomic mass simulator" tabindex="0"><table>
+<thead><tr><th scope="col">Isotope</th><th scope="col">Isotope mass (u)</th><th scope="col">Abundance (%)</th></tr></thead>
+<tbody><tr data-isotope-row><th scope="row">1</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Isotope mass (u) · Isotope 1" value="12"></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundance (%) · Isotope 1" value="99"></td></tr>
+<tr data-isotope-row><th scope="row">2</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Isotope mass (u) · Isotope 2" value="13"></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundance (%) · Isotope 2" value="1"></td></tr>
+<tr data-isotope-row hidden><th scope="row">3</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Isotope mass (u) · Isotope 3" value="" disabled></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundance (%) · Isotope 3" value="" disabled></td></tr>
+<tr data-isotope-row hidden><th scope="row">4</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Isotope mass (u) · Isotope 4" value="" disabled></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundance (%) · Isotope 4" value="" disabled></td></tr>
+<tr data-isotope-row hidden><th scope="row">5</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Isotope mass (u) · Isotope 5" value="" disabled></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundance (%) · Isotope 5" value="" disabled></td></tr></tbody></table></div>
+<p id="isotope-total"></p>
+<output id="isotope-mass-result" class="result" aria-live="polite" style="display:block"></output>
+</form>
+<p>Relative atomic mass (Aᵣ) is the average mass divided by one atomic mass unit, so it has no unit.</p>
+</div>
+</article>
 </section>
 <section id="configuracio">
 <h2>Electron configuration</h2>
@@ -819,6 +838,46 @@ function updateShellExample() {
 shellSelector.value = '11';
 shellSelector.addEventListener('change', updateShellExample);
 updateShellExample();
+
+
+const isotopeForm = document.querySelector('#isotope-mass-form');
+const isotopeCount = isotopeForm.querySelector('#isotope-count');
+const isotopeRows = [...isotopeForm.querySelectorAll('[data-isotope-row]')];
+const isotopeTotal = isotopeForm.querySelector('#isotope-total');
+const isotopeResult = isotopeForm.querySelector('#isotope-mass-result');
+const isotopeNumber = new Intl.NumberFormat("en-GB", {maximumFractionDigits: 8});
+function updateIsotopeMass() {
+  const entries = [];
+  for (const [index, row] of isotopeRows.entries()) {
+    const active = index < Number(isotopeCount.value);
+    row.hidden = !active;
+    const massInput = row.querySelector('[data-isotope-mass]');
+    const abundanceInput = row.querySelector('[data-isotope-abundance]');
+    massInput.disabled = abundanceInput.disabled = !active;
+    if (!active) continue;
+    const mass = positiveMass(massInput.value);
+    const text = abundanceInput.value.trim().replace(',', '.');
+    const abundance = /^(?:\\d+(?:\\.\\d+)?|\\.\\d+)$/.test(text) ? Number(text) : NaN;
+    entries.push({mass, abundance});
+  }
+  const total = entries.reduce((sum, entry) => sum + entry.abundance, 0);
+  isotopeTotal.textContent = "Total abundance: " + (Number.isFinite(total) ? isotopeNumber.format(total) + ' %' : '—');
+  if (entries.some(({mass, abundance}) => !Number.isFinite(mass) || !Number.isFinite(abundance) || abundance < 0 || abundance > 100)) {
+    isotopeResult.textContent = "Enter a positive mass and an abundance from 0% to 100% for each isotope.";
+    return;
+  }
+  if (Math.abs(total - 100) > 1e-8) {
+    isotopeResult.textContent = "The abundances must add up to 100%.";
+    return;
+  }
+  const mean = entries.reduce((sum, {mass, abundance}) => sum + mass * (abundance / 100), 0);
+  const value = isotopeNumber.format(mean);
+  isotopeResult.textContent = "Relative atomic mass (Aᵣ) ≈ " + value + ". Average atomic mass ≈ " + value + ' u.';
+}
+isotopeForm.addEventListener('input', updateIsotopeMass);
+isotopeCount.addEventListener('change', updateIsotopeMass);
+isotopeForm.addEventListener('submit', event => event.preventDefault());
+updateIsotopeMass();
 
 const elementData = {
   Li: ['Lithium', 3, 1, 2, 'Alkali metal. Common ion Li⁺.'],
