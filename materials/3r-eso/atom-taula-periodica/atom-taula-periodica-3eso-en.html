@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The atom and the periodic table · Physics and chemistry</title>
 <link rel="stylesheet" href="../../../assets/site.css?v=20261114-download">
-<link rel="stylesheet" href="../../../assets/atomic-unit.css?v=contrast-1">
+<link rel="stylesheet" href="../../../assets/atomic-unit.css?v=isotopes-1">
 <link rel="icon" type="image/png" sizes="64x64" href="../../../assets/favicon-64.png?v=20261114-cat">
 <link rel="apple-touch-icon" href="../../../assets/favicon-192.png?v=20261114-cat">
 <script src="../../../assets/site.js?v=20261114-eso3" defer></script>
@@ -329,9 +329,8 @@
 <article class="card">
 <p>The nucleus contains positively charged protons and usually neutrons, which have no charge. Electrons are negatively charged and are found in the region around the nucleus.</p>
 <ul><li><strong>Atomic number (Z)</strong> = number of protons. It identifies the element.</li><li><strong>Mass number (A)</strong> = protons + neutrons.</li><li><strong>Charge in elementary units</strong> = protons − electrons.</li></ul>
-<p>Two <strong>isotopes</strong> have the same Z and different A values. A <strong>monatomic ion</strong> is charged because the number of electrons differs from the number of protons.</p>
+<h3>Monatomic ions</h3><p>A <strong>monatomic ion</strong> is charged because the number of electrons differs from the number of protons.</p>
 <details><summary>Worked example: sodium-23</summary><p>When Z = 11 and A = 23, there are 11 protons and 23 − 11 = 12 neutrons. A neutral atom has 11 electrons. The Na⁺ ion has 10.</p></details>
-<details id="masses"><summary>Atomic masses of the elements</summary><p>To calculate the average atomic mass, multiply each isotope’s mass by its abundance as a fraction and add the results. The mass number A counts particles. Isotope mass is measured in atomic mass units (u).</p></details>
 </article>
 <article class="lab atom-constructor">
 <h3>Test your explanation</h3>
@@ -357,6 +356,10 @@
 </article>
 </div>
 
+<article class="card topic" id="isotops"><h3>Carbon isotopes</h3><p>Isotopes of the same element have the same number of protons (Z) and different numbers of neutrons. Their mass numbers (A) are therefore different. All three carbon isotopes below have six protons. Each diagram shows a neutral atom with six electrons.</p><div class="isotope-grid"><figure><div class="atom-plot" data-carbon-neutrons="6" aria-hidden="true" data-paused></div><figcaption><strong>¹²C · Carbon-12</strong><br>6 protons · 6 neutrons · 6 electrons</figcaption></figure>
+<figure><div class="atom-plot" data-carbon-neutrons="7" aria-hidden="true" data-paused></div><figcaption><strong>¹³C · Carbon-13</strong><br>6 protons · 7 neutrons · 6 electrons</figcaption></figure>
+<figure><div class="atom-plot" data-carbon-neutrons="8" aria-hidden="true" data-paused></div><figcaption><strong>¹⁴C · Carbon-14</strong><br>6 protons · 8 neutrons · 6 electrons<br>Radioactive</figcaption></figure></div><div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div></article>
+<article class="card topic" id="masses"><h3>Atomic masses of the elements</h3><p>The <strong>mass number (A)</strong> counts protons and neutrons. The <strong>average atomic mass</strong> is a weighted average of the isotope masses, measured in atomic mass units (u).</p><h4>Worked example: carbon</h4><p>In a simplified sample, about 99% of the atoms are carbon-12 and 1% are carbon-13. We omit the traces of carbon-14 and use rounded isotope masses of 12 u and 13 u.</p><p class="result">Average atomic mass ≈ 0.99 × 12 u + 0.01 × 13 u = <strong>12.01 u</strong>.</p><p>The result is much closer to 12 u because carbon-12 is much more abundant.</p></article>
 <details class="card topic" id="elements"><summary>Chemical elements</summary><p>Atoms of the same element have the same number of protons. Any atom with six protons is carbon, regardless of its neutron or electron count.</p></details>
 <details class="card topic" id="alteracions"><summary>Changing atoms</summary><p>With the proton count fixed, changing the neutron count gives a different isotope, and changing the electron count changes the charge. Changing the proton count gives a different element.</p></details>
 </section>
@@ -406,7 +409,7 @@
 <div class="card">
 <div class="table-scroll" tabindex="0" role="region" aria-label="Extract from the periodic table">
 <table>
-<caption>This table shows parts of groups 1, 2, 17 and 18. Select a symbol to see the element’s data.</caption>
+<caption>This table shows parts of groups 1, 2, 17 and 18. Select a symbol to see the element’s data. Select it again to clear the selection.</caption>
 <thead><tr><th scope="col">Period</th><th scope="col">Group 1</th><th scope="col">Group 2</th><th scope="col">Group 17</th><th scope="col">Group 18</th></tr></thead>
 <tbody>
 <tr><th scope="row">2</th><td><button data-element="Li" aria-pressed="false">Li</button></td><td><button data-element="Be" aria-pressed="false">Be</button></td><td><button data-element="F" aria-pressed="false">F</button></td><td><button data-element="Ne" aria-pressed="false">Ne</button></td></tr>
@@ -524,6 +527,10 @@ function drawAtom(target, protons, neutrons, electrons) {
   });
   target.replaceChildren(visual);
 }
+for (const diagram of document.querySelectorAll('[data-carbon-neutrons]')) {
+  drawAtom(diagram, 6, Number(diagram.dataset.carbonNeutrons), 6);
+}
+
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 for (const panel of document.querySelectorAll('.atom-constructor')) {
   const form = panel.querySelector('[data-constructor]');
@@ -821,13 +828,20 @@ const elementData = {
   Br: ['Bromine', 35, 17, 4, 'Halogen, non-metal. Common ion Br⁻.'],
   Kr: ['Krypton', 36, 18, 4, 'Noble gas with low reactivity.']
 };
+const elementResult = document.querySelector('#element-result');
+const elementPrompt = elementResult.textContent;
 const elementButtons = document.querySelectorAll('[data-element]');
 for (const button of elementButtons) {
   button.addEventListener('click', () => {
+    const select = button.getAttribute('aria-pressed') !== 'true';
+    for (const item of elementButtons) item.setAttribute('aria-pressed', String(select && item === button));
+    if (!select) {
+      elementResult.textContent = elementPrompt;
+      return;
+    }
     const symbol = button.dataset.element;
     const [name, atomicNumber, group, period, properties] = elementData[symbol];
-    for (const item of elementButtons) item.setAttribute('aria-pressed', String(item === button));
-    document.querySelector('#element-result').textContent =
+    elementResult.textContent =
       `${name} (${symbol}). Z = ${atomicNumber}, group ${group}, period ${period}. ${properties}`;
   });
 }
