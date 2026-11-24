@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>L’àtom i la taula periòdica · Física i química</title>
 <link rel="stylesheet" href="../../../assets/site.css?v=20261114-download">
-<link rel="stylesheet" href="../../../assets/atomic-unit.css?v=isotopes-1">
+<link rel="stylesheet" href="../../../assets/atomic-unit.css?v=notation-1">
 <link rel="icon" type="image/png" sizes="64x64" href="../../../assets/favicon-64.png?v=20261114-cat">
 <link rel="apple-touch-icon" href="../../../assets/favicon-192.png?v=20261114-cat">
 <script src="../../../assets/site.js?v=20261114-eso3" defer></script>
@@ -329,6 +329,11 @@
 <p>El nucli conté protons amb càrrega positiva i, habitualment, neutrons sense càrrega. Els electrons tenen càrrega negativa i es troben a la regió que envolta el nucli.</p>
 <ul><li><strong>Nombre atòmic (Z)</strong> = protons. Determina l’element.</li><li><strong>Nombre màssic (A)</strong> = protons + neutrons.</li><li><strong>Càrrega en unitats elementals</strong> = protons − electrons.</li></ul>
 <h3>Ions monoatòmics</h3><p>Un <strong>ió monoatòmic</strong> té càrrega perquè el nombre d’electrons difereix del nombre de protons.</p>
+<figure class="ion-notation"><figcaption>Com es llegeix el símbol de l’ió de sodi-23</figcaption>
+<div class="ion-symbol" aria-hidden="true"><span class="mass-number">23</span><span class="atomic-number">11</span><strong class="chem-symbol">Na</strong><span class="ion-charge">+</span></div>
+<ul><li><strong class="mass-label">23</strong> · Nombre màssic (A): 11 protons + 12 neutrons.</li>
+<li><strong class="atomic-label">11</strong> · Nombre atòmic (Z): 11 protons.</li>
+<li><strong class="charge-label">+</strong> · Càrrega relativa +1: 11 protons − 10 electrons.</li></ul></figure>
 <details><summary>Exemple resolt del sodi-23</summary><p>Amb Z = 11 i A = 23, té 11 protons i 23 − 11 = 12 neutrons. Si és neutre, té 11 electrons. El catió Na⁺ té 10 electrons.</p></details>
 </article>
 <article class="lab atom-constructor">
@@ -358,9 +363,10 @@
 <article class="card topic" id="isotops"><h3>Els isòtops del carboni</h3><p>Els isòtops d’un mateix element tenen el mateix nombre de protons (Z) i un nombre diferent de neutrons. Per això tenen nombres màssics (A) diferents. Els tres isòtops del carboni que es mostren tenen sis protons i, com que els àtoms representats són neutres, també sis electrons.</p><div class="isotope-grid"><figure><div class="atom-plot" data-carbon-neutrons="6" aria-hidden="true" data-paused></div><figcaption><strong>¹²C · Carboni-12</strong><br>6 protons · 6 neutrons · 6 electrons</figcaption></figure>
 <figure><div class="atom-plot" data-carbon-neutrons="7" aria-hidden="true" data-paused></div><figcaption><strong>¹³C · Carboni-13</strong><br>6 protons · 7 neutrons · 6 electrons</figcaption></figure>
 <figure><div class="atom-plot" data-carbon-neutrons="8" aria-hidden="true" data-paused></div><figcaption><strong>¹⁴C · Carboni-14</strong><br>6 protons · 8 neutrons · 6 electrons<br>Radioactiu</figcaption></figure></div><div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div></article>
-<article class="card topic" id="masses"><h3>Masses atòmiques dels elements</h3><p>El <strong>nombre màssic (A)</strong> compta protons i neutrons. La <strong>massa atòmica mitjana</strong> és la mitjana ponderada de les masses dels isòtops, expressada en unitats de massa atòmica (u).</p><h4>Exemple resolt amb el carboni</h4><p>En una mostra simplificada, aproximadament el 99% dels àtoms són carboni-12 i l’1% són carboni-13. Prescindim de les traces de carboni-14 i fem servir les masses isotòpiques arrodonides de 12 u i 13 u.</p><p class="result">Massa atòmica mitjana ≈ 0,99 × 12 u + 0,01 × 13 u = <strong>12,01 u</strong>.</p><p>El resultat és molt més proper a 12 u perquè el carboni-12 és molt més abundant.</p></article>
-<details class="card topic" id="elements"><summary>Els elements químics</summary><p>Tots els àtoms d’un element tenen el mateix nombre de protons. Per exemple, qualsevol àtom amb sis protons és carboni, encara que en variïn els neutrons o els electrons.</p></details>
-<details class="card topic" id="alteracions"><summary>Alterant els àtoms</summary><p>Amb els mateixos protons, un canvi de neutrons dona un altre isòtop i un canvi d’electrons modifica la càrrega. Canviar el nombre de protons implica canviar d’element.</p></details>
+<article class="card topic" id="masses"><h3>Masses atòmiques dels elements</h3><p>El <strong>nombre màssic (A)</strong> compta protons i neutrons. La <strong>massa atòmica mitjana</strong> és la mitjana ponderada de les masses dels isòtops, expressada en unitats de massa atòmica (u).</p><h4>Exemple resolt amb el carboni</h4><p>En una mostra simplificada, aproximadament el 99% dels àtoms són carboni-12 i l’1% són carboni-13. Prescindim de les traces de carboni-14 i fem servir les masses isotòpiques arrodonides de 12 u i 13 u.</p><figure class="mass-abundance"><figcaption>De cada 100 àtoms de carboni de la mostra simplificada</figcaption>
+<div class="mass-abundance-bar" aria-hidden="true"><span></span><span></span></div>
+<ul><li><span class="mass-key-12" aria-hidden="true"></span><strong>99%</strong> · carboni-12 (≈ 12 u)</li><li><span class="mass-key-13" aria-hidden="true"></span><strong>1%</strong> · carboni-13 (≈ 13 u)</li></ul></figure>
+<p class="result">Massa atòmica mitjana ≈ 0,99 × 12 u + 0,01 × 13 u = <strong>12,01 u</strong>.</p><p>El resultat és molt més proper a 12 u perquè el carboni-12 és molt més abundant.</p></article>
 </section>
 <section id="configuracio">
 <h2>Configuració electrònica</h2>
