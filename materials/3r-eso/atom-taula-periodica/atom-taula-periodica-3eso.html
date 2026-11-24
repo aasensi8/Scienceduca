@@ -370,7 +370,7 @@
 <div class="lab topic" id="simulador-isotops" aria-labelledby="simulador-isotops-titol">
 <h4 id="simulador-isotops-titol">Simulador de massa atòmica relativa</h4>
 <p>Tria quants isòtops vols incloure i introdueix la massa i el percentatge de cadascun. Els percentatges han de sumar el 100%. Pots fer servir coma o punt decimal.</p>
-<form id="isotope-mass-form">
+<form id="isotope-mass-form" data-decimal-input>
 <label for="isotope-count">Nombre d’isòtops</label>
 <select id="isotope-count"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
 <div class="table-scroll" role="region" aria-label="Simulador de massa atòmica relativa" tabindex="0"><table>
@@ -855,7 +855,7 @@ function updateIsotopeMass() {
     if (!active) continue;
     const mass = positiveMass(massInput.value);
     const text = abundanceInput.value.trim().replace(',', '.');
-    const abundance = /^(?:\\d+(?:\\.\\d+)?|\\.\\d+)$/.test(text) ? Number(text) : NaN;
+    const abundance = /^(?:\d+(?:\.\d+)?|\.\d+)$/.test(text) ? Number(text) : NaN;
     entries.push({mass, abundance});
   }
   const total = entries.reduce((sum, entry) => sum + entry.abundance, 0);
