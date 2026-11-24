@@ -366,7 +366,26 @@
 <article class="card topic" id="masses"><h3>Masses atòmiques dels elements</h3><p>El <strong>nombre màssic (A)</strong> compta protons i neutrons. La <strong>massa atòmica mitjana</strong> és la mitjana ponderada de les masses dels isòtops, expressada en unitats de massa atòmica (u).</p><h4>Exemple resolt amb el carboni</h4><p>En una mostra simplificada, aproximadament el 99% dels àtoms són carboni-12 i l’1% són carboni-13. Prescindim de les traces de carboni-14 i fem servir les masses isotòpiques arrodonides de 12 u i 13 u.</p><figure class="mass-abundance"><figcaption>De cada 100 àtoms de carboni de la mostra simplificada</figcaption>
 <div class="mass-abundance-bar" aria-hidden="true"><span></span><span></span></div>
 <ul><li><span class="mass-key-12" aria-hidden="true"></span><strong>99%</strong> · carboni-12 (≈ 12 u)</li><li><span class="mass-key-13" aria-hidden="true"></span><strong>1%</strong> · carboni-13 (≈ 13 u)</li></ul></figure>
-<p class="result">Massa atòmica mitjana ≈ 0,99 × 12 u + 0,01 × 13 u = <strong>12,01 u</strong>.</p><p>El resultat és molt més proper a 12 u perquè el carboni-12 és molt més abundant.</p></article>
+<p class="result">Massa atòmica mitjana ≈ <math><mfrac><mrow><mn>99</mn><mo>×</mo><mn>12</mn><mtext>&nbsp;u</mtext><mo>+</mo><mn>1</mn><mo>×</mo><mn>13</mn><mtext>&nbsp;u</mtext></mrow><mn>100</mn></mfrac></math> = <strong>12,01 u</strong>.</p><p>El resultat és molt més proper a 12 u perquè el carboni-12 és molt més abundant.</p>
+<div class="lab topic" id="simulador-isotops" aria-labelledby="simulador-isotops-titol">
+<h4 id="simulador-isotops-titol">Simulador de massa atòmica relativa</h4>
+<p>Tria quants isòtops vols incloure i introdueix la massa i el percentatge de cadascun. Els percentatges han de sumar el 100%. Pots fer servir coma o punt decimal.</p>
+<form id="isotope-mass-form">
+<label for="isotope-count">Nombre d’isòtops</label>
+<select id="isotope-count"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+<div class="table-scroll" role="region" aria-label="Simulador de massa atòmica relativa" tabindex="0"><table>
+<thead><tr><th scope="col">Isòtop</th><th scope="col">Massa isotòpica (u)</th><th scope="col">Abundància (%)</th></tr></thead>
+<tbody><tr data-isotope-row><th scope="row">1</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Massa isotòpica (u) · Isòtop 1" value="12"></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundància (%) · Isòtop 1" value="99"></td></tr>
+<tr data-isotope-row><th scope="row">2</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Massa isotòpica (u) · Isòtop 2" value="13"></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundància (%) · Isòtop 2" value="1"></td></tr>
+<tr data-isotope-row hidden><th scope="row">3</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Massa isotòpica (u) · Isòtop 3" value="" disabled></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundància (%) · Isòtop 3" value="" disabled></td></tr>
+<tr data-isotope-row hidden><th scope="row">4</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Massa isotòpica (u) · Isòtop 4" value="" disabled></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundància (%) · Isòtop 4" value="" disabled></td></tr>
+<tr data-isotope-row hidden><th scope="row">5</th><td><input class="drop-mass" data-isotope-mass type="text" inputmode="decimal" aria-label="Massa isotòpica (u) · Isòtop 5" value="" disabled></td><td><input class="drop-mass" data-isotope-abundance type="text" inputmode="decimal" aria-label="Abundància (%) · Isòtop 5" value="" disabled></td></tr></tbody></table></div>
+<p id="isotope-total"></p>
+<output id="isotope-mass-result" class="result" aria-live="polite" style="display:block"></output>
+</form>
+<p>La massa atòmica relativa (Aᵣ) és la massa mitjana dividida per una unitat de massa atòmica. És un nombre sense unitat.</p>
+</div>
+</article>
 </section>
 <section id="configuracio">
 <h2>Configuració electrònica</h2>
@@ -817,6 +836,46 @@ function updateShellExample() {
 shellSelector.value = '11';
 shellSelector.addEventListener('change', updateShellExample);
 updateShellExample();
+
+
+const isotopeForm = document.querySelector('#isotope-mass-form');
+const isotopeCount = isotopeForm.querySelector('#isotope-count');
+const isotopeRows = [...isotopeForm.querySelectorAll('[data-isotope-row]')];
+const isotopeTotal = isotopeForm.querySelector('#isotope-total');
+const isotopeResult = isotopeForm.querySelector('#isotope-mass-result');
+const isotopeNumber = new Intl.NumberFormat("ca", {maximumFractionDigits: 8});
+function updateIsotopeMass() {
+  const entries = [];
+  for (const [index, row] of isotopeRows.entries()) {
+    const active = index < Number(isotopeCount.value);
+    row.hidden = !active;
+    const massInput = row.querySelector('[data-isotope-mass]');
+    const abundanceInput = row.querySelector('[data-isotope-abundance]');
+    massInput.disabled = abundanceInput.disabled = !active;
+    if (!active) continue;
+    const mass = positiveMass(massInput.value);
+    const text = abundanceInput.value.trim().replace(',', '.');
+    const abundance = /^(?:\\d+(?:\\.\\d+)?|\\.\\d+)$/.test(text) ? Number(text) : NaN;
+    entries.push({mass, abundance});
+  }
+  const total = entries.reduce((sum, entry) => sum + entry.abundance, 0);
+  isotopeTotal.textContent = "Abundància total: " + (Number.isFinite(total) ? isotopeNumber.format(total) + ' %' : '—');
+  if (entries.some(({mass, abundance}) => !Number.isFinite(mass) || !Number.isFinite(abundance) || abundance < 0 || abundance > 100)) {
+    isotopeResult.textContent = "Introdueix una massa positiva i una abundància del 0% al 100% per a cada isòtop.";
+    return;
+  }
+  if (Math.abs(total - 100) > 1e-8) {
+    isotopeResult.textContent = "Les abundàncies han de sumar el 100%.";
+    return;
+  }
+  const mean = entries.reduce((sum, {mass, abundance}) => sum + mass * (abundance / 100), 0);
+  const value = isotopeNumber.format(mean);
+  isotopeResult.textContent = "Massa atòmica relativa (Aᵣ) ≈ " + value + ". Massa atòmica mitjana ≈ " + value + ' u.';
+}
+isotopeForm.addEventListener('input', updateIsotopeMass);
+isotopeCount.addEventListener('change', updateIsotopeMass);
+isotopeForm.addEventListener('submit', event => event.preventDefault());
+updateIsotopeMass();
 
 const elementData = {
   Li: ['Liti', 3, 1, 2, 'Metall alcalí. Ió habitual Li⁺.'],
