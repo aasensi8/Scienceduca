@@ -146,3 +146,21 @@ fieldset label{display:block;font-weight:450;padding:.2rem 0}
 .atomic-unit .isotope-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.75rem;margin:1rem 0}
 .atomic-unit .isotope-grid figure{margin:0;padding:.75rem;text-align:center;background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:.65rem}
 .atomic-unit .isotope-grid .atom-plot{width:min(100%,9rem)}
+
+.atomic-unit .ion-notation{margin:1rem 0;padding:.85rem;border:1px solid var(--line);border-radius:.65rem;background:var(--soft);color:var(--ink)}
+.atomic-unit .ion-notation figcaption{font-weight:750}
+.atomic-unit .ion-symbol{display:grid;grid-template-columns:max-content max-content max-content;align-items:center;justify-content:center;gap:0 .22em;margin:.5rem 0;font-size:2rem;line-height:1}
+.atomic-unit .ion-symbol .mass-number{grid-area:1 / 1;color:#ffd8af}
+.atomic-unit .ion-symbol .atomic-number{grid-area:2 / 1;color:#a8e5ff}
+.atomic-unit .ion-symbol .chem-symbol{grid-area:1 / 2 / 3 / 3;font-size:1.8em}
+.atomic-unit .ion-symbol .ion-charge{grid-area:1 / 3;color:#ff9ca2}
+.atomic-unit .ion-notation ul,.atomic-unit .mass-abundance ul{padding-left:1.2rem;margin:.55rem 0 0}
+.atomic-unit .ion-notation .mass-label{color:#ffd8af}
+.atomic-unit .ion-notation .atomic-label{color:#a8e5ff}
+.atomic-unit .ion-notation .charge-label{color:#ff9ca2}
+.atomic-unit .mass-abundance{margin:1rem 0}
+.atomic-unit .mass-abundance figcaption{font-weight:750;margin-bottom:.4rem}
+.atomic-unit .mass-abundance-bar{display:grid;grid-template-columns:99fr 1fr;height:1.4rem;overflow:hidden;border:1px solid #bda6a7;border-radius:.3rem}
+.atomic-unit .mass-abundance-bar span:first-child,.atomic-unit .mass-key-12{background:#9edcf7}
+.atomic-unit .mass-abundance-bar span:last-child,.atomic-unit .mass-key-13{background:#ff9f81}
+.atomic-unit .mass-key-12,.atomic-unit .mass-key-13{display:inline-block;width:.8rem;height:.8rem;border-radius:.15rem;margin-right:.4rem}
