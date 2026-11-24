@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L’àtom i la taula periòdica · Física i química</title>
+<style>
+:root{color-scheme:light;--ink:#17253c;--paper:#f4f6fb;--blue:#203eaa;--line:#ccd5eb;--yellow:#ffe075;--dark:#101d39}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 system-ui,sans-serif}
+a{color:var(--blue)} a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid #a44b00;outline-offset:4px}
+.wrap{width:min(70rem,calc(100% - 2rem));margin:auto}
+header{background:var(--dark);color:white;padding:.75rem 0}
+.language-link{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;margin-inline-start:auto;color:white;border:1px solid #aab9d8;border-radius:.45rem;padding:.25rem .65rem;font-weight:700}
+.language-flag{display:block;width:1.7rem;height:.95rem;flex:none;border:1px solid #ffffff40;border-radius:.15rem}
+.senyera{background:repeating-linear-gradient(to bottom,#fcdd09 0 calc(100% / 9),#da121a calc(100% / 9) calc(200% / 9),#fcdd09 calc(200% / 9) calc(100% / 3),#da121a calc(100% / 3) calc(400% / 9),#fcdd09 calc(400% / 9) calc(500% / 9),#da121a calc(500% / 9) calc(200% / 3),#fcdd09 calc(200% / 3) calc(700% / 9),#da121a calc(700% / 9) calc(800% / 9),#fcdd09 calc(800% / 9) 100%)}
+.brand-bar{display:flex;align-items:center;gap:.8rem}
+.brand-logo{display:block;width:clamp(7.5rem,23vw,12rem);height:auto;flex:none;border-radius:.25rem}
+@media(max-width:460px){.brand-bar{align-items:flex-start;flex-direction:column;gap:.45rem}}
+.brand{margin:0;font-weight:700;color:#e1e8ff}
+.intro{display:grid;gap:1.5rem}
+.intro-copy{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:var(--dark);color:white;border-radius:.9rem;overflow:hidden}
+.intro-text{padding:clamp(1.3rem,3.5vw,2.75rem)}
+.intro-image{position:relative;min-height:14rem}
+.intro-image img{position:absolute;width:100%;height:100%;object-fit:cover}
+.sim-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:1.4rem;align-items:center}
+.atom-plot .shell-motion{position:absolute;inset:0;animation:orbit var(--period) linear infinite}
+.atom-plot[data-paused] .shell-motion{animation-play-state:paused}
+@keyframes orbit{to{transform:rotate(1turn)}}
+[data-motion-toggle]{background:white;color:var(--blue);margin-top:.35rem}
+
+.intro h1{color:var(--yellow);font-size:clamp(2rem,4.1vw,3.75rem);line-height:1.04;letter-spacing:-.045em;margin:0 0 1.2rem}
+.intro-copy p{max-width:38ch}
+article.objectives{padding:clamp(1.1rem,3vw,2rem);background:#e8edff;border-color:#c4d0ed}
+.objectives ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0;padding:0;list-style:none}
+.objectives li{padding:.85rem 1rem;border:1px solid #ccd5eb;border-left:.25rem solid var(--blue);border-radius:.55rem;background:#fff}
+.objectives strong{display:block;color:#203eaa;margin-bottom:.15rem}
+@media(max-width:640px){.objectives ul{grid-template-columns:1fr}}
+.intro-copy a{color:white}
+article.opening-reflection{display:grid;grid-template-columns:clamp(4rem,9vw,6rem) minmax(0,1fr);align-items:center;gap:clamp(1.25rem,4vw,3.5rem);padding:clamp(1.25rem,4vw,2.75rem);background:#32263d;color:#fff7f1;border-color:#32263d}
+.reflection-portrait{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 34%;border-radius:50%;border:.2rem solid #ffb39b}
+.opening-reflection h2{font-size:1rem;color:#ffb39b;margin:0 0 .8rem}
+.opening-reflection figure,.opening-reflection blockquote{margin:0}
+.opening-reflection blockquote p{font:700 clamp(1.65rem,4vw,3.2rem)/1.12 system-ui,sans-serif;letter-spacing:-.035em;max-width:20ch;margin:0 0 1rem}
+.opening-reflection figcaption{color:#f2e6ee}
+.opening-reflection a{color:#ffe075}
+@media(max-width:580px){article.opening-reflection{grid-template-columns:1fr}.reflection-portrait{width:4rem}}
+@media print{article.opening-reflection{background:white;color:var(--ink)}.opening-reflection h2,.opening-reflection figcaption,.opening-reflection a{color:var(--ink)}}
+.unit-contents ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem 2rem;margin:0;padding-left:1.65rem}
+.unit-contents li::marker{font-weight:750;color:var(--blue)}
+.topic{margin-top:1rem}
+.particle-discovery{list-style:none;padding:0;margin:.7rem 0}
+.particle-discovery li{display:grid;grid-template-columns:2.7rem minmax(0,1fr);align-items:start;gap:.7rem;margin:.7rem 0}
+.particle-symbol{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;font-weight:800;background:#dfe7ff;color:#1c3587}
+.particle-symbol.positive{background:#ffcebd;color:#512011}
+.particle-symbol.neutral{background:#e2e7f1;color:#17253c}
+.quark-diagrams{display:flex;flex-wrap:wrap;gap:.75rem;margin:.75rem 0}
+.quark-diagrams figure{flex:1;min-width:8.5rem;margin:0;padding:.55rem;text-align:center;background:#edf1fb;border-radius:.65rem}
+.quark-diagrams strong{display:inline-grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:50%;background:#ffcebd;color:#512011}
+.quark-diagrams .down{background:#d0dafe;color:#162d80}
+
+.mass-unit{position:relative;display:inline-block}
+.mass-unit button{padding:.02rem .28rem;background:#fff;color:var(--blue);font-weight:700}
+.mass-unit [role="tooltip"]{display:none;position:absolute;z-index:2;top:100%;left:50%;transform:translateX(-50%);width:12rem;text-align:left;background:var(--dark);color:white;font-weight:400;line-height:1.4;padding:.65rem;border-radius:.45rem;box-shadow:0 .2rem .65rem #101d3940}
+.mass-unit:hover [role="tooltip"],.mass-unit:focus-within [role="tooltip"]{display:block}
+.mass-unit[data-dismissed] [role="tooltip"]{display:none}
+.mass-calculator .atom-plot{max-width:12rem}
+.lab-materials{align-items:center;margin-bottom:1rem}
+.lab-materials figure{margin:0}
+.lab-materials img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:.65rem}
+.lab-materials figcaption{margin-top:.3rem}
+.drop-mass{font:inherit;width:8ch;padding:.3rem .45rem;border:1px solid #6376a1;border-radius:.35rem}
+.drop-results{min-width:24rem}
+
+.charge-figure,.drop-figure{margin:.8rem 0 0}
+.charge-cases{display:grid;gap:.4rem}
+.charge-case{display:grid;grid-template-columns:minmax(5rem,1fr) minmax(9rem,1.5fr);align-items:center;gap:.35rem .6rem;background:#edf1fb;border-radius:.45rem;padding:.35rem .55rem}
+.charge-particles{display:flex;gap:.22rem;flex-wrap:wrap}
+.charge-particles i{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;font-style:normal;font-weight:750;background:#ffcebd;color:#512011}
+.charge-particles .minus{background:#d0dafe;color:#162d80}
+.drop-figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;text-align:center}
+.drop-group{background:#edf5ff;border-radius:.5rem;padding:.25rem}
+.drop-group span{display:block;font-size:1rem;color:#203eaa;letter-spacing:.13em;white-space:nowrap}
+
+@media(max-width:640px){.unit-contents ol{grid-template-columns:1fr}}
+.knowledge-check{border-left:.25rem solid var(--blue)}
+.reflection-questions{margin:.6rem 0 0;padding-left:1.65rem}
+.reflection-questions li+li{margin-top:.4rem}
+.reflection-questions li::marker{color:var(--blue);font-weight:750}
+.final-check{margin-top:1rem}
+.atom-plot{position:relative;width:min(100%,16rem);aspect-ratio:1;margin:.5rem auto;background:radial-gradient(circle,#2e4c88,#111f41 75%);border-radius:50%}
+.atom-plot .ring{position:absolute;inset:var(--inset);border:1px dashed #93a9e0;border-radius:50%}
+.atom-plot i{position:absolute;width:4%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--particle)}
+.proton{--particle:#ffab8f}.neutron{--particle:#c8d5fc}.electron{--particle:#ffe075}
+.legend{display:flex;gap:.4rem 1rem;flex-wrap:wrap;margin:.4rem 0;font-size:.9rem}
+.legend span::before{content:"";display:inline-block;width:.65rem;height:.65rem;margin-right:.35rem;border-radius:50%;background:var(--particle);border:1px solid #445679}
+nav a[aria-current="page"]{color:var(--dark);text-decoration-thickness:3px;text-underline-offset:.28rem}
+[hidden]{display:none!important}
+nav{background:white;border-bottom:1px solid var(--line);padding:.65rem 0}
+nav .wrap{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
+nav a{padding:.25rem 0;font-weight:650}
+main{padding:2rem 0} section{margin-bottom:2.5rem;scroll-margin-top:1rem}
+.card,details.session{background:white;border:1px solid var(--line);border-radius:.9rem;padding:1.1rem 1.25rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start}
+summary{cursor:pointer;font-weight:750} details.session{margin-bottom:.65rem}
+summary span{color:var(--blue);display:block;font-size:.9rem}
+details p:last-child{margin-bottom:0}
+.lab{background:#e8edff;border-radius:.9rem;padding:1.25rem}
+.controls{display:flex;flex-wrap:wrap;gap:.8rem}
+label{font-weight:650} input[type=number]{display:block;width:6rem}
+input,textarea,button{font:inherit}
+textarea,input[type=number]{background:white;color:var(--ink);border:1px solid #6376a1;border-radius:.4rem;padding:.4rem .55rem}
+textarea{display:block;width:100%;min-height:5rem;margin:.3rem 0 1rem}
+button{cursor:pointer;border:1px solid var(--blue);background:var(--blue);color:white;border-radius:.45rem;padding:.45rem .8rem}
+button[aria-pressed=true]{background:var(--yellow);color:var(--dark);border-color:var(--dark)}
+.result{background:white;border-left:.25rem solid var(--blue);padding:.65rem .85rem;margin:1rem 0;border-radius:.25rem}
+.table-scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+caption{text-align:left;margin-bottom:.5rem}
+th,td{padding:.35rem;text-align:center;border-bottom:1px solid var(--line)}
+th{background:#edf1fb} td button{min-width:3rem}
+fieldset{border:1px solid var(--line);border-radius:.55rem;margin:0 0 1rem;padding:.65rem 1rem}
+fieldset label{display:block;font-weight:450;padding:.2rem 0}
+footer{border-top:1px solid var(--line);padding:1.5rem 0 2rem}
+.skip{position:absolute;left:1rem;top:-6rem;background:white;padding:.45rem}.skip:focus{top:1rem}
+@media(max-width:640px){.grid,.intro-copy,.sim-layout{grid-template-columns:1fr}}
+@media print{header,.intro-copy{background:white;color:black;padding:.5rem}.brand,.intro h1,.intro-copy a{color:black}nav,button,.skip{display:none}.grid{display:block}.card,.lab,.session{break-inside:avoid;margin-bottom:1rem}}
+.atomic-timeline{list-style:none;padding:0 0 0 1.4rem;margin:1.25rem 0;border-left:2px solid #9eafe4;display:grid;gap:.65rem}
+.atomic-timeline li{position:relative}
+.atomic-timeline li::before{content:"";position:absolute;left:-1.83rem;top:1.15rem;width:.7rem;height:.7rem;border:2px solid white;border-radius:50%;background:var(--blue)}
+.atomic-timeline button{display:grid;grid-template-columns:minmax(8rem,10rem) 1fr;gap:.05rem .85rem;text-align:left;width:100%;background:white;color:var(--ink);border-color:var(--line);padding:.65rem .85rem}
+.atomic-timeline button:hover{border-color:var(--blue);background:#e8edff}
+.timeline-date{color:var(--blue);font-weight:750}
+.timeline-person{grid-column:2}
+.milestone-dialog{width:min(44rem,calc(100% - 2rem));max-height:85vh;padding:0;border:1px solid var(--line);border-radius:.9rem;color:var(--ink)}
+.milestone-dialog::backdrop{background:#101d39aa}
+.milestone-content{padding:1.2rem}
+.milestone-content form{position:sticky;top:0;float:right;margin:0 0 .4rem .6rem}
+.milestone-content h3{font-size:1.55rem;margin:.25rem 0 .8rem}
+.model-view{margin:1rem 0;background:#edf1fb;border-radius:.65rem;padding:.65rem}
+.model-view canvas{display:block;width:100%;height:auto;max-height:15rem;object-fit:contain;background:#101d39;border-radius:.45rem}
+.model-view figcaption{margin:.45rem 0}
+.model-view-controls{display:flex;flex-wrap:wrap;gap:.45rem}
+.model-view-controls button{background:white;color:var(--blue)}
+.milestone-image{margin:1rem 0}
+.milestone-image img{display:block;width:auto;max-width:100%;max-height:29rem;margin:auto;border-radius:.5rem}
+.milestone-image figcaption{margin-top:.45rem}
+@media(max-width:540px){.atomic-timeline button{grid-template-columns:1fr}.timeline-person{grid-column:1}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contingut">Ves al contingut</a>
+<header><div class="wrap brand-bar"><img class="brand-logo" alt="SciencEduca" width="1254" height="480" src="../../../assets/scienceduca-banner.png"><p class="brand">Física i química · 3r d’ESO · L’àtom i la taula periòdica</p><a class="language-link" href="atom-taula-periodica-3eso-en.html" lang="en"><svg class="language-flag" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="flag-uk-bounds"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#flag-uk-bounds)"><path fill="#012169" d="M0 0h60v30H0z"/><path stroke="#fff" stroke-width="6" d="m0 0 60 30m0-30L0 30"/><path fill="#C8102E" d="M0 0h4.47l25.53 12.76V15zM60 0v2.24L34.47 15H30zM60 30h-4.47L30 17.24V15zM0 30v-2.24L25.53 15H30z"/><path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60"/><path stroke="#C8102E" stroke-width="6" d="M30 0v30M0 15h60"/></g></svg><span>English</span></a></div></header>
+<nav aria-label="Apartats"><div class="wrap"><a href="#inici">Inici</a><a href="#electricitat">Matèria i electricitat</a><a href="#atom">Àtom</a><a href="#models">Models</a><a href="#configuracio">Configuració electrònica</a><a href="#taula">Taula periòdica</a><a href="#repas">Autoavaluació</a></div></nav>
+<main id="contingut" class="wrap" tabindex="-1">
+<section id="inici" class="intro">
+<div class="intro-copy">
+<div class="intro-text">
+<h1>De què està formada tota la matèria que ens envolta?</h1>
+<p>Tria un objecte del teu voltant. De què creus que estaria fet si el poguessis observar a escala atòmica?</p>
+<p>Formula una hipòtesi. Després, canvia una partícula a la simulació i explica què passa.</p>
+<a href="#temari-titol">Consulta els continguts de la unitat</a>
+</div>
+<div class="intro-image"><img alt="Platja tropical amb palmeres sota un cel nocturn on es veu la Via Làctia" src="imatges/platja.jpg"></div>
+</div>
+<article class="card opening-reflection" aria-labelledby="reflexio-inicial">
+<a href="https://commons.wikimedia.org/wiki/File:Richard_Feynman_Los_Alamos_ID_badge_(cropped).jpg">
+<img class="reflection-portrait" alt="Retrat de Richard Feynman a Los Alamos, cap al 1943 (font de la fotografia)" width="96" height="96" src="imatges/feynman.jpg">
+</a>
+<div>
+<h2 id="reflexio-inicial">Reflexió inicial</h2>
+<figure>
+<blockquote cite="https://www.feynmanlectures.caltech.edu/I_01.html"><p>«Totes les coses estan formades per àtoms.»</p></blockquote>
+<figcaption>Richard Phillips Feynman · <a href="https://www.feynmanlectures.caltech.edu/I_01.html#Ch1-S2" lang="en">Matter is made of atoms</a></figcaption>
+</figure>
+</div>
+</article>
+<article class="card knowledge-check" aria-labelledby="coneixements-titol">
+<h2 id="coneixements-titol">Activació de coneixements previs</h2>
+<p>Abans de provar la simulació, respon amb les teves paraules. Anota les idees al quadern per poder-les recuperar al final de la unitat.</p>
+<ol class="reflection-questions">
+<li>Què és la matèria?</li>
+<li>De què està format tot allò que ens envolta?</li>
+<li>Podem descompondre un àtom en partícules més petites sense perdre les seves propietats?</li>
+<li>Són iguals els àtoms d’un mateix element?</li>
+<li>Els àtoms d’un mateix element presenten les mateixes propietats?</li>
+</ol>
+</article>
+<article class="card objectives" aria-labelledby="objectius-titol">
+<h2 id="objectius-titol">Objectius d’aprenentatge</h2>
+<ul role="list">
+<li><strong>Representar àtoms, ions i isòtops.</strong> Determinar quants protons, neutrons i electrons tenen a partir del nombre atòmic, el nombre màssic i la càrrega.</li>
+<li><strong>Comparar les idees i els models atòmics.</strong> Recórrer l’evolució de Demòcrit a Schrödinger i explicar com les evidències van fer canviar els models.</li>
+<li><strong>Localitzar i classificar elements a la taula periòdica.</strong> Fer servir el nombre atòmic, el grup i el període per justificar semblances i diferències.</li>
+<li><strong>Predir propietats bàsiques d’un element.</strong> Justificar la predicció a partir de la seva posició i de les propietats d’altres elements del mateix grup.</li>
+</ul>
+</article>
+<article class="card unit-contents" aria-labelledby="temari-titol">
+<h2 id="temari-titol">Continguts de la unitat</h2>
+<ol>
+<li><a href="#electricitat">Matèria i electricitat</a></li>
+<li><a href="#atom">Estructura atòmica</a></li>
+<li><a href="#models">Models atòmics i descobriment de les partícules</a></li>
+<li><a href="#configuracio">Configuració electrònica</a></li>
+<li><a href="#taula">La taula periòdica</a></li>
+<li><a href="#laboratori-aigua-titol">Laboratori: molècules en una, dues i tres gotes</a></li>
+<li><a href="#repas">Autoavaluació i reflexió</a></li>
+</ol>
+</article>
+<article class="lab atom-constructor">
+<h2>Simulació de l’àtom</h2>
+<div class="sim-layout">
+<div>
+<div data-atom-plot class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+</div>
+<div>
+<form data-constructor>
+<div class="controls">
+<label>Protons<input data-protons type="number" min="1" max="20" required value="11"></label>
+<label>Neutrons<input data-neutrons type="number" min="0" max="40" required value="12"></label>
+<label>Electrons<input data-electrons type="number" min="0" max="20" required value="11"></label>
+</div>
+<p><button>Actualitza l’àtom</button> <button data-motion-toggle type="button">Reprèn el moviment</button></p>
+</form>
+<output data-atom-result class="result" style="display:block" aria-live="polite">Sodi (Na). Z = 11, A = 23, càrrega = 0. Àtom neutre.</output>
+<p>El dibuix és un esquema simplificat i sense escala, amb un màxim de 20 electrons. Els cercles representen capes electròniques. El gir és un recurs visual: el model actual descriu regions de probabilitat per als electrons. Algunes combinacions són inestables o poc habituals.</p>
+</div>
+</div>
+</article>
+</section>
+<section id="electricitat">
+<h2>Matèria i electricitat</h2>
+<p><strong>Si la matèria conté partícules amb càrrega, per què molts cossos són neutres?</strong></p>
+<div class="grid">
+<article class="card"><h3>Quan hi ha càrrega neta?</h3>
+<p>En un cos neutre, les càrregues positives i negatives es compensen en conjunt. Si un cos neutre guanya electrons adquireix càrrega negativa. Si en perd, adquireix càrrega positiva.</p>
+<p>Un àtom neutre té tants protons com electrons. Els neutrons aporten massa i tenen càrrega zero.</p>
+<figure class="charge-figure">
+<figcaption><strong>El mateix àtom amb un electró de més o de menys</strong></figcaption>
+<div class="charge-cases">
+<div class="charge-case"><div class="charge-particles" aria-hidden="true"><i>+</i><i>+</i><i class="minus">−</i><i class="minus">−</i><i class="minus">−</i></div><span>2 p⁺ i 3 e⁻ · Negativa (−1)</span></div>
+<div class="charge-case"><div class="charge-particles" aria-hidden="true"><i>+</i><i>+</i><i class="minus">−</i><i class="minus">−</i></div><span>2 p⁺ i 2 e⁻ · Neutra (0)</span></div>
+<div class="charge-case"><div class="charge-particles" aria-hidden="true"><i>+</i><i>+</i><i class="minus">−</i></div><span>2 p⁺ i 1 e⁻ · Positiva (+1)</span></div>
+</div>
+</figure>
+</article>
+<article class="card"><h3>El descobriment de les partícules</h3>
+<ul class="particle-discovery"><li><span class="particle-symbol" aria-hidden="true">e⁻</span><div><strong>1897 · J. J. Thomson.</strong> Els experiments amb raigs catòdics van aportar evidències de l’electró.</div></li>
+<li><span class="particle-symbol positive" aria-hidden="true">p⁺</span><div><strong>1919 · Ernest Rutherford.</strong> Va publicar resultats que identificaven nuclis d’hidrogen en bombardejar nitrogen amb partícules alfa. El nucli de l’hidrogen ordinari és un protó.</div></li>
+<li><span class="particle-symbol neutral" aria-hidden="true">n⁰</span><div><strong>1932 · James Chadwick.</strong> Va identificar el neutró, una partícula sense càrrega i de massa semblant a la del protó.</div></li></ul>
+<details><summary>Ampliació sobre els quarks</summary>
+<p>Els protons i els neutrons contenen quarks. Els <strong>quarks de valència</strong> permeten explicar la seva càrrega total. En aquests dos casos hi intervenen els tipus <i>up</i> (u), amb càrrega +2/3, i <i>down</i> (d), amb càrrega −1/3.</p>
+<div class="quark-diagrams">
+<figure><div aria-hidden="true"><strong>u</strong> <strong>u</strong> <strong class="down">d</strong></div><figcaption><b>Protó · uud</b><br>+2/3 + 2/3 − 1/3 = +1</figcaption></figure>
+<figure><div aria-hidden="true"><strong>u</strong> <strong class="down">d</strong> <strong class="down">d</strong></div><figcaption><b>Neutró · udd</b><br>+2/3 − 1/3 − 1/3 = 0</figcaption></figure>
+</div>
+<p>Els gluons transmeten la interacció forta que manté units els quarks. L’electró és una partícula elemental de la família dels leptons. Els cercles de l’esquema només serveixen per comptar els quarks de valència.</p>
+</details>
+</article>
+</div>
+<div class="card topic table-scroll" role="region" aria-label="Comparació de les partícules de l’àtom" tabindex="0">
+<table style="min-width:32rem">
+<caption><strong>Les partícules de l’àtom</strong> · Valors arrodonits</caption>
+<thead><tr><th scope="col">Partícula</th><th scope="col">Massa (kg)</th><th scope="col">Massa (<span class="mass-unit"><button type="button" aria-describedby="unitat-u">u</button><span id="unitat-u" role="tooltip">Unitat de massa atòmica. Una u és 1/12 de la massa d’un àtom de carboni-12 i equival aproximadament a 1,66 × 10⁻²⁷ kg.</span></span>)</th><th scope="col">Càrrega (C)</th><th scope="col">Càrrega relativa (e)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Electró (e⁻)</th><td>9,11 × 10⁻³¹</td><td>0,00055</td><td>−1,60 × 10⁻¹⁹</td><td>−1</td></tr>
+<tr><th scope="row">Protó (p⁺)</th><td>1,67 × 10⁻²⁷</td><td>≈ 1</td><td>+1,60 × 10⁻¹⁹</td><td>+1</td></tr>
+<tr><th scope="row">Neutró (n⁰)</th><td>1,67 × 10⁻²⁷</td><td>≈ 1</td><td>0</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+<article class="card topic"><h3>Calcula la massa i la càrrega d’un àtom</h3>
+<p><strong>Què és la càrrega relativa?</strong> És la càrrega expressada prenent com a unitat la càrrega elemental <i>e</i> (aproximadament 1,60 × 10⁻¹⁹ C). Cada protó suma +1, cada electró resta 1 i cada neutró aporta 0. Per això, la càrrega relativa d’un àtom o ió s’obté restant el nombre d’electrons al de protons. Per exemple, 3 protons i 2 electrons donen +1, és a dir, una càrrega de +1<i>e</i>.</p>
+<p>Un àtom té 4 protons, 4 neutrons i 4 electrons.</p>
+<ol><li>Estima’n la massa en kg sumant la massa de les partícules. Quina massa obtens si treus els quatre electrons?</li><li>Quina massa aproximada té en u? Quina és la seva càrrega relativa inicial?</li><li>Quina càrrega tindria si guanyés un electró? I si, partint de l’àtom neutre, en perdés dos?</li></ol>
+<details><summary>Comprova els càlculs</summary><p>Amb electrons, la suma dona 1,3363644 × 10⁻²⁶ kg abans d’arrodonir. Sense electrons, dona 1,336 × 10⁻²⁶ kg. Totes dues sumes s’arrodoneixen a 1,34 × 10⁻²⁶ kg amb tres xifres significatives. La massa és aproximadament 8 u. La càrrega és 0 inicialment, −1 si guanya un electró i +2 si en perd dos.</p><p>Per a aquesta estimació s’han sumat les masses de les partícules lliures. La massa real també depèn de l’energia d’enllaç.</p></details>
+</article>
+<article class="lab topic mass-calculator" aria-labelledby="calculadora-massa-titol">
+<h3 id="calculadora-massa-titol">Calculadora de massa atòmica</h3>
+<div class="sim-layout">
+<div>
+<div id="mass-plot" class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+</div>
+<div>
+<p>Canvia les partícules i observa com es modifica el dibuix i la massa total.</p>
+<form id="atom-mass-form" aria-labelledby="calculadora-massa-titol">
+<div class="controls">
+<label>Protons<input name="protons" type="number" min="1" max="20" value="4" required></label>
+<label>Neutrons<input name="neutrons" type="number" min="0" max="40" value="4" required></label>
+<label>Electrons<input name="electrons" type="number" min="0" max="20" value="4" required></label>
+</div>
+</form>
+<output id="atom-mass-result" class="result" style="display:block" aria-live="polite"></output>
+<p>La massa estimada és la suma de les masses de les partícules lliures. El dibuix és un esquema per capes sense escala.</p>
+</div>
+</div>
+</article>
+<article class="lab topic" aria-labelledby="laboratori-aigua-titol">
+<h3 id="laboratori-aigua-titol">Laboratori · Quantes molècules caben en unes gotes?</h3>
+<div class="grid lab-materials">
+<p><strong>Material.</strong> Balança, recipient petit, comptagotes i una mostra d’aigua triada per l’equip, com ara aigua destil·lada, de l’aixeta o embotellada. Amb aigua d’aixeta o embotellada, la massa mesurada s’aproxima a la de l’aigua perquè hi ha pocs soluts. Si la mostra és una dissolució amb una proporció apreciable de solut, cal multiplicar la massa mesurada per la fracció en massa d’aigua abans de calcular el nombre de molècules.</p>
+<figure><img alt="Un comptagotes deixa caure una gota en un recipient sobre una balança digital, amb un vas d’aigua al costat" src="imatges/laboratori.jpg"><figcaption>Muntatge per mesurar la massa de les gotes.</figcaption></figure>
+</div>
+<div class="card"><h4>Estima les molècules en 1, 2 i 3 gotes</h4>
+<details open><summary>Primer, calcula la massa d’una molècula d’aigua</summary>
+<ol>
+<li>Una molècula d’H₂O té dos àtoms d’hidrogen i un d’oxigen. Treballa amb hidrogen-1 (Z = 1, A = 1) i oxigen-16 (Z = 8, A = 16). Considera els àtoms neutres per fer el recompte.</li>
+<li>Calcula els protons, neutrons i electrons d’un àtom de cada element. Multiplica per dos el recompte de l’hidrogen i suma-hi el de l’oxigen.</li>
+<li>Multiplica el total de cada partícula per la seva massa en kg i suma els tres termes. Pots comprovar el càlcul amb la <a href="#calculadora-massa-titol">calculadora de massa</a> calculant separadament la massa de cada tipus d’àtom i sumant 2 · m(H) + m(O).</li>
+<li>Passa el resultat a grams (1 kg = 1.000 g) i introdueix-lo a sota. És una estimació basada en les masses de les partícules lliures.</li>
+</ol>
+</details>
+<p><label for="water-molecule-mass">Massa d’una molècula d’aigua (g)</label><br>
+<input id="water-molecule-mass" class="drop-mass" style="width:min(100%,14rem)" inputmode="decimal" placeholder="Coeficient e exponent" aria-describedby="water-mass-hint">
+<br><small id="water-mass-hint">En notació científica, escriu per exemple 4,25e-23 per a 4,25 × 10⁻²³.</small></p>
+<ol>
+<li>Anota la mostra i la resolució de la balança. Tara el recipient sec i pesa-hi 20 gotes. Mantén el comptagotes vertical.</li>
+<li>Fes dues mesures més, cadascuna amb el recipient buit i sec. Si la massa queda massa a prop de la resolució de la balança, augmenta el nombre de gotes i fes servir la mateixa quantitat en totes tres mesures.</li>
+<li>Divideix la massa mitjana pel nombre de gotes pesades per estimar la massa d’una gota. Multiplica-la per 1, 2 i 3. Per a cada cas, divideix la massa d’aigua estimada en grams per la massa en grams d’una molècula que has calculat. Si has d’aplicar la fracció en massa d’aigua, fes-ho abans de dividir.</li>
+</ol>
+<figure class="drop-figure" aria-label="Si la massa mitjana d’una gota és m, dues gotes tenen massa 2m i tres gotes tenen massa 3m">
+<div class="drop-group"><span aria-hidden="true">💧</span>1 gota · <i>m</i></div>
+<div class="drop-group"><span aria-hidden="true">💧💧</span>2 gotes · 2<i>m</i></div>
+<div class="drop-group"><span aria-hidden="true">💧💧💧</span>3 gotes · 3<i>m</i></div>
+</figure>
+</div>
+<div class="card topic table-scroll" role="region" aria-label="Registre de les estimacions" tabindex="0">
+<table class="drop-results"><caption>Introdueix la massa estimada d’aigua en grams a cada fila. Pots fer servir coma o punt decimal.</caption>
+<thead><tr><th scope="col">Gotes</th><th scope="col">Massa estimada d’aigua (g)</th><th scope="col">Nombre estimat de molècules</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td><input class="drop-mass" type="text" inputmode="decimal" aria-label="Massa en grams de la gota"></td><td><output aria-live="polite" aria-label="Molècules en la gota">—</output></td></tr>
+<tr><th scope="row">2</th><td><input class="drop-mass" type="text" inputmode="decimal" aria-label="Massa en grams de dues gotes"></td><td><output aria-live="polite" aria-label="Molècules en dues gotes">—</output></td></tr>
+<tr><th scope="row">3</th><td><input class="drop-mass" type="text" inputmode="decimal" aria-label="Massa en grams de tres gotes"></td><td><output aria-live="polite" aria-label="Molècules en tres gotes">—</output></td></tr>
+</tbody></table>
+</div>
+<p>Compara els resultats d’1, 2 i 3 gotes i explica la relació que hi observes. Indica una font d’incertesa i com la podries reduir.</p>
+<p><a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185">Dades de l’aigua al NIST Chemistry WebBook</a></p>
+</article>
+</section>
+<section id="atom">
+<h2>Estructura atòmica</h2>
+<div class="grid">
+<article class="card">
+<p>El nucli conté protons amb càrrega positiva i, habitualment, neutrons sense càrrega. Els electrons tenen càrrega negativa i es troben a la regió que envolta el nucli.</p>
+<ul><li><strong>Nombre atòmic (Z)</strong> = protons. Determina l’element.</li><li><strong>Nombre màssic (A)</strong> = protons + neutrons.</li><li><strong>Càrrega en unitats elementals</strong> = protons − electrons.</li></ul>
+<p>Dos <strong>isòtops</strong> tenen el mateix Z i un A diferent. Un <strong>ió monoatòmic</strong> té càrrega perquè el nombre d’electrons difereix del nombre de protons.</p>
+<details><summary>Exemple resolt del sodi-23</summary><p>Amb Z = 11 i A = 23, té 11 protons i 23 − 11 = 12 neutrons. Si és neutre, té 11 electrons. El catió Na⁺ té 10 electrons.</p></details>
+<details id="masses"><summary>Masses atòmiques dels elements</summary><p>La massa atòmica mitjana d’una mostra es calcula multiplicant la massa de cada isòtop per la seva abundància en forma de fracció i sumant els resultats. A compta partícules. La massa d’un isòtop s’expressa en unitats de massa atòmica (u).</p></details>
+</article>
+<article class="lab atom-constructor">
+<h3>Comprova la teva explicació</h3>
+<p>Parteix del sodi-23. Canvia un neutró o un electró cada vegada i explica què passa amb l’element, el nombre màssic i la càrrega.</p>
+<div>
+<div>
+<div data-atom-plot class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+</div>
+<div>
+<form data-constructor>
+<div class="controls">
+<label>Protons<input data-protons type="number" min="1" max="20" required value="11"></label>
+<label>Neutrons<input data-neutrons type="number" min="0" max="40" required value="12"></label>
+<label>Electrons<input data-electrons type="number" min="0" max="20" required value="11"></label>
+</div>
+<p><button>Actualitza l’àtom</button> <button data-motion-toggle type="button">Reprèn el moviment</button></p>
+</form>
+<output data-atom-result class="result" style="display:block" aria-live="polite">Sodi (Na). Z = 11, A = 23, càrrega = 0. Àtom neutre.</output>
+<p>El dibuix és un esquema simplificat i sense escala, amb un màxim de 20 electrons. Els cercles representen capes electròniques. El gir és un recurs visual: el model actual descriu regions de probabilitat per als electrons. Algunes combinacions són inestables o poc habituals.</p>
+</div>
+</div>
+</article>
+</div>
+
+<details class="card topic" id="elements"><summary>Els elements químics</summary><p>Tots els àtoms d’un element tenen el mateix nombre de protons. Per exemple, qualsevol àtom amb sis protons és carboni, encara que en variïn els neutrons o els electrons.</p></details>
+<details class="card topic" id="alteracions"><summary>Alterant els àtoms</summary><p>Amb els mateixos protons, un canvi de neutrons dona un altre isòtop i un canvi d’electrons modifica la càrrega. Canviar el nombre de protons implica canviar d’element.</p></details>
+</section>
+<section id="models">
+<h2>Models atòmics de Demòcrit a l’actualitat</h2>
+<p>Obre una fita per veure què es va proposar o descobrir i quines evidències ho expliquen.</p>
+<ol class="atomic-timeline" role="list">
+<li><button type="button" data-milestone="model-democrit" aria-haspopup="dialog"><span class="timeline-date">Segle V aC</span><strong>La idea de l’àtom</strong><span class="timeline-person">Demòcrit</span></button></li>
+<li><button type="button" data-milestone="model-dalton" aria-haspopup="dialog"><span class="timeline-date">Inicis del segle XIX</span><strong>Teoria atòmica de la matèria</strong><span class="timeline-person">John Dalton</span></button></li>
+<li><button type="button" data-milestone="model-electro" aria-haspopup="dialog"><span class="timeline-date">1897</span><strong>Descobriment de l’electró</strong><span class="timeline-person">J. J. Thomson</span></button></li>
+<li><button type="button" data-milestone="model-thomson" aria-haspopup="dialog"><span class="timeline-date">1904</span><strong>Model amb electrons incrustats</strong><span class="timeline-person">J. J. Thomson</span></button></li>
+<li><button type="button" data-milestone="model-rutherford" aria-haspopup="dialog"><span class="timeline-date">1909–1911</span><strong>La làmina d’or i el nucli</strong><span class="timeline-person">Geiger, Marsden i Rutherford</span></button></li>
+<li><button type="button" data-milestone="model-bohr" aria-haspopup="dialog"><span class="timeline-date">1913</span><strong>Nivells d’energia</strong><span class="timeline-person">Niels Bohr</span></button></li>
+<li><button type="button" data-milestone="model-proto" aria-haspopup="dialog"><span class="timeline-date">1919–1920</span><strong>Identificació del protó</strong><span class="timeline-person">Ernest Rutherford</span></button></li>
+<li><button type="button" data-milestone="model-schrodinger" aria-haspopup="dialog"><span class="timeline-date">1926</span><strong>Model quàntic</strong><span class="timeline-person">Erwin Schrödinger</span></button></li>
+<li><button type="button" data-milestone="model-neutro" aria-haspopup="dialog"><span class="timeline-date">1932</span><strong>Descobriment del neutró</strong><span class="timeline-person">James Chadwick</span></button></li>
+<li><button type="button" data-milestone="model-quarks" aria-haspopup="dialog"><span class="timeline-date">1964–finals dels anys seixanta</span><strong>Els quarks</strong><span class="timeline-person">Gell-Mann, Zweig i experiments de dispersió</span></button></li>
+<li><button type="button" data-milestone="model-actual" aria-haspopup="dialog"><span class="timeline-date">Actualitat</span><strong>Com descrivim l’àtom avui?</strong><span class="timeline-person">Model quàntic i model estàndard</span></button></li>
+</ol>
+<dialog id="model-democrit" class="milestone-dialog" aria-labelledby="model-democrit-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">Segle V aC · Demòcrit</p><h3 id="model-democrit-title">La idea de l’àtom</h3>
+<figure class="model-view" data-model-view="democrit">
+<canvas width="600" height="300" role="img" aria-label="Una partícula compacta i facetada.">Una partícula compacta i facetada.</canvas>
+<figcaption>Forma imaginada per il·lustrar la idea filosòfica d’una partícula indivisible.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Demòcrit va proposar que dividir la matèria havia de portar a partícules indivisibles, els àtoms. La proposta era filosòfica i, en aquella època, encara no es basava en mesures experimentals.</p></div></dialog>
+<dialog id="model-dalton" class="milestone-dialog" aria-labelledby="model-dalton-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">Inicis del segle XIX · John Dalton</p><h3 id="model-dalton-title">Teoria atòmica de la matèria</h3>
+<figure class="model-view" data-model-view="dalton">
+<canvas width="600" height="300" role="img" aria-label="Tres esferes compactes de colors diferents.">Tres esferes compactes de colors diferents.</canvas>
+<figcaption>Cada color representa un element diferent. Les esferes representen àtoms sense estructura interna en aquest model.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Dalton va proposar que cada element té un tipus d’àtom propi i que els àtoms dels diferents elements formen compostos en proporcions de nombres enters senzills. La teoria explicava les proporcions de massa que es mesuraven en les reaccions i els compostos.</p></div></dialog>
+<dialog id="model-electro" class="milestone-dialog" aria-labelledby="model-electro-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1897 · J. J. Thomson</p><h3 id="model-electro-title">Descobriment de l’electró</h3>
+<figure class="model-view" data-model-view="electro">
+<canvas width="600" height="300" role="img" aria-label="Tres partícules al llarg d’un feix que es corba.">Tres partícules al llarg d’un feix que es corba.</canvas>
+<figcaption>Esquema d’un feix d’electrons desviat per un camp.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Thomson va observar que els raigs catòdics es desviaven en camps elèctrics i magnètics com ho faria un feix de partícules amb càrrega negativa. Eren electrons, partícules més petites que l’àtom.</p></div></dialog>
+<dialog id="model-thomson" class="milestone-dialog" aria-labelledby="model-thomson-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1904 · J. J. Thomson</p><h3 id="model-thomson-title">Model amb electrons incrustats</h3>
+<figure class="model-view" data-model-view="thomson">
+<canvas width="600" height="300" role="img" aria-label="Electrons blaus incrustats en una esfera translúcida.">Electrons blaus incrustats en una esfera translúcida.</canvas>
+<figcaption>La càrrega positiva es representa repartida per tot el volum taronja. Els punts blaus són electrons.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Per explicar que un àtom amb electrons pogués ser neutre, Thomson va proposar que la càrrega positiva ocupava tot el volum de l’àtom i que els electrons hi estaven incrustats. Les càrregues positives i negatives es compensaven.</p></div></dialog>
+<dialog id="model-rutherford" class="milestone-dialog" aria-labelledby="model-rutherford-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1909–1911 · Geiger, Marsden i Rutherford</p><h3 id="model-rutherford-title">La làmina d’or i el nucli</h3>
+<figure class="model-view" data-model-view="rutherford">
+<canvas width="600" height="300" role="img" aria-label="Un nucli petit i positiu rodejat d’electrons molt més allunyats.">Un nucli petit i positiu rodejat d’electrons molt més allunyats.</canvas>
+<figcaption>El model nuclear separa el nucli positiu de la regió ocupada pels electrons. Les distàncies són esquemàtiques.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><h4>Com era el muntatge?</h4><p>Hans Geiger i Ernest Marsden, sota la direcció d’Ernest Rutherford, van dirigir un feix de partícules alfa, que tenen càrrega positiva, cap a una làmina d’or molt fina. La pantalla fluorescent produïa petits centelleigs als punts on arribaven les partícules.</p><figure class="milestone-image"><img src="imatges/rutherford.jpg" alt="Un feix de partícules alfa incideix sobre una làmina d’or. Algunes continuen endavant i d’altres es desvien cap a diferents punts de la pantalla fluorescent."><figcaption>Muntatge de la làmina d’or. Les línies vermelles il·lustren possibles trajectòries.</figcaption></figure><h4>Què es va observar?</h4><p>La majoria de les partícules travessaven la làmina amb poca desviació o sense. Una petita fracció es desviava molt i algunes tornaven cap enrere.</p><h4>Què en va deduir Rutherford?</h4><p>Amb la càrrega positiva repartida, com proposava Thomson, s’esperaven desviacions generalment petites. El 1911 Rutherford va proposar que la càrrega positiva i gairebé tota la massa es concentraven en un nucli molt petit. Les partícules que hi passaven molt a prop experimentaven una repulsió intensa. La majoria passaven lluny del nucli i seguien gairebé rectes.</p></div></dialog>
+<dialog id="model-bohr" class="milestone-dialog" aria-labelledby="model-bohr-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1913 · Niels Bohr</p><h3 id="model-bohr-title">Nivells d’energia</h3>
+<figure class="model-view" data-model-view="bohr">
+<canvas width="600" height="300" role="img" aria-label="Dos cercles concèntrics amb electrons al voltant del nucli.">Dos cercles concèntrics amb electrons al voltant del nucli.</canvas>
+<figcaption>Cada cercle representa una òrbita permesa en el model de Bohr. Les mides i la distribució són esquemàtiques.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Bohr va conservar el nucli de Rutherford i va proposar que l’electró només podia ocupar certes òrbites amb energies definides. En baixar de nivell, l’àtom emet llum amb una energia igual a la diferència entre els dos nivells. Això explicava les línies de l’espectre de l’hidrogen.</p><figure class="milestone-image"><img src="imatges/bohr.jpg" alt="Esquema amb un nucli de protons i neutrons i sis electrons repartits en dues capes."><figcaption>Representació escolar per capes amb sis electrons. El neutró es va descobrir el 1932, després de la proposta de Bohr.</figcaption></figure><p>En el model quàntic actual, les capes continuen relacionades amb l’energia, i la posició de l’electró es descriu mitjançant probabilitats.</p></div></dialog>
+<dialog id="model-proto" class="milestone-dialog" aria-labelledby="model-proto-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1919–1920 · Ernest Rutherford</p><h3 id="model-proto-title">Identificació del protó</h3>
+<figure class="model-view" data-model-view="proto">
+<canvas width="600" height="300" role="img" aria-label="Una esfera taronja amb un signe positiu.">Una esfera taronja amb un signe positiu.</canvas>
+<figcaption>Símbol d’un protó, el nucli de l’hidrogen-1.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>En bombardejar nitrogen amb partícules alfa, Rutherford va observar que s’emetien nuclis d’hidrogen. Va publicar els resultats el 1919. El 1920 va proposar el nom <em>protó</em> per al nucli de l’hidrogen ordinari. El nombre de protons identifica l’element.</p></div></dialog>
+<dialog id="model-schrodinger" class="milestone-dialog" aria-labelledby="model-schrodinger-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1926 · Erwin Schrödinger</p><h3 id="model-schrodinger-title">Model quàntic</h3>
+<figure class="model-view" data-model-view="schrodinger">
+<canvas width="600" height="300" role="img" aria-label="Un núvol esfèric de punts que es concentra cap al centre.">Un núvol esfèric de punts que es concentra cap al centre.</canvas>
+<figcaption>Exemple d’un orbital 1s. Cada punt és una mostra de la distribució de probabilitat.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Schrödinger va formular una equació que descriu l’electró mitjançant una funció d’ona. La interpretació probabilística de Max Born permet relacionar aquesta funció amb les regions on és més probable trobar l’electró. Aquestes distribucions s’associen als orbitals.</p></div></dialog>
+<dialog id="model-neutro" class="milestone-dialog" aria-labelledby="model-neutro-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1932 · James Chadwick</p><h3 id="model-neutro-title">Descobriment del neutró</h3>
+<figure class="model-view" data-model-view="neutro">
+<canvas width="600" height="300" role="img" aria-label="Una esfera de color gris blavós amb un zero.">Una esfera de color gris blavós amb un zero.</canvas>
+<figcaption>Símbol d’un neutró, amb càrrega elèctrica zero.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>En bombardejar beril·li amb partícules alfa, es produïa una radiació capaç d’expulsar protons de la parafina. Chadwick va analitzar l’energia dels protons expulsats i va concloure que la radiació contenia partícules neutres de massa semblant a la del protó. Variar el nombre de neutrons dona lloc als diferents isòtops d’un mateix element.</p></div></dialog>
+<dialog id="model-quarks" class="milestone-dialog" aria-labelledby="model-quarks-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">1964–finals dels anys seixanta · Gell-Mann, Zweig i experiments de dispersió</p><h3 id="model-quarks-title">Els quarks</h3>
+<figure class="model-view" data-model-view="quarks">
+<canvas width="600" height="300" role="img" aria-label="Dos grups de tres esferes amb les lletres u i d.">Dos grups de tres esferes amb les lletres u i d.</canvas>
+<figcaption>Quarks de valència: uud al protó (esquerra) i udd al neutró (dreta).</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>El 1964 Murray Gell-Mann i George Zweig van proposar, independentment, que partícules com els protons i els neutrons contenen quarks. Més endavant, experiments de dispersió d’electrons a SLAC van trobar evidència de components interns al protó.</p><p>El protó té dos quarks de valència <i>up</i> i un <i>down</i>. El neutró en té un <i>up</i> i dos <i>down</i>. L’electró és una partícula elemental.</p></div></dialog>
+<dialog id="model-actual" class="milestone-dialog" aria-labelledby="model-actual-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Tanca</button></form><p class="timeline-date">Actualitat · Model quàntic i model estàndard</p><h3 id="model-actual-title">Com descrivim l’àtom avui?</h3>
+<figure class="model-view" data-model-view="actual">
+<canvas width="600" height="300" role="img" aria-label="Un nucli de partícules dins d’un núvol electrònic.">Un nucli de partícules dins d’un núvol electrònic.</canvas>
+<figcaption>Esquema actual amb nucli i núvol electrònic, fora d’escala. La densitat dels punts indica probabilitat.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Controls de gir de la representació">
+<button type="button" data-turn="-1">Gira a l’esquerra</button>
+<button type="button" data-turn="1">Gira a la dreta</button>
+</div>
+</figure><p>Per descriure l’àtom, usem un nucli amb protons i, habitualment, neutrons, envoltat per electrons en estats quàntics. Els orbitals permeten representar la distribució de probabilitat de cada electró.</p><p>A una escala més petita, el model estàndard descriu els electrons i els quarks com a partícules elementals i els gluons com a mediadors de la interacció forta. Cada model respon preguntes a una escala diferent.</p></div></dialog>
+<div class="card topic"><h3>Compara les fites</h3><p>Tria dos models consecutius i explica què es manté, què canvia i quina observació va motivar el canvi. Per a la làmina d’or, separa el que Geiger i Marsden van observar del que Rutherford en va deduir.</p></div>
+<p><a href="https://openstax.org/books/chemistry-2e/pages/2-2-evolution-of-atomic-theory">Evolució de la teoria atòmica · OpenStax</a> · <a href="https://home.cern/science/physics/standard-model/">El model estàndard · CERN</a></p>
+</section>
+<section id="configuracio">
+<h2>Configuració electrònica</h2>
+<p>La configuració electrònica indica com es distribueixen els electrons. En el <strong>model de Bohr</strong> dibuixem les capes com cercles al voltant del nucli. Cada capa correspon a un nivell d’energia. Farem servir aquest esquema per representar els primers 20 elements.</p>
+<div class="grid">
+<article class="card">
+<h3>Com distribuïm els electrons?</h3>
+<ol>
+<li>Busca el nombre atòmic <i>Z</i>. En un àtom neutre, el nombre d’electrons és igual a <i>Z</i>.</li>
+<li>Col·loca fins a 2 electrons a la primera capa i fins a 8 a la segona.</li>
+<li>Per als primers 20 elements, col·loca fins a 8 electrons a la tercera capa i, si encara en queden, posa’ls a la quarta.</li>
+</ol>
+<table>
+<caption>Distribució per capes fins al calci</caption>
+<thead><tr><th scope="col">Capa</th><th scope="col">Electrons que hi podem trobar en aquests exemples</th></tr></thead>
+<tbody><tr><th scope="row">1a</th><td>Fins a 2</td></tr><tr><th scope="row">2a</th><td>Fins a 8</td></tr><tr><th scope="row">3a</th><td>Fins a 8</td></tr><tr><th scope="row">4a</th><td>Fins a 2</td></tr></tbody>
+</table>
+<details class="topic"><summary>Per què comencem la quarta capa abans de completar la tercera?</summary><p>Els electrons ocupen primer els estats de menys energia. En el potassi i el calci, el subnivell 4s de la quarta capa s’ocupa abans que el 3d de la tercera. Per això la tercera capa queda amb 8 electrons en aquests casos, tot i que en pot allotjar fins a 18. La capacitat total de la quarta capa és de 32 electrons.</p><p>Els cercles ens ajuden a comptar electrons per capes. El model quàntic descriu els electrons mitjançant orbitals i probabilitats.</p><p><a href="https://openstax.org/books/chemistry/pages/6-4-electronic-structure-of-atoms-electron-configurations">Configuració electrònica · OpenStax</a></p></details>
+</article>
+<article class="lab">
+<h3>Explora el model de Bohr</h3>
+<label for="shell-element">Tria un àtom neutre</label>
+<select id="shell-element" style="font:inherit;display:block;max-width:100%;padding:.4rem .5rem"></select>
+<div id="shell-plot" class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+<output class="result" id="shell-result" style="display:block" aria-live="polite"></output>
+</article>
+</div>
+<article class="card topic">
+<h3>Del recompte a la taula periòdica</h3>
+<p>El sodi té 11 electrons. La seva distribució és <strong>2, 8, 1</strong>. Té tres capes ocupades i un electró a la capa més externa, que anomenem <strong>electró de valència</strong>.</p>
+<p>Prediu la distribució del clor (17 electrons) i del potassi (19 electrons). Quantes capes ocupades tenen? Quants electrons tenen a la capa externa? Comprova-ho amb el model.</p>
+<details><summary>Comprova la resposta</summary><p>El clor té distribució 2, 8, 7. Ocupa tres capes i té set electrons de valència. El potassi té distribució 2, 8, 8, 1. Ocupa quatre capes i té un electró de valència.</p></details>
+<p><a href="#taula">Continua amb la taula periòdica</a></p>
+</article>
+<article class="card topic"><h3>Activitat · Tres àtoms, tres distribucions</h3>
+<p>Dibuixa les capes de tres àtoms neutres amb <strong>9, 12 i 25 electrons</strong>. Reparteix els electrons i escriu quants n’hi ha a cada capa, de la més interna a la més externa. Comprova que la suma coincideix amb el nombre inicial.</p>
+<p><strong>Pista per als 25 electrons.</strong> Parteix de la distribució del calci (2, 8, 8, 2). Els cinc electrons següents ocupen el subnivell 3d, que pertany a la tercera capa. Mantén dos electrons a la quarta capa.</p>
+<details><summary>Comprova les tres distribucions</summary><ul><li>Fluor (9): 2, 7.</li><li>Magnesi (12): 2, 8, 2.</li><li>Manganès (25): 2, 8, 13, 2.</li></ul></details>
+</article>
+</section>
+<section id="taula">
+<h2>Taula periòdica</h2>
+<p id="ordenacio">Els elements s’ordenen per nombre atòmic creixent. Les files són <strong>períodes</strong> i les columnes són <strong>grups</strong>. Sovint, els elements d’un grup presenten propietats químiques semblants.</p>
+<div class="card">
+<div class="table-scroll" tabindex="0" role="region" aria-label="Fragment de la taula periòdica">
+<table>
+<caption>Fragment dels grups 1, 2, 17 i 18. Selecciona un símbol per consultar-ne les dades.</caption>
+<thead><tr><th scope="col">Període</th><th scope="col">Grup 1</th><th scope="col">Grup 2</th><th scope="col">Grup 17</th><th scope="col">Grup 18</th></tr></thead>
+<tbody>
+<tr><th scope="row">2</th><td><button data-element="Li" aria-pressed="false">Li</button></td><td><button data-element="Be" aria-pressed="false">Be</button></td><td><button data-element="F" aria-pressed="false">F</button></td><td><button data-element="Ne" aria-pressed="false">Ne</button></td></tr>
+<tr><th scope="row">3</th><td><button data-element="Na" aria-pressed="false">Na</button></td><td><button data-element="Mg" aria-pressed="false">Mg</button></td><td><button data-element="Cl" aria-pressed="false">Cl</button></td><td><button data-element="Ar" aria-pressed="false">Ar</button></td></tr>
+<tr><th scope="row">4</th><td><button data-element="K" aria-pressed="false">K</button></td><td><button data-element="Ca" aria-pressed="false">Ca</button></td><td><button data-element="Br" aria-pressed="false">Br</button></td><td><button data-element="Kr" aria-pressed="false">Kr</button></td></tr>
+</tbody>
+</table>
+</div>
+<p id="element-result" class="result" aria-live="polite">Selecciona un element de la taula.</p>
+<details><summary>Comprovació de la predicció sobre l’estronci</summary><p>L’ió habitual és Sr²⁺. L’estronci és un metall alcalinoterri del grup 2, com el magnesi i el calci. En els seus compostos és habitual trobar-lo amb càrrega +2.</p></details>
+</div>
+<details class="card topic" id="metalls"><summary>Metalls i no-metalls</summary><p>En general, els metalls condueixen bé la calor i l’electricitat i molts formen cations. Els no-metalls tenen propietats diverses. Per exemple, els halògens solen formar anions de càrrega −1. Hi ha excepcions, com el grafit, que és una forma del carboni que condueix l’electricitat.</p></details>
+<details class="card topic" id="abundancia"><summary>Abundància dels elements</summary><p>L’abundància depèn del lloc o de la mostra que estudiem. A escala còsmica predominen l’hidrogen i l’heli. Al nostre entorn, la composició varia segons el material: a l’aigua pura hi ha hidrogen i oxigen, mentre que la sal de cuina està formada principalment per sodi i clor en forma d’ions.</p><p><a href="https://science.nasa.gov/universe/glossary/">Glossari de l’Univers de la NASA</a></p></details>
+</section>
+<section id="repas">
+<h2>Autoavaluació i reflexió</h2>
+<div class="grid">
+<form id="quiz" class="card">
+<fieldset><legend>1. Quants neutrons té una espècie amb Z = 17 i A = 35?</legend><label><input type="radio" name="neutrons" value="17" required> 17</label><label><input type="radio" name="neutrons" value="18"> 18</label><label><input type="radio" name="neutrons" value="35"> 35</label></fieldset>
+<fieldset><legend>2. Quina observació dona suport a l’existència d’un nucli petit i positiu?</legend><label><input type="radio" name="model" value="desviacio" required> Algunes partícules alfa es desvien molt.</label><label><input type="radio" name="model" value="igual"> Totes les partícules alfa es desvien igual.</label></fieldset>
+<fieldset><legend>3. Per què esperem que Na i K formin ions de càrrega semblant?</legend><label><input type="radio" name="grup" value="grup" required> Pertanyen al mateix grup.</label><label><input type="radio" name="grup" value="periode"> Pertanyen al mateix període.</label></fieldset>
+<button>Corregeix les respostes</button>
+<div id="quiz-result" aria-live="polite"></div>
+</form>
+<div class="card"><h3>Què ha canviat en la teva explicació?</h3><label for="reflection">Abans pensava… Ara diria… La dada que ho justifica és…</label><textarea id="reflection" rows="5"></textarea><p>Pots respondre oralment, amb un esquema etiquetat o per escrit. Si escrius aquí, copia la resposta al quadern abans de tancar la pàgina.</p></div>
+</div>
+<article class="card knowledge-check final-check" aria-labelledby="tancament-titol">
+<h3 id="tancament-titol">Què has après? Torna a les preguntes inicials</h3>
+<p>Respon de nou les cinc preguntes i compara les respostes amb les que vas anotar al començament. Tria una resposta que hagis canviat o matisat i justifica-la amb un exemple o una evidència de la unitat.</p>
+<ol class="reflection-questions">
+<li>Què és la matèria?</li>
+<li>De què està format tot allò que ens envolta?</li>
+<li>Podem descompondre un àtom en partícules més petites sense perdre les seves propietats?</li>
+<li>Són iguals els àtoms d’un mateix element?</li>
+<li>Els àtoms d’un mateix element presenten les mateixes propietats?</li>
+</ol>
+</article>
+</section>
+</main>
+<footer><div class="wrap"><a href="https://iupac.org/what-we-do/periodic-table-of-elements/">Taula periòdica de la IUPAC</a></div></footer>
+<script>
+'use strict';
+const atoms = ['H hidrogen','He heli','Li liti','Be beril·li','B bor','C carboni','N nitrogen','O oxigen','F fluor','Ne neó','Na sodi','Mg magnesi','Al alumini','Si silici','P fòsfor','S sofre','Cl clor','Ar argó','K potassi','Ca calci'];
+const pages = [...document.querySelectorAll('main > section')];
+const pageLinks = [...document.querySelectorAll('nav a')];
+function showPage(focusHeading = false) {
+  const target = document.getElementById(location.hash.slice(1));
+  const selected = target?.closest('main > section') ?? pages[0];
+  const topic = target && target !== selected && selected.contains(target) ? target : null;
+  for (const page of pages) page.hidden = page !== selected;
+  for (const link of pageLinks) {
+    if (link.hash === '#' + selected.id) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  }
+  if (topic) {
+    if (topic.tagName === 'DETAILS') topic.open = true;
+    topic.scrollIntoView({block: 'start'});
+  }
+  if (focusHeading) {
+    if (!topic) window.scrollTo(0, 0);
+    const heading = topic?.querySelector('summary') ?? topic ?? selected.querySelector('h1, h2');
+    heading.tabIndex = -1;
+    heading.focus({preventScroll: true});
+  }
+}
+window.addEventListener('hashchange', () => {
+  if (location.hash !== '#contingut') showPage(true);
+});
+showPage();
+const languageLink = document.querySelector('.language-link');
+function syncLanguageLink() {
+  languageLink.hash = location.hash === '#contingut' ? '' : location.hash;
+}
+window.addEventListener('hashchange', syncLanguageLink);
+syncLanguageLink();
+
+function electronShellCounts(electrons) {
+  let remaining = electrons;
+  return [2, 8, 8, 2].map(capacity => {
+    const count = Math.min(capacity, remaining);
+    remaining -= count;
+    return count;
+  });
+}
+function drawAtom(target, protons, neutrons, electrons) {
+  const visual = document.createDocumentFragment();
+  for (const inset of [33, 23, 13, 3]) {
+    const ring = document.createElement('span');
+    ring.className = 'ring';
+    ring.style.setProperty('--inset', inset + '%');
+    visual.append(ring);
+  }
+  function addParticle(className, radius, angle, layer = visual) {
+    const particle = document.createElement('i');
+    particle.className = className;
+    particle.style.left = (50 + radius * Math.cos(angle)) + '%';
+    particle.style.top = (50 + radius * Math.sin(angle)) + '%';
+    layer.append(particle);
+  }
+  for (let index = 0; index < protons + neutrons; index++) {
+    const isProton = Math.floor((index + 1) * protons / (protons + neutrons)) >
+      Math.floor(index * protons / (protons + neutrons));
+    addParticle(isProton ? 'proton' : 'neutron', 1.8 * Math.sqrt(index), index * 2.4);
+  }
+  electronShellCounts(electrons).forEach((count, shell) => {
+    const layer = document.createElement('span');
+    layer.className = 'shell-motion';
+    layer.style.setProperty('--period', (6 + 3 * shell) + 's');
+    for (let index = 0; index < count; index++) {
+      addParticle('electron', 17 + shell * 10, index * 2 * Math.PI / count + shell, layer);
+    }
+    visual.append(layer);
+  });
+  target.replaceChildren(visual);
+}
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+for (const panel of document.querySelectorAll('.atom-constructor')) {
+  const form = panel.querySelector('[data-constructor]');
+  const plot = panel.querySelector('[data-atom-plot]');
+  const motion = panel.querySelector('[data-motion-toggle]');
+  function setPaused(paused) {
+    plot.toggleAttribute('data-paused', paused);
+    motion.textContent = paused ? 'Reprèn el moviment' : 'Pausa el moviment';
+  }
+  function updateAtom() {
+    if (!form.checkValidity()) return;
+    const p = form.querySelector('[data-protons]').valueAsNumber;
+    const n = form.querySelector('[data-neutrons]').valueAsNumber;
+    const e = form.querySelector('[data-electrons]').valueAsNumber;
+    const [symbol, name] = atoms[p - 1].split(' ');
+    const charge = p - e;
+    const type = charge === 0 ? 'Àtom neutre' : charge > 0 ? 'Catió' : 'Anió';
+    panel.querySelector('[data-atom-result]').textContent =
+      `${name[0].toUpperCase() + name.slice(1)} (${symbol}). Z = ${p}, A = ${p + n}, càrrega = ${charge > 0 ? '+' : ''}${charge}. ${type}.`;
+    drawAtom(plot, p, n, e);
+  }
+  setPaused(reducedMotion.matches);
+  reducedMotion.addEventListener('change', event => setPaused(event.matches));
+  motion.addEventListener('click', () => setPaused(!plot.hasAttribute('data-paused')));
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    updateAtom();
+  });
+  updateAtom();
+}
+const massUnit = document.querySelector('.mass-unit');
+const massUnitButton = massUnit.querySelector('button');
+massUnitButton.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') massUnit.setAttribute('data-dismissed', '');
+});
+massUnitButton.addEventListener('click', () => {
+  massUnit.removeAttribute('data-dismissed');
+  massUnitButton.focus();
+});
+massUnitButton.addEventListener('blur', () => massUnit.removeAttribute('data-dismissed'));
+massUnit.addEventListener('pointerleave', () => {
+  if (document.activeElement !== massUnitButton) massUnit.removeAttribute('data-dismissed');
+});
+
+const massForm = document.querySelector('#atom-mass-form');
+const massPlot = document.querySelector('#mass-plot');
+const massResult = document.querySelector('#atom-mass-result');
+const decimal = new Intl.NumberFormat('ca', {maximumSignificantDigits: 4});
+function scientific(value) {
+  const [coefficient, exponent] = value.toExponential(3).split('e');
+  const superscript = String(Number(exponent)).replace(/[0-9-]/g, digit => digit === '-' ? '⁻' : '⁰¹²³⁴⁵⁶⁷⁸⁹'[digit]);
+  return decimal.format(Number(coefficient)) + ' × 10' + superscript;
+}
+function updateMass() {
+  if (!massForm.checkValidity()) {
+    massResult.textContent = 'Introdueix nombres enters dins dels intervals dels camps.';
+    massPlot.replaceChildren();
+    return;
+  }
+  const {protons, neutrons, electrons} = massForm.elements;
+  const p = protons.valueAsNumber;
+  const n = neutrons.valueAsNumber;
+  const e = electrons.valueAsNumber;
+  const kg = (p + n) * 1.67e-27 + e * 9.11e-31;
+  const units = kg / 1.66054e-27;
+  massResult.textContent = `${atoms[p - 1].split(' ')[0]} · Massa estimada: ${scientific(kg)} kg (≈ ${decimal.format(units)} u).`;
+  drawAtom(massPlot, p, n, e);
+}
+massForm.addEventListener('input', updateMass);
+massForm.addEventListener('submit', event => event.preventDefault());
+updateMass();
+
+const waterMassInput = document.querySelector('#water-molecule-mass');
+const dropInputs = [...document.querySelectorAll('.drop-results .drop-mass')];
+function positiveMass(value) {
+  const normalized = value.trim().replace(',', '.');
+  if (!/^(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?$/i.test(normalized)) return NaN;
+  const mass = Number(normalized);
+  return Number.isFinite(mass) && mass > 0 ? mass : NaN;
+}
+function updateDropCount(input) {
+  const result = input.closest('tr').querySelector('output');
+  const mass = positiveMass(input.value);
+  const moleculeMass = positiveMass(waterMassInput.value);
+  const count = mass / moleculeMass;
+  if (!input.value.trim()) result.textContent = '—';
+  else if (!Number.isFinite(mass)) result.textContent = 'Introdueix una massa de gotes positiva.';
+  else if (!Number.isFinite(moleculeMass)) result.textContent = 'Introdueix la massa d’una molècula.';
+  else if (!Number.isFinite(count) || count <= 0) result.textContent = 'Revisa les masses i els exponents.';
+  else result.textContent = scientific(count);
+}
+for (const input of dropInputs) input.addEventListener('input', () => updateDropCount(input));
+waterMassInput.addEventListener('input', () => dropInputs.forEach(updateDropCount));
+
+function createModelScene(model) {
+  const spheres = [];
+  const paths = [];
+  const blue = '#82cfff', orange = '#ff9b70', grey = '#aab9d8';
+  const add = (x, y, z, radius, color, label = '', opacity = 1) =>
+    spheres.push({x, y, z, radius, color, label, opacity});
+  const circle = (radius, count) => {
+    paths.push(Array.from({length: 81}, (_, i) => {
+      const angle = i * Math.PI / 40;
+      return {x: radius * Math.cos(angle), y: 0, z: radius * Math.sin(angle)};
+    }));
+    for (let i = 0; i < count; i++) {
+      const angle = i * 2 * Math.PI / count;
+      add(radius * Math.cos(angle), 0, radius * Math.sin(angle), 8, blue);
+    }
+  };
+  const nucleus = () => {
+    for (let i = 0; i < 8; i++) {
+      add(i & 1 ? 10 : -10, i & 2 ? 10 : -10, i & 4 ? 10 : -10, 12, i % 3 ? orange : grey);
+    }
+  };
+  const cloud = () => {
+    let seed = 11293;
+    const random = () => {
+      seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+      return (seed + 1) / 4294967297;
+    };
+    for (let i = 0; i < 900; i++) {
+      const r = -23 * Math.log(random() * random() * random());
+      const cosine = 2 * random() - 1, phi = 2 * Math.PI * random();
+      if (r > 123) continue;
+      const horizontal = r * Math.sqrt(1 - cosine * cosine);
+      add(horizontal * Math.cos(phi), r * cosine, horizontal * Math.sin(phi), 1.6, blue, '', .25);
+    }
+  };
+  switch (model) {
+    case 'dalton':
+      add(-78, 0, 22, 32, '#ffc76c');
+      add(0, -16, -26, 45, blue);
+      add(78, 11, 9, 37, orange);
+      break;
+    case 'electro':
+      paths.push(Array.from({length: 30}, (_, i) => ({x: -115 + i * 8, y: -48 + .09 * i * i, z: 0})));
+      for (const i of [4, 14, 25]) add(-115 + i * 8, -48 + .09 * i * i, 0, 13, blue, '−');
+      break;
+    case 'thomson':
+      add(0, 0, 0, 83, orange, '', .26);
+      for (let i = 0; i < 8; i++) add(i & 1 ? 33 : -33, i & 2 ? 29 : -29, i & 4 ? 30 : -30, 10, blue);
+      break;
+    case 'rutherford':
+      add(0, 0, 0, 14, orange, '+');
+      add(-102, 23, 5, 8, blue);
+      add(72, -72, 14, 8, blue);
+      add(32, 68, -60, 8, blue);
+      break;
+    case 'bohr':
+      add(0, 0, 0, 17, orange, '+');
+      circle(54, 2);
+      circle(101, 4);
+      break;
+    case 'proto':
+      add(0, 0, 0, 64, orange, '+');
+      break;
+    case 'neutro':
+      add(0, 0, 0, 64, grey, '0');
+      break;
+    case 'schrodinger':
+      add(0, 0, 0, 5, orange);
+      cloud();
+      break;
+    case 'quarks':
+      for (const [center, letters] of [[-91, 'uud'], [91, 'udd']]) {
+        for (const [i, letter] of [...letters].entries()) {
+          const angle = i * 2 * Math.PI / 3;
+          add(center + 30 * Math.cos(angle), 30 * Math.sin(angle), 15 * Math.sin(angle), 18, letter === 'u' ? orange : blue, letter);
+        }
+      }
+      break;
+    case 'actual':
+      nucleus();
+      cloud();
+      break;
+  }
+  return {spheres, paths};
+}
+
+function drawModelView(canvas, scene, angle, faceted) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const {width, height} = canvas;
+  const tilt = .45;
+  function project({x, y, z}) {
+    const rotatedX = x * Math.cos(angle) + z * Math.sin(angle);
+    const rotatedZ = z * Math.cos(angle) - x * Math.sin(angle);
+    const front = rotatedZ * Math.cos(tilt) + y * Math.sin(tilt);
+    const scale = 340 / (340 - front);
+    return {x: width / 2 + rotatedX * scale, y: height / 2 + (y * Math.cos(tilt) - rotatedZ * Math.sin(tilt)) * scale, front, scale};
+  }
+  ctx.clearRect(0, 0, width, height);
+  if (faceted) {
+    const points = [[0,-78,0],[75,0,0],[0,0,75],[-75,0,0],[0,0,-75],[0,78,0]]
+      .map(([x,y,z]) => project({x,y,z}));
+    const faces = [0,5].flatMap(apex => [1,2,3,4].map(i => [apex,i,i === 4 ? 1 : i+1]))
+      .map((face, i) => ({color: ['#ffcb80','#d9945c','#956043','#e4a66d'][i % 4], points: face.map(j => points[j])}));
+    faces.sort((a,b) => a.points.reduce((sum,p) => sum+p.front,0) - b.points.reduce((sum,p) => sum+p.front,0));
+    for (const face of faces) {
+      ctx.beginPath();
+      face.points.forEach((point, i) => i ? ctx.lineTo(point.x, point.y) : ctx.moveTo(point.x, point.y));
+      ctx.closePath();
+      ctx.fillStyle = face.color;
+      ctx.fill();
+    }
+  }
+  ctx.strokeStyle = '#8399c4';
+  ctx.lineWidth = 2;
+  for (const path of scene.paths) {
+    ctx.beginPath();
+    path.map(project).forEach((point,i) => i ? ctx.lineTo(point.x,point.y) : ctx.moveTo(point.x,point.y));
+    ctx.stroke();
+  }
+  const balls = scene.spheres.map(sphere => ({...sphere, ...project(sphere)})).sort((a,b) => a.front-b.front);
+  for (const ball of balls) {
+    const {x,y,color,label,opacity} = ball;
+    const r = ball.radius * ball.scale;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,2*Math.PI);
+    ctx.globalAlpha = opacity;
+    if (r >= 5) {
+      const gradient = ctx.createRadialGradient(x-r*.32,y-r*.32,0,x,y,r);
+      gradient.addColorStop(0,'#fff');
+      gradient.addColorStop(.4,color);
+      gradient.addColorStop(1,'#40517a');
+      ctx.fillStyle = gradient;
+    } else ctx.fillStyle = color;
+    ctx.fill();
+    if (label) {
+      ctx.fillStyle = '#17253c';
+      ctx.font = `bold ${Math.max(12, r)}px system-ui`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label,x,y);
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+for (const trigger of document.querySelectorAll('[data-milestone]')) {
+  const dialog = document.getElementById(trigger.dataset.milestone);
+  const viewer = dialog.querySelector('[data-model-view]');
+  const canvas = viewer.querySelector('canvas');
+  const model = viewer.dataset.modelView;
+  let scene;
+  let angle = .44;
+  function render() {
+    scene ??= createModelScene(model);
+    drawModelView(canvas, scene, angle, model === 'democrit');
+  }
+  for (const button of viewer.querySelectorAll('[data-turn]')) {
+    button.addEventListener('click', () => {
+      angle += Number(button.dataset.turn) * Math.PI / 10;
+      render();
+    });
+  }
+  trigger.addEventListener('click', () => {
+    dialog.showModal();
+    render();
+  });
+  dialog.addEventListener('close', () => trigger.focus());
+}
+
+const shellSelector = document.querySelector('#shell-element');
+const shellPlot = document.querySelector('#shell-plot');
+const shellResult = document.querySelector('#shell-result');
+const exampleMassNumbers = [1, 4, 7, 9, 11, 12, 14, 16, 19, 20, 23, 24, 27, 28, 31, 32, 35, 40, 39, 40];
+for (const [index, atom] of atoms.entries()) {
+  const [symbol, name] = atom.split(' ');
+  shellSelector.add(new Option(`${symbol} · ${name} (Z = ${index + 1})`, String(index + 1)));
+}
+function updateShellExample() {
+  const atomicNumber = Number(shellSelector.value);
+  const occupied = electronShellCounts(atomicNumber).filter(count => count > 0);
+  const massNumber = exampleMassNumbers[atomicNumber - 1];
+  drawAtom(shellPlot, atomicNumber, massNumber - atomicNumber, atomicNumber);
+  shellResult.textContent = `Distribució: ${occupied.join(', ')}. Capes ocupades: ${occupied.length}. Electrons a l’última capa: ${occupied.at(-1)}.`;
+}
+shellSelector.value = '11';
+shellSelector.addEventListener('change', updateShellExample);
+updateShellExample();
+
+const elementData = {
+  Li: ['Liti', 3, 1, 2, 'Metall alcalí. Ió habitual Li⁺.'],
+  Be: ['Beril·li', 4, 2, 2, 'Metall alcalinoterri. Estat d’oxidació habitual +2.'],
+  F: ['Fluor', 9, 17, 2, 'Halogen, no-metall. Ió habitual F⁻.'],
+  Ne: ['Neó', 10, 18, 2, 'Gas noble, de reactivitat molt baixa.'],
+  Na: ['Sodi', 11, 1, 3, 'Metall alcalí. Ió habitual Na⁺.'],
+  Mg: ['Magnesi', 12, 2, 3, 'Metall alcalinoterri. Ió habitual Mg²⁺.'],
+  Cl: ['Clor', 17, 17, 3, 'Halogen, no-metall. Ió habitual Cl⁻.'],
+  Ar: ['Argó', 18, 18, 3, 'Gas noble, de reactivitat molt baixa.'],
+  K: ['Potassi', 19, 1, 4, 'Metall alcalí. Ió habitual K⁺.'],
+  Ca: ['Calci', 20, 2, 4, 'Metall alcalinoterri. Ió habitual Ca²⁺.'],
+  Br: ['Brom', 35, 17, 4, 'Halogen, no-metall. Ió habitual Br⁻.'],
+  Kr: ['Criptó', 36, 18, 4, 'Gas noble, de reactivitat baixa.']
+};
+const elementButtons = document.querySelectorAll('[data-element]');
+for (const button of elementButtons) {
+  button.addEventListener('click', () => {
+    const symbol = button.dataset.element;
+    const [name, atomicNumber, group, period, properties] = elementData[symbol];
+    for (const item of elementButtons) item.setAttribute('aria-pressed', String(item === button));
+    document.querySelector('#element-result').textContent =
+      `${name} (${symbol}). Z = ${atomicNumber}, grup ${group}, període ${period}. ${properties}`;
+  });
+}
+const questions = [
+  ['neutrons', '18', 'Resta el nombre atòmic al nombre màssic. 35 − 17 = 18.'],
+  ['model', 'desviacio', 'Les grans desviacions donen suport a una concentració de càrrega positiva.'],
+  ['grup', 'grup', 'Na i K són del grup 1 i formen habitualment cations de càrrega +1.']
+];
+document.querySelector('#quiz').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const answers = new FormData(event.currentTarget);
+  const list = document.createElement('ol');
+  let score = 0;
+  for (const [key, correctAnswer, explanation] of questions) {
+    const correct = answers.get(key) === correctAnswer;
+    if (correct) score++;
+    const item = document.createElement('li');
+    item.textContent = `${correct ? 'Correcte.' : 'Revisa-ho.'} ${explanation}`;
+    list.append(item);
+  }
+  const total = document.createElement('p');
+  total.textContent = `${score} de ${questions.length} respostes correctes.`;
+  document.querySelector('#quiz-result').replaceChildren(total, list);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The atom and the periodic table · Physics and chemistry</title>
+<style>
+:root{color-scheme:light;--ink:#17253c;--paper:#f4f6fb;--blue:#203eaa;--line:#ccd5eb;--yellow:#ffe075;--dark:#101d39}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 system-ui,sans-serif}
+a{color:var(--blue)} a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid #a44b00;outline-offset:4px}
+.wrap{width:min(70rem,calc(100% - 2rem));margin:auto}
+header{background:var(--dark);color:white;padding:.75rem 0}
+.language-link{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;margin-inline-start:auto;color:white;border:1px solid #aab9d8;border-radius:.45rem;padding:.25rem .65rem;font-weight:700}
+.language-flag{display:block;width:1.7rem;height:.95rem;flex:none;border:1px solid #ffffff40;border-radius:.15rem}
+.senyera{background:repeating-linear-gradient(to bottom,#fcdd09 0 calc(100% / 9),#da121a calc(100% / 9) calc(200% / 9),#fcdd09 calc(200% / 9) calc(100% / 3),#da121a calc(100% / 3) calc(400% / 9),#fcdd09 calc(400% / 9) calc(500% / 9),#da121a calc(500% / 9) calc(200% / 3),#fcdd09 calc(200% / 3) calc(700% / 9),#da121a calc(700% / 9) calc(800% / 9),#fcdd09 calc(800% / 9) 100%)}
+.brand-bar{display:flex;align-items:center;gap:.8rem}
+.brand-logo{display:block;width:clamp(7.5rem,23vw,12rem);height:auto;flex:none;border-radius:.25rem}
+@media(max-width:460px){.brand-bar{align-items:flex-start;flex-direction:column;gap:.45rem}}
+.brand{margin:0;font-weight:700;color:#e1e8ff}
+.intro{display:grid;gap:1.5rem}
+.intro-copy{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:var(--dark);color:white;border-radius:.9rem;overflow:hidden}
+.intro-text{padding:clamp(1.3rem,3.5vw,2.75rem)}
+.intro-image{position:relative;min-height:14rem}
+.intro-image img{position:absolute;width:100%;height:100%;object-fit:cover}
+.sim-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:1.4rem;align-items:center}
+.atom-plot .shell-motion{position:absolute;inset:0;animation:orbit var(--period) linear infinite}
+.atom-plot[data-paused] .shell-motion{animation-play-state:paused}
+@keyframes orbit{to{transform:rotate(1turn)}}
+[data-motion-toggle]{background:white;color:var(--blue);margin-top:.35rem}
+
+.intro h1{color:var(--yellow);font-size:clamp(2rem,4.1vw,3.75rem);line-height:1.04;letter-spacing:-.045em;margin:0 0 1.2rem}
+.intro-copy p{max-width:38ch}
+article.objectives{padding:clamp(1.1rem,3vw,2rem);background:#e8edff;border-color:#c4d0ed}
+.objectives ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0;padding:0;list-style:none}
+.objectives li{padding:.85rem 1rem;border:1px solid #ccd5eb;border-left:.25rem solid var(--blue);border-radius:.55rem;background:#fff}
+.objectives strong{display:block;color:#203eaa;margin-bottom:.15rem}
+@media(max-width:640px){.objectives ul{grid-template-columns:1fr}}
+.intro-copy a{color:white}
+article.opening-reflection{display:grid;grid-template-columns:clamp(4rem,9vw,6rem) minmax(0,1fr);align-items:center;gap:clamp(1.25rem,4vw,3.5rem);padding:clamp(1.25rem,4vw,2.75rem);background:#32263d;color:#fff7f1;border-color:#32263d}
+.reflection-portrait{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 34%;border-radius:50%;border:.2rem solid #ffb39b}
+.opening-reflection h2{font-size:1rem;color:#ffb39b;margin:0 0 .8rem}
+.opening-reflection figure,.opening-reflection blockquote{margin:0}
+.opening-reflection blockquote p{font:700 clamp(1.65rem,4vw,3.2rem)/1.12 system-ui,sans-serif;letter-spacing:-.035em;max-width:20ch;margin:0 0 1rem}
+.opening-reflection figcaption{color:#f2e6ee}
+.opening-reflection a{color:#ffe075}
+@media(max-width:580px){article.opening-reflection{grid-template-columns:1fr}.reflection-portrait{width:4rem}}
+@media print{article.opening-reflection{background:white;color:var(--ink)}.opening-reflection h2,.opening-reflection figcaption,.opening-reflection a{color:var(--ink)}}
+.unit-contents ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem 2rem;margin:0;padding-left:1.65rem}
+.unit-contents li::marker{font-weight:750;color:var(--blue)}
+.topic{margin-top:1rem}
+.particle-discovery{list-style:none;padding:0;margin:.7rem 0}
+.particle-discovery li{display:grid;grid-template-columns:2.7rem minmax(0,1fr);align-items:start;gap:.7rem;margin:.7rem 0}
+.particle-symbol{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;font-weight:800;background:#dfe7ff;color:#1c3587}
+.particle-symbol.positive{background:#ffcebd;color:#512011}
+.particle-symbol.neutral{background:#e2e7f1;color:#17253c}
+.quark-diagrams{display:flex;flex-wrap:wrap;gap:.75rem;margin:.75rem 0}
+.quark-diagrams figure{flex:1;min-width:8.5rem;margin:0;padding:.55rem;text-align:center;background:#edf1fb;border-radius:.65rem}
+.quark-diagrams strong{display:inline-grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:50%;background:#ffcebd;color:#512011}
+.quark-diagrams .down{background:#d0dafe;color:#162d80}
+
+.mass-unit{position:relative;display:inline-block}
+.mass-unit button{padding:.02rem .28rem;background:#fff;color:var(--blue);font-weight:700}
+.mass-unit [role="tooltip"]{display:none;position:absolute;z-index:2;top:100%;left:50%;transform:translateX(-50%);width:12rem;text-align:left;background:var(--dark);color:white;font-weight:400;line-height:1.4;padding:.65rem;border-radius:.45rem;box-shadow:0 .2rem .65rem #101d3940}
+.mass-unit:hover [role="tooltip"],.mass-unit:focus-within [role="tooltip"]{display:block}
+.mass-unit[data-dismissed] [role="tooltip"]{display:none}
+.mass-calculator .atom-plot{max-width:12rem}
+.lab-materials{align-items:center;margin-bottom:1rem}
+.lab-materials figure{margin:0}
+.lab-materials img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:.65rem}
+.lab-materials figcaption{margin-top:.3rem}
+.drop-mass{font:inherit;width:8ch;padding:.3rem .45rem;border:1px solid #6376a1;border-radius:.35rem}
+.drop-results{min-width:24rem}
+
+.charge-figure,.drop-figure{margin:.8rem 0 0}
+.charge-cases{display:grid;gap:.4rem}
+.charge-case{display:grid;grid-template-columns:minmax(5rem,1fr) minmax(9rem,1.5fr);align-items:center;gap:.35rem .6rem;background:#edf1fb;border-radius:.45rem;padding:.35rem .55rem}
+.charge-particles{display:flex;gap:.22rem;flex-wrap:wrap}
+.charge-particles i{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;font-style:normal;font-weight:750;background:#ffcebd;color:#512011}
+.charge-particles .minus{background:#d0dafe;color:#162d80}
+.drop-figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;text-align:center}
+.drop-group{background:#edf5ff;border-radius:.5rem;padding:.25rem}
+.drop-group span{display:block;font-size:1rem;color:#203eaa;letter-spacing:.13em;white-space:nowrap}
+
+@media(max-width:640px){.unit-contents ol{grid-template-columns:1fr}}
+.knowledge-check{border-left:.25rem solid var(--blue)}
+.reflection-questions{margin:.6rem 0 0;padding-left:1.65rem}
+.reflection-questions li+li{margin-top:.4rem}
+.reflection-questions li::marker{color:var(--blue);font-weight:750}
+.final-check{margin-top:1rem}
+.atom-plot{position:relative;width:min(100%,16rem);aspect-ratio:1;margin:.5rem auto;background:radial-gradient(circle,#2e4c88,#111f41 75%);border-radius:50%}
+.atom-plot .ring{position:absolute;inset:var(--inset);border:1px dashed #93a9e0;border-radius:50%}
+.atom-plot i{position:absolute;width:4%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--particle)}
+.proton{--particle:#ffab8f}.neutron{--particle:#c8d5fc}.electron{--particle:#ffe075}
+.legend{display:flex;gap:.4rem 1rem;flex-wrap:wrap;margin:.4rem 0;font-size:.9rem}
+.legend span::before{content:"";display:inline-block;width:.65rem;height:.65rem;margin-right:.35rem;border-radius:50%;background:var(--particle);border:1px solid #445679}
+nav a[aria-current="page"]{color:var(--dark);text-decoration-thickness:3px;text-underline-offset:.28rem}
+[hidden]{display:none!important}
+nav{background:white;border-bottom:1px solid var(--line);padding:.65rem 0}
+nav .wrap{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
+nav a{padding:.25rem 0;font-weight:650}
+main{padding:2rem 0} section{margin-bottom:2.5rem;scroll-margin-top:1rem}
+.card,details.session{background:white;border:1px solid var(--line);border-radius:.9rem;padding:1.1rem 1.25rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start}
+summary{cursor:pointer;font-weight:750} details.session{margin-bottom:.65rem}
+summary span{color:var(--blue);display:block;font-size:.9rem}
+details p:last-child{margin-bottom:0}
+.lab{background:#e8edff;border-radius:.9rem;padding:1.25rem}
+.controls{display:flex;flex-wrap:wrap;gap:.8rem}
+label{font-weight:650} input[type=number]{display:block;width:6rem}
+input,textarea,button{font:inherit}
+textarea,input[type=number]{background:white;color:var(--ink);border:1px solid #6376a1;border-radius:.4rem;padding:.4rem .55rem}
+textarea{display:block;width:100%;min-height:5rem;margin:.3rem 0 1rem}
+button{cursor:pointer;border:1px solid var(--blue);background:var(--blue);color:white;border-radius:.45rem;padding:.45rem .8rem}
+button[aria-pressed=true]{background:var(--yellow);color:var(--dark);border-color:var(--dark)}
+.result{background:white;border-left:.25rem solid var(--blue);padding:.65rem .85rem;margin:1rem 0;border-radius:.25rem}
+.table-scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+caption{text-align:left;margin-bottom:.5rem}
+th,td{padding:.35rem;text-align:center;border-bottom:1px solid var(--line)}
+th{background:#edf1fb} td button{min-width:3rem}
+fieldset{border:1px solid var(--line);border-radius:.55rem;margin:0 0 1rem;padding:.65rem 1rem}
+fieldset label{display:block;font-weight:450;padding:.2rem 0}
+footer{border-top:1px solid var(--line);padding:1.5rem 0 2rem}
+.skip{position:absolute;left:1rem;top:-6rem;background:white;padding:.45rem}.skip:focus{top:1rem}
+@media(max-width:640px){.grid,.intro-copy,.sim-layout{grid-template-columns:1fr}}
+@media print{header,.intro-copy{background:white;color:black;padding:.5rem}.brand,.intro h1,.intro-copy a{color:black}nav,button,.skip{display:none}.grid{display:block}.card,.lab,.session{break-inside:avoid;margin-bottom:1rem}}
+.atomic-timeline{list-style:none;padding:0 0 0 1.4rem;margin:1.25rem 0;border-left:2px solid #9eafe4;display:grid;gap:.65rem}
+.atomic-timeline li{position:relative}
+.atomic-timeline li::before{content:"";position:absolute;left:-1.83rem;top:1.15rem;width:.7rem;height:.7rem;border:2px solid white;border-radius:50%;background:var(--blue)}
+.atomic-timeline button{display:grid;grid-template-columns:minmax(8rem,10rem) 1fr;gap:.05rem .85rem;text-align:left;width:100%;background:white;color:var(--ink);border-color:var(--line);padding:.65rem .85rem}
+.atomic-timeline button:hover{border-color:var(--blue);background:#e8edff}
+.timeline-date{color:var(--blue);font-weight:750}
+.timeline-person{grid-column:2}
+.milestone-dialog{width:min(44rem,calc(100% - 2rem));max-height:85vh;padding:0;border:1px solid var(--line);border-radius:.9rem;color:var(--ink)}
+.milestone-dialog::backdrop{background:#101d39aa}
+.milestone-content{padding:1.2rem}
+.milestone-content form{position:sticky;top:0;float:right;margin:0 0 .4rem .6rem}
+.milestone-content h3{font-size:1.55rem;margin:.25rem 0 .8rem}
+.model-view{margin:1rem 0;background:#edf1fb;border-radius:.65rem;padding:.65rem}
+.model-view canvas{display:block;width:100%;height:auto;max-height:15rem;object-fit:contain;background:#101d39;border-radius:.45rem}
+.model-view figcaption{margin:.45rem 0}
+.model-view-controls{display:flex;flex-wrap:wrap;gap:.45rem}
+.model-view-controls button{background:white;color:var(--blue)}
+.milestone-image{margin:1rem 0}
+.milestone-image img{display:block;width:auto;max-width:100%;max-height:29rem;margin:auto;border-radius:.5rem}
+.milestone-image figcaption{margin-top:.45rem}
+@media(max-width:540px){.atomic-timeline button{grid-template-columns:1fr}.timeline-person{grid-column:1}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contingut">Skip to content</a>
+<header><div class="wrap brand-bar"><img class="brand-logo" alt="SciencEduca" width="1254" height="480" src="../../../assets/scienceduca-banner.png"><p class="brand">Physics and chemistry · Year 3 ESO · The atom and the periodic table</p><a class="language-link" href="atom-taula-periodica-3eso.html" lang="ca"><span class="language-flag senyera" aria-hidden="true"></span><span>Català</span></a></div></header>
+<nav aria-label="Sections"><div class="wrap"><a href="#inici">Home</a><a href="#electricitat">Matter and electricity</a><a href="#atom">Atom</a><a href="#models">Models</a><a href="#configuracio">Electron configuration</a><a href="#taula">Periodic table</a><a href="#repas">Self-assessment</a><a href="#glossary">Glossary</a></div></nav>
+<main id="contingut" class="wrap" tabindex="-1">
+<section id="inici" class="intro">
+<div class="intro-copy">
+<div class="intro-text">
+<h1>What is all the matter around us made of?</h1>
+<p>Choose an object near you. What do you think it would be made of if you could see it at the atomic scale?</p>
+<p>Make a prediction. Then change one particle in the simulation and explain what happens.</p>
+<a href="#temari-titol">Explore the unit contents</a>
+</div>
+<div class="intro-image"><img alt="Tropical beach with palms and the Milky Way overhead" src="imatges/platja.jpg"></div>
+</div>
+<article class="card opening-reflection" aria-labelledby="reflexio-inicial">
+<a href="https://commons.wikimedia.org/wiki/File:Richard_Feynman_Los_Alamos_ID_badge_(cropped).jpg">
+<img class="reflection-portrait" alt="Richard Feynman at Los Alamos, around 1943 (photo source)" width="96" height="96" src="imatges/feynman.jpg">
+</a>
+<div>
+<h2 id="reflexio-inicial">Opening reflection</h2>
+<figure>
+<blockquote cite="https://www.feynmanlectures.caltech.edu/I_01.html"><p>“All things are made of atoms.”</p></blockquote>
+<figcaption>Richard Phillips Feynman · <a href="https://www.feynmanlectures.caltech.edu/I_01.html#Ch1-S2" lang="en">Matter is made of atoms</a></figcaption>
+</figure>
+</div>
+</article>
+<article class="card knowledge-check" aria-labelledby="coneixements-titol">
+<h2 id="coneixements-titol">What do you already know?</h2>
+<p>Before trying the simulation, answer in your own words. Write down your ideas so you can return to them at the end of the unit.</p>
+<ol class="reflection-questions">
+<li>What is matter?</li>
+<li>What is everything around us made of?</li>
+<li>Can we break an atom into smaller particles without losing its properties?</li>
+<li>Are all atoms of the same element identical?</li>
+<li>Do atoms of the same element have the same properties?</li>
+</ol>
+</article>
+<article class="card objectives" aria-labelledby="objectius-titol">
+<h2 id="objectius-titol">Learning objectives</h2>
+<ul role="list">
+<li><strong>Represent atoms, ions and isotopes.</strong> Work out how many protons, neutrons and electrons they have from the atomic number, mass number and charge.</li>
+<li><strong>Compare ideas and models of the atom.</strong> Trace the development from Democritus to Schrödinger and explain how evidence changed the models.</li>
+<li><strong>Locate and classify elements in the periodic table.</strong> Use atomic number, group and period to explain similarities and differences.</li>
+<li><strong>Predict basic properties of an element.</strong> Support your prediction with its position and the properties of other elements in the same group.</li>
+</ul>
+</article>
+<article class="card unit-contents" aria-labelledby="temari-titol">
+<h2 id="temari-titol">Unit contents</h2>
+<ol>
+<li><a href="#electricitat">Matter and electricity</a></li>
+<li><a href="#atom">Atomic structure</a></li>
+<li><a href="#models">Atomic models and particle discoveries</a></li>
+<li><a href="#configuracio">Electron configuration</a></li>
+<li><a href="#taula">The periodic table</a></li>
+<li><a href="#laboratori-aigua-titol">Lab: molecules in one, two and three drops</a></li>
+<li><a href="#repas">Self-assessment and reflection</a></li>
+<li><a href="#glossary">Key vocabulary</a></li>
+</ol>
+</article>
+<article class="lab atom-constructor">
+<h2>Atom simulation</h2>
+<div class="sim-layout">
+<div>
+<div data-atom-plot class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+</div>
+<div>
+<form data-constructor>
+<div class="controls">
+<label>Protons<input data-protons type="number" min="1" max="20" required value="11"></label>
+<label>Neutrons<input data-neutrons type="number" min="0" max="40" required value="12"></label>
+<label>Electrons<input data-electrons type="number" min="0" max="20" required value="11"></label>
+</div>
+<p><button>Update the atom</button> <button data-motion-toggle type="button">Resume motion</button></p>
+</form>
+<output data-atom-result class="result" style="display:block" aria-live="polite">Sodium (Na). Z = 11, A = 23, charge = 0. Neutral atom.</output>
+<p>This simplified diagram shows up to 20 electrons and is not to scale. The circles represent electron shells. The movement is a visual aid. The modern model describes where electrons are likely to be found. Some particle combinations are unstable or unusual.</p>
+</div>
+</div>
+</article>
+</section>
+<section id="electricitat">
+<h2>Matter and electricity</h2>
+<p><strong>If matter contains charged particles, why are many objects neutral?</strong></p>
+<div class="grid">
+<article class="card"><h3>When does an object have a net charge?</h3>
+<p>In a neutral object, positive and negative charges balance. If it gains electrons, it becomes negatively charged. If it loses electrons, it becomes positively charged.</p>
+<p>A neutral atom has equal numbers of protons and electrons. Neutrons add mass and have zero charge.</p>
+<figure class="charge-figure">
+<figcaption><strong>The same element with one more or one fewer electron</strong></figcaption>
+<div class="charge-cases">
+<div class="charge-case"><div class="charge-particles" aria-hidden="true"><i>+</i><i>+</i><i class="minus">−</i><i class="minus">−</i><i class="minus">−</i></div><span>2 p⁺ and 3 e⁻ · Negative (−1)</span></div>
+<div class="charge-case"><div class="charge-particles" aria-hidden="true"><i>+</i><i>+</i><i class="minus">−</i><i class="minus">−</i></div><span>2 p⁺ and 2 e⁻ · Neutral (0)</span></div>
+<div class="charge-case"><div class="charge-particles" aria-hidden="true"><i>+</i><i>+</i><i class="minus">−</i></div><span>2 p⁺ and 1 e⁻ · Positive (+1)</span></div>
+</div>
+</figure>
+</article>
+<article class="card"><h3>How the particles were discovered</h3>
+<ul class="particle-discovery"><li><span class="particle-symbol" aria-hidden="true">e⁻</span><div><strong>1897 · J. J. Thomson.</strong> Experiments with cathode rays provided evidence for the electron.</div></li>
+<li><span class="particle-symbol positive" aria-hidden="true">p⁺</span><div><strong>1919 · Ernest Rutherford.</strong> He published results showing that hydrogen nuclei were produced when nitrogen was bombarded with alpha particles. A normal hydrogen nucleus is a proton.</div></li>
+<li><span class="particle-symbol neutral" aria-hidden="true">n⁰</span><div><strong>1932 · James Chadwick.</strong> He identified the neutron, a particle with no charge and a mass similar to that of a proton.</div></li></ul>
+<details><summary>Explore quarks</summary>
+<p>Protons and neutrons contain quarks. Their <strong>valence quarks</strong> explain their net charge. The two types involved are <i>up</i> (u), with charge +2/3, and <i>down</i> (d), with charge −1/3.</p>
+<div class="quark-diagrams">
+<figure><div aria-hidden="true"><strong>u</strong> <strong>u</strong> <strong class="down">d</strong></div><figcaption><b>Proton · uud</b><br>+2/3 + 2/3 − 1/3 = +1</figcaption></figure>
+<figure><div aria-hidden="true"><strong>u</strong> <strong class="down">d</strong> <strong class="down">d</strong></div><figcaption><b>Neutron · udd</b><br>+2/3 − 1/3 − 1/3 = 0</figcaption></figure>
+</div>
+<p>Gluons carry the strong interaction that holds quarks together. The electron is an elementary particle in the lepton family. The circles in the diagram help you count the valence quarks.</p>
+</details>
+</article>
+</div>
+<div class="card topic table-scroll" role="region" aria-label="Comparison of atomic particles" tabindex="0">
+<table style="min-width:32rem">
+<caption><strong>Particles in an atom</strong> · Rounded values</caption>
+<thead><tr><th scope="col">Particle</th><th scope="col">Mass (kg)</th><th scope="col">Mass (<span class="mass-unit"><button type="button" aria-describedby="unitat-u">u</button><span id="unitat-u" role="tooltip">Atomic mass unit. One u is 1/12 of the mass of a carbon-12 atom, or about 1.66 × 10⁻²⁷ kg.</span></span>)</th><th scope="col">Charge (C)</th><th scope="col">Relative charge (e)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Electron (e⁻)</th><td>9.11 × 10⁻³¹</td><td>0.00055</td><td>−1.60 × 10⁻¹⁹</td><td>−1</td></tr>
+<tr><th scope="row">Proton (p⁺)</th><td>1.67 × 10⁻²⁷</td><td>≈ 1</td><td>+1.60 × 10⁻¹⁹</td><td>+1</td></tr>
+<tr><th scope="row">Neutron (n⁰)</th><td>1.67 × 10⁻²⁷</td><td>≈ 1</td><td>0</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+<article class="card topic"><h3>Calculate the mass and charge of an atom</h3>
+<p><strong>What is relative charge?</strong> It is charge measured in units of the elementary charge <i>e</i> (about 1.60 × 10⁻¹⁹ C). A proton counts as +1, an electron as −1 and a neutron as 0. Subtract the number of electrons from the number of protons. For example, three protons and two electrons give +1, so the charge is +1<i>e</i>.</p>
+<p>An atom has four protons, four neutrons and four electrons.</p>
+<ol><li>Estimate its mass in kg by adding the particle masses. What mass do you get if you remove all four electrons?</li><li>What is its approximate mass in u? What was its relative charge at the start?</li><li>What charge would it have if it gained one electron? What if the neutral atom lost two electrons instead?</li></ol>
+<details><summary>Check your calculations</summary><p>With electrons, the sum is 1.3363644 × 10⁻²⁶ kg before rounding. Without electrons it is 1.336 × 10⁻²⁶ kg. Both round to 1.34 × 10⁻²⁶ kg to three significant figures. The mass is about 8 u. The initial charge is 0. It becomes −1 if the atom gains one electron and +2 if it loses two.</p><p>This estimate adds the masses of free particles. The actual mass also depends on binding energy.</p></details>
+</article>
+<article class="lab topic mass-calculator" aria-labelledby="calculadora-massa-titol">
+<h3 id="calculadora-massa-titol">Atomic mass calculator</h3>
+<div class="sim-layout">
+<div>
+<div id="mass-plot" class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+</div>
+<div>
+<p>Change the particle counts and see how the drawing and total mass change.</p>
+<form id="atom-mass-form" aria-labelledby="calculadora-massa-titol">
+<div class="controls">
+<label>Protons<input name="protons" type="number" min="1" max="20" value="4" required></label>
+<label>Neutrons<input name="neutrons" type="number" min="0" max="40" value="4" required></label>
+<label>Electrons<input name="electrons" type="number" min="0" max="20" value="4" required></label>
+</div>
+</form>
+<output id="atom-mass-result" class="result" style="display:block" aria-live="polite"></output>
+<p>The estimate adds the masses of free particles. The diagram shows shells and is not to scale.</p>
+</div>
+</div>
+</article>
+<article class="lab topic" aria-labelledby="laboratori-aigua-titol">
+<h3 id="laboratori-aigua-titol">Lab · How many molecules are in a few drops?</h3>
+<div class="grid lab-materials">
+<p><strong>Equipment.</strong> A balance, a small container, a dropper and a water sample chosen by your team, such as distilled, tap or bottled water. Tap and bottled water contain small amounts of dissolved substances, so their measured mass is close to the mass of the water alone. If the sample contains a large amount of dissolved material, multiply its mass by the fraction that is water before calculating the number of molecules.</p>
+<figure><img alt="A dropper releases a drop into a container on a digital balance, with a beaker of water nearby" src="imatges/laboratori.jpg"><figcaption>Equipment for measuring the mass of the drops.</figcaption></figure>
+</div>
+<div class="card"><h4>Estimate the number of molecules in one, two and three drops</h4>
+<details open><summary>First, calculate the mass of one water molecule</summary>
+<ol>
+<li>An H₂O molecule has two hydrogen atoms and one oxygen atom. Use hydrogen-1 (Z = 1, A = 1) and oxygen-16 (Z = 8, A = 16). Treat both types of atom as neutral for this calculation.</li>
+<li>Count the protons, neutrons and electrons in each type of atom. Double the hydrogen counts and add the oxygen counts.</li>
+<li>Multiply each particle count by its mass in kg and add the three terms. Check your calculation using the <a href="#calculadora-massa-titol">mass calculator</a> by finding the mass of each type of atom separately and adding 2 · m(H) + m(O).</li>
+<li>Convert your result to grams (1 kg = 1,000 g) and enter it below. This estimate is based on the masses of free particles.</li>
+</ol>
+</details>
+<p><label for="water-molecule-mass">Mass of one water molecule (g)</label><br>
+<input id="water-molecule-mass" class="drop-mass" style="width:min(100%,14rem)" inputmode="decimal" placeholder="Coefficient e exponent" aria-describedby="water-mass-hint">
+<br><small id="water-mass-hint">For scientific notation, enter 4.25e-23 for 4.25 × 10⁻²³, for example.</small></p>
+<ol>
+<li>Record your sample and the balance resolution. Zero the balance with the dry container in place, then weigh 20 drops. Hold the dropper vertically.</li>
+<li>Take two more measurements, starting with an empty, dry container each time. If the mass is too close to the balance resolution, increase the number of drops and use that same number for all three measurements.</li>
+<li>Divide the mean mass by the number of drops weighed to estimate the mass of one drop. Multiply it by 1, 2 and 3. For each case, divide the estimated water mass in grams by the mass of one molecule in grams. If needed, apply the water mass fraction before dividing.</li>
+</ol>
+<figure class="drop-figure" aria-label="If one drop has mean mass m, two drops have mass 2m and three have mass 3m">
+<div class="drop-group"><span aria-hidden="true">💧</span>1 drop · <i>m</i></div>
+<div class="drop-group"><span aria-hidden="true">💧💧</span>2 drops · 2<i>m</i></div>
+<div class="drop-group"><span aria-hidden="true">💧💧💧</span>3 drops · 3<i>m</i></div>
+</figure>
+</div>
+<div class="card topic table-scroll" role="region" aria-label="Record your estimates" tabindex="0">
+<table class="drop-results"><caption>Enter the estimated mass of water in grams in each row. You can use a decimal point or comma.</caption>
+<thead><tr><th scope="col">Drops</th><th scope="col">Estimated water mass (g)</th><th scope="col">Estimated number of molecules</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td><input class="drop-mass" type="text" inputmode="decimal" aria-label="Mass of one drop in grams"></td><td><output aria-live="polite" aria-label="Molecules in one drop">—</output></td></tr>
+<tr><th scope="row">2</th><td><input class="drop-mass" type="text" inputmode="decimal" aria-label="Mass of two drops in grams"></td><td><output aria-live="polite" aria-label="Molecules in two drops">—</output></td></tr>
+<tr><th scope="row">3</th><td><input class="drop-mass" type="text" inputmode="decimal" aria-label="Mass of three drops in grams"></td><td><output aria-live="polite" aria-label="Molecules in three drops">—</output></td></tr>
+</tbody></table>
+</div>
+<p>Compare the results for one, two and three drops and explain the pattern. Identify one source of uncertainty and how you could reduce it.</p>
+<p><a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185">Water data in the NIST Chemistry WebBook</a></p>
+</article>
+</section>
+<section id="atom">
+<h2>Atomic structure</h2>
+<div class="grid">
+<article class="card">
+<p>The nucleus contains positively charged protons and usually neutrons, which have no charge. Electrons are negatively charged and are found in the region around the nucleus.</p>
+<ul><li><strong>Atomic number (Z)</strong> = number of protons. It identifies the element.</li><li><strong>Mass number (A)</strong> = protons + neutrons.</li><li><strong>Charge in elementary units</strong> = protons − electrons.</li></ul>
+<p>Two <strong>isotopes</strong> have the same Z and different A values. A <strong>monatomic ion</strong> is charged because the number of electrons differs from the number of protons.</p>
+<details><summary>Worked example: sodium-23</summary><p>When Z = 11 and A = 23, there are 11 protons and 23 − 11 = 12 neutrons. A neutral atom has 11 electrons. The Na⁺ ion has 10.</p></details>
+<details id="masses"><summary>Atomic masses of the elements</summary><p>To calculate the average atomic mass, multiply each isotope’s mass by its abundance as a fraction and add the results. The mass number A counts particles. Isotope mass is measured in atomic mass units (u).</p></details>
+</article>
+<article class="lab atom-constructor">
+<h3>Test your explanation</h3>
+<p>Start with sodium-23. Change one neutron or one electron at a time. Explain what happens to the element, mass number and charge.</p>
+<div>
+<div>
+<div data-atom-plot class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+</div>
+<div>
+<form data-constructor>
+<div class="controls">
+<label>Protons<input data-protons type="number" min="1" max="20" required value="11"></label>
+<label>Neutrons<input data-neutrons type="number" min="0" max="40" required value="12"></label>
+<label>Electrons<input data-electrons type="number" min="0" max="20" required value="11"></label>
+</div>
+<p><button>Update the atom</button> <button data-motion-toggle type="button">Resume motion</button></p>
+</form>
+<output data-atom-result class="result" style="display:block" aria-live="polite">Sodium (Na). Z = 11, A = 23, charge = 0. Neutral atom.</output>
+<p>This simplified diagram shows up to 20 electrons and is not to scale. The circles represent electron shells. The movement is a visual aid. The modern model describes where electrons are likely to be found. Some particle combinations are unstable or unusual.</p>
+</div>
+</div>
+</article>
+</div>
+
+<details class="card topic" id="elements"><summary>Chemical elements</summary><p>Atoms of the same element have the same number of protons. Any atom with six protons is carbon, regardless of its neutron or electron count.</p></details>
+<details class="card topic" id="alteracions"><summary>Changing atoms</summary><p>With the proton count fixed, changing the neutron count gives a different isotope, and changing the electron count changes the charge. Changing the proton count gives a different element.</p></details>
+</section>
+<section id="models">
+<h2>Atomic models from Democritus to today</h2>
+<p>Open a milestone to see what was proposed or discovered and what evidence explains it.</p>
+<ol class="atomic-timeline" role="list">
+<li><button type="button" data-milestone="model-democrit" aria-haspopup="dialog"><span class="timeline-date">5th century BCE</span><strong>The idea of the atom</strong><span class="timeline-person">Democritus</span></button></li>
+<li><button type="button" data-milestone="model-dalton" aria-haspopup="dialog"><span class="timeline-date">Early 19th century</span><strong>Atomic theory of matter</strong><span class="timeline-person">John Dalton</span></button></li>
+<li><button type="button" data-milestone="model-electro" aria-haspopup="dialog"><span class="timeline-date">1897</span><strong>Discovery of the electron</strong><span class="timeline-person">J. J. Thomson</span></button></li>
+<li><button type="button" data-milestone="model-thomson" aria-haspopup="dialog"><span class="timeline-date">1904</span><strong>Model with embedded electrons</strong><span class="timeline-person">J. J. Thomson</span></button></li>
+<li><button type="button" data-milestone="model-rutherford" aria-haspopup="dialog"><span class="timeline-date">1909–1911</span><strong>Gold foil and the nucleus</strong><span class="timeline-person">Geiger, Marsden and Rutherford</span></button></li>
+<li><button type="button" data-milestone="model-bohr" aria-haspopup="dialog"><span class="timeline-date">1913</span><strong>Energy levels</strong><span class="timeline-person">Niels Bohr</span></button></li>
+<li><button type="button" data-milestone="model-proto" aria-haspopup="dialog"><span class="timeline-date">1919–1920</span><strong>Identification of the proton</strong><span class="timeline-person">Ernest Rutherford</span></button></li>
+<li><button type="button" data-milestone="model-schrodinger" aria-haspopup="dialog"><span class="timeline-date">1926</span><strong>Quantum model</strong><span class="timeline-person">Erwin Schrödinger</span></button></li>
+<li><button type="button" data-milestone="model-neutro" aria-haspopup="dialog"><span class="timeline-date">1932</span><strong>Discovery of the neutron</strong><span class="timeline-person">James Chadwick</span></button></li>
+<li><button type="button" data-milestone="model-quarks" aria-haspopup="dialog"><span class="timeline-date">1964 to the late 1960s</span><strong>Quarks</strong><span class="timeline-person">Gell-Mann, Zweig and scattering experiments</span></button></li>
+<li><button type="button" data-milestone="model-actual" aria-haspopup="dialog"><span class="timeline-date">Today</span><strong>How do we describe the atom today?</strong><span class="timeline-person">Quantum model and Standard Model</span></button></li>
+</ol>
+<dialog id="model-democrit" class="milestone-dialog" aria-labelledby="model-democrit-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">5th century BCE · Democritus</p><h3 id="model-democrit-title">The idea of the atom</h3>
+<figure class="model-view" data-model-view="democrit">
+<canvas width="600" height="300" role="img" aria-label="A solid particle with flat faces.">A solid particle with flat faces.</canvas>
+<figcaption>An imaginary shape for the idea of a particle that cannot be divided.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>Democritus proposed that dividing matter would eventually lead to indivisible particles called atoms. This was a philosophical idea. It was not based on experimental measurements.</p></div></dialog>
+<dialog id="model-dalton" class="milestone-dialog" aria-labelledby="model-dalton-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">Early 19th century · John Dalton</p><h3 id="model-dalton-title">Atomic theory of matter</h3>
+<figure class="model-view" data-model-view="dalton">
+<canvas width="600" height="300" role="img" aria-label="Three solid spheres in different colours.">Three solid spheres in different colours.</canvas>
+<figcaption>Each colour represents a different element. The spheres represent atoms with no internal structure in this model.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>Dalton proposed that each element has its own type of atom and that atoms combine in simple whole-number ratios. This explained the mass ratios observed in reactions and compounds.</p></div></dialog>
+<dialog id="model-electro" class="milestone-dialog" aria-labelledby="model-electro-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1897 · J. J. Thomson</p><h3 id="model-electro-title">Discovery of the electron</h3>
+<figure class="model-view" data-model-view="electro">
+<canvas width="600" height="300" role="img" aria-label="Three particles along a curved beam.">Three particles along a curved beam.</canvas>
+<figcaption>A diagram of a beam of electrons bent by a field.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>Thomson noticed that electric and magnetic fields bent cathode rays as expected for a beam of negatively charged particles. These were electrons, particles smaller than atoms.</p></div></dialog>
+<dialog id="model-thomson" class="milestone-dialog" aria-labelledby="model-thomson-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1904 · J. J. Thomson</p><h3 id="model-thomson-title">Model with embedded electrons</h3>
+<figure class="model-view" data-model-view="thomson">
+<canvas width="600" height="300" role="img" aria-label="Blue electrons within a translucent sphere.">Blue electrons within a translucent sphere.</canvas>
+<figcaption>Positive charge is spread throughout the orange sphere. The blue dots are electrons.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>To explain how an atom with electrons could be neutral, Thomson proposed that positive charge was spread throughout the atom, with electrons embedded in it. The positive and negative charges balanced.</p></div></dialog>
+<dialog id="model-rutherford" class="milestone-dialog" aria-labelledby="model-rutherford-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1909–1911 · Geiger, Marsden and Rutherford</p><h3 id="model-rutherford-title">Gold foil and the nucleus</h3>
+<figure class="model-view" data-model-view="rutherford">
+<canvas width="600" height="300" role="img" aria-label="A small positive nucleus with electrons much further away.">A small positive nucleus with electrons much further away.</canvas>
+<figcaption>The nuclear model separates the positive nucleus from the region containing electrons. Distances are not to scale.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><h4>How was the experiment set up?</h4><p>Hans Geiger and Ernest Marsden, working with Ernest Rutherford, aimed a beam of positively charged alpha particles at very thin gold foil. A fluorescent screen gave a small flash where a particle hit it.</p><figure class="milestone-image"><img src="imatges/rutherford.jpg" alt="An alpha particle beam hits gold foil. Some particles continue straight and others scatter towards different parts of a fluorescent screen."><figcaption>The gold foil experiment. Red lines show possible particle paths.</figcaption></figure><h4>What did they observe?</h4><p>Most particles passed through with little or no change in direction. A small fraction changed direction sharply and some came back towards the source.</p><h4>What did Rutherford conclude?</h4><p>Thomson’s model, with positive charge spread out, predicted mainly small changes in direction. In 1911 Rutherford proposed that the positive charge and almost all the mass were concentrated in a tiny nucleus. Particles passing close to it were strongly repelled. Most passed far from it and went almost straight through.</p></div></dialog>
+<dialog id="model-bohr" class="milestone-dialog" aria-labelledby="model-bohr-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1913 · Niels Bohr</p><h3 id="model-bohr-title">Energy levels</h3>
+<figure class="model-view" data-model-view="bohr">
+<canvas width="600" height="300" role="img" aria-label="Two rings with electrons around the nucleus.">Two rings with electrons around the nucleus.</canvas>
+<figcaption>Each ring represents an allowed orbit in Bohr’s model. Sizes and positions are schematic.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>Bohr kept Rutherford’s nucleus and proposed that electrons could only occupy certain orbits with fixed energies. When an electron moves to a lower level, the atom emits light with energy equal to the difference between the levels. This explained the lines in the hydrogen spectrum.</p><figure class="milestone-image"><img src="imatges/bohr.jpg" alt="A nucleus with protons and neutrons surrounded by six electrons in two shells."><figcaption>A school shell diagram with six electrons. The neutron was discovered in 1932, after Bohr proposed his model.</figcaption></figure><p>In the modern quantum model, shells are still linked to energy, and electron positions are described using probabilities.</p></div></dialog>
+<dialog id="model-proto" class="milestone-dialog" aria-labelledby="model-proto-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1919–1920 · Ernest Rutherford</p><h3 id="model-proto-title">Identification of the proton</h3>
+<figure class="model-view" data-model-view="proto">
+<canvas width="600" height="300" role="img" aria-label="An orange sphere with a plus sign.">An orange sphere with a plus sign.</canvas>
+<figcaption>A symbol for the proton, the nucleus of hydrogen-1.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>When Rutherford bombarded nitrogen with alpha particles, hydrogen nuclei were released. He published the results in 1919. In 1920 he proposed the name <em>proton</em> for the nucleus of ordinary hydrogen. The number of protons identifies the element.</p></div></dialog>
+<dialog id="model-schrodinger" class="milestone-dialog" aria-labelledby="model-schrodinger-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1926 · Erwin Schrödinger</p><h3 id="model-schrodinger-title">Quantum model</h3>
+<figure class="model-view" data-model-view="schrodinger">
+<canvas width="600" height="300" role="img" aria-label="A spherical cloud of dots, denser near the centre.">A spherical cloud of dots, denser near the centre.</canvas>
+<figcaption>An example of a 1s orbital. Each dot is a sample from the probability distribution.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>Schrödinger wrote an equation that describes electrons using a wave function. Max Born’s interpretation connects this function to the probability of finding an electron in a particular region. These distributions are linked to orbitals.</p></div></dialog>
+<dialog id="model-neutro" class="milestone-dialog" aria-labelledby="model-neutro-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1932 · James Chadwick</p><h3 id="model-neutro-title">Discovery of the neutron</h3>
+<figure class="model-view" data-model-view="neutro">
+<canvas width="600" height="300" role="img" aria-label="A grey-blue sphere marked zero.">A grey-blue sphere marked zero.</canvas>
+<figcaption>A symbol for a neutron, which has no electrical charge.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>When alpha particles hit beryllium, they produced radiation that could knock protons out of paraffin. Chadwick analysed the energy of these protons and concluded that the radiation contained neutral particles with a mass similar to a proton. Different neutron counts give different isotopes of the same element.</p></div></dialog>
+<dialog id="model-quarks" class="milestone-dialog" aria-labelledby="model-quarks-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">1964 to the late 1960s · Gell-Mann, Zweig and scattering experiments</p><h3 id="model-quarks-title">Quarks</h3>
+<figure class="model-view" data-model-view="quarks">
+<canvas width="600" height="300" role="img" aria-label="Two groups of three spheres marked u or d.">Two groups of three spheres marked u or d.</canvas>
+<figcaption>Valence quarks: uud in the proton (left) and udd in the neutron (right).</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>In 1964 Murray Gell-Mann and George Zweig independently proposed that protons and neutrons contain quarks. Later, electron scattering experiments at SLAC found evidence of smaller components inside the proton.</p><p>The proton has two <i>up</i> quarks and one <i>down</i>quark. The neutron has one <i>up</i> quark and two <i>down</i>quarks. The electron is an elementary particle.</p></div></dialog>
+<dialog id="model-actual" class="milestone-dialog" aria-labelledby="model-actual-title"><div class="milestone-content"><form method="dialog"><button type="submit" autofocus>Close</button></form><p class="timeline-date">Today · Quantum model and Standard Model</p><h3 id="model-actual-title">How do we describe the atom today?</h3>
+<figure class="model-view" data-model-view="actual">
+<canvas width="600" height="300" role="img" aria-label="A nucleus made of particles within an electron cloud.">A nucleus made of particles within an electron cloud.</canvas>
+<figcaption>A modern sketch of a nucleus and an electron cloud, not to scale. Denser dots indicate higher probability.</figcaption>
+<div class="model-view-controls" role="group" aria-label="Model rotation controls">
+<button type="button" data-turn="-1">Rotate left</button>
+<button type="button" data-turn="1">Rotate right</button>
+</div>
+</figure><p>We describe an atom as a nucleus with protons and usually neutrons, surrounded by electrons in quantum states. Orbitals show the probability distribution for each electron.</p><p>At a smaller scale, the Standard Model describes electrons and quarks as elementary particles and gluons as carriers of the strong interaction. Each model answers questions at a different scale.</p></div></dialog>
+<div class="card topic"><h3>Compare milestones</h3><p>Choose two successive models. Explain what stayed the same, what changed and which observation led to the change. For the gold foil experiment, describe what Geiger and Marsden observed and what Rutherford inferred.</p></div>
+<p><a href="https://openstax.org/books/chemistry-2e/pages/2-2-evolution-of-atomic-theory">Evolution of atomic theory · OpenStax</a> · <a href="https://home.cern/science/physics/standard-model/">The Standard Model · CERN</a></p>
+</section>
+<section id="configuracio">
+<h2>Electron configuration</h2>
+<p>Electron configuration shows how electrons are arranged. In the <strong>Bohr model</strong> we draw shells as circles around the nucleus. Each shell corresponds to an energy level. We will use this diagram for the first 20 elements.</p>
+<div class="grid">
+<article class="card">
+<h3>How do we arrange the electrons?</h3>
+<ol>
+<li>Find the atomic number <i>Z</i>. In a neutral atom, the number of electrons equals <i>Z</i>.</li>
+<li>Place up to two electrons in the first shell and up to eight in the second.</li>
+<li>For the first 20 elements, place up to eight electrons in the third shell and any remaining electrons in the fourth.</li>
+</ol>
+<table>
+<caption>Electron shells up to calcium</caption>
+<thead><tr><th scope="col">Shell</th><th scope="col">Possible electron counts in these examples</th></tr></thead>
+<tbody><tr><th scope="row">1st</th><td>Up to 2</td></tr><tr><th scope="row">2nd</th><td>Up to 8</td></tr><tr><th scope="row">3rd</th><td>Up to 8</td></tr><tr><th scope="row">4th</th><td>Up to 2</td></tr></tbody>
+</table>
+<details class="topic"><summary>Why does the fourth shell start filling before the third is full?</summary><p>Electrons occupy the lowest-energy states first. In potassium and calcium, the 4s subshell fills before the 3d subshell. So the third shell has eight electrons in these examples, even though it can hold up to 18. The fourth shell can hold up to 32.</p><p>The circles help us count electrons by shell. The quantum model uses orbitals and probabilities to describe electrons.</p><p><a href="https://openstax.org/books/chemistry/pages/6-4-electronic-structure-of-atoms-electron-configurations">Electron configuration · OpenStax</a></p></details>
+</article>
+<article class="lab">
+<h3>Explore the Bohr model</h3>
+<label for="shell-element">Choose a neutral atom</label>
+<select id="shell-element" style="font:inherit;display:block;max-width:100%;padding:.4rem .5rem"></select>
+<div id="shell-plot" class="atom-plot" aria-hidden="true" data-paused></div>
+<div class="legend"><span class="proton">Protons</span><span class="neutron">Neutrons</span><span class="electron">Electrons</span></div>
+<output class="result" id="shell-result" style="display:block" aria-live="polite"></output>
+</article>
+</div>
+<article class="card topic">
+<h3>From electron counts to the periodic table</h3>
+<p>Sodium has 11 electrons. Its shell arrangement is <strong>2, 8, 1</strong>. It has three occupied shells and one electron in its outer shell. We call this a <strong>valence electron</strong>.</p>
+<p>Predict the arrangements for chlorine (17 electrons) and potassium (19 electrons). How many occupied shells do they have? How many electrons are in the outer shell? Check your answers using the model.</p>
+<details><summary>Check your answer</summary><p>Chlorine has the arrangement 2, 8, 7. It occupies three shells and has seven valence electrons. Potassium has the arrangement 2, 8, 8, 1. It occupies four shells and has one valence electron.</p></details>
+<p><a href="#taula">Continue to the periodic table</a></p>
+</article>
+<article class="card topic"><h3>Activity · Three atoms, three arrangements</h3>
+<p>Draw the shells of three neutral atoms with <strong>9, 12 and 25 electrons</strong>. Place the electrons and write the number in each shell, from the inner shell outwards. Check that the counts add up to the original total.</p>
+<p><strong>Hint for 25 electrons.</strong> Start with calcium (2, 8, 8, 2). The next five electrons fill the 3d subshell, which belongs to the third shell. Keep two electrons in the fourth shell.</p>
+<details><summary>Check all three arrangements</summary><ul><li>Fluorine (9): 2, 7.</li><li>Magnesium (12): 2, 8, 2.</li><li>Manganese (25): 2, 8, 13, 2.</li></ul></details>
+</article>
+</section>
+<section id="taula">
+<h2>Periodic table</h2>
+<p id="ordenacio">Elements are arranged in order of increasing atomic number. The rows are <strong>periods</strong> and the columns are <strong>groups</strong>. Elements in the same group often have similar chemical properties.</p>
+<div class="card">
+<div class="table-scroll" tabindex="0" role="region" aria-label="Extract from the periodic table">
+<table>
+<caption>This table shows parts of groups 1, 2, 17 and 18. Select a symbol to see the element’s data.</caption>
+<thead><tr><th scope="col">Period</th><th scope="col">Group 1</th><th scope="col">Group 2</th><th scope="col">Group 17</th><th scope="col">Group 18</th></tr></thead>
+<tbody>
+<tr><th scope="row">2</th><td><button data-element="Li" aria-pressed="false">Li</button></td><td><button data-element="Be" aria-pressed="false">Be</button></td><td><button data-element="F" aria-pressed="false">F</button></td><td><button data-element="Ne" aria-pressed="false">Ne</button></td></tr>
+<tr><th scope="row">3</th><td><button data-element="Na" aria-pressed="false">Na</button></td><td><button data-element="Mg" aria-pressed="false">Mg</button></td><td><button data-element="Cl" aria-pressed="false">Cl</button></td><td><button data-element="Ar" aria-pressed="false">Ar</button></td></tr>
+<tr><th scope="row">4</th><td><button data-element="K" aria-pressed="false">K</button></td><td><button data-element="Ca" aria-pressed="false">Ca</button></td><td><button data-element="Br" aria-pressed="false">Br</button></td><td><button data-element="Kr" aria-pressed="false">Kr</button></td></tr>
+</tbody>
+</table>
+</div>
+<p id="element-result" class="result" aria-live="polite">Select an element in the table.</p>
+<details><summary>Check your prediction about strontium</summary><p>The common ion is Sr²⁺. Strontium is a group 2 alkaline earth metal, like magnesium and calcium. It commonly has a charge of +2 in compounds.</p></details>
+</div>
+<details class="card topic" id="metalls"><summary>Metals and non-metals</summary><p>Metals generally conduct heat and electricity well, and many form cations. Non-metals have a range of properties. For example, halogens often form ions with charge −1. Graphite is an exception to the usual pattern for conductivity. It is a form of carbon that conducts electricity.</p></details>
+<details class="card topic" id="abundancia"><summary>Abundance of the elements</summary><p>Abundance depends on the place or sample. Hydrogen and helium are the most abundant elements in the universe. Closer to home, composition depends on the material. Pure water contains hydrogen and oxygen. Table salt mainly contains sodium and chloride ions.</p><p><a href="https://science.nasa.gov/universe/glossary/">NASA Universe Glossary</a></p></details>
+</section>
+<section id="repas">
+<h2>Self-assessment and reflection</h2>
+<div class="grid">
+<form id="quiz" class="card">
+<fieldset><legend>1. How many neutrons are in a species with Z = 17 and A = 35?</legend><label><input type="radio" name="neutrons" value="17" required> 17</label><label><input type="radio" name="neutrons" value="18"> 18</label><label><input type="radio" name="neutrons" value="35"> 35</label></fieldset>
+<fieldset><legend>2. Which observation supports the idea of a small, positive nucleus?</legend><label><input type="radio" name="model" value="desviacio" required> Some alpha particles change direction sharply.</label><label><input type="radio" name="model" value="igual"> All alpha particles change direction by the same amount.</label></fieldset>
+<fieldset><legend>3. Why do we expect Na and K to form ions with similar charges?</legend><label><input type="radio" name="grup" value="grup" required> They are in the same group.</label><label><input type="radio" name="grup" value="periode"> They are in the same period.</label></fieldset>
+<button>Check your answers</button>
+<div id="quiz-result" aria-live="polite"></div>
+</form>
+<div class="card"><h3>How has your explanation changed?</h3><label for="reflection">I used to think… Now I would say… The evidence is…</label><textarea id="reflection" rows="5"></textarea><p>You can answer orally, with a labelled diagram or in writing. If you write here, copy your answer to your notebook before closing the page.</p></div>
+</div>
+<article class="card knowledge-check final-check" aria-labelledby="tancament-titol">
+<h3 id="tancament-titol">What have you learnt? Return to the opening questions</h3>
+<p>Answer the five questions again and compare your answers with your first ideas. Choose one answer you changed or improved and support it with an example or evidence from the unit.</p>
+<ol class="reflection-questions">
+<li>What is matter?</li>
+<li>What is everything around us made of?</li>
+<li>Can we break an atom into smaller particles without losing its properties?</li>
+<li>Are all atoms of the same element identical?</li>
+<li>Do atoms of the same element have the same properties?</li>
+</ol>
+</article>
+</section>
+<section id="glossary"><h2>Key vocabulary</h2><dl class="card"><dt><strong>Matter</strong></dt><dd style="margin:0 0 .65rem">Anything that has mass and occupies space.</dd><dt><strong>Atom</strong></dt><dd style="margin:0 0 .65rem">The smallest unit of an element that can take part in a chemical change.</dd><dt><strong>Element</strong></dt><dd style="margin:0 0 .65rem">A substance defined by the number of protons in its atoms.</dd><dt><strong>Nucleus</strong></dt><dd style="margin:0 0 .65rem">The small, dense centre of an atom, containing protons and usually neutrons.</dd><dt><strong>Proton</strong></dt><dd style="margin:0 0 .65rem">A positively charged particle in the nucleus.</dd><dt><strong>Neutron</strong></dt><dd style="margin:0 0 .65rem">A particle in the nucleus with no electrical charge.</dd><dt><strong>Electron</strong></dt><dd style="margin:0 0 .65rem">A negatively charged elementary particle found around the nucleus.</dd><dt><strong>Atomic number (Z)</strong></dt><dd style="margin:0 0 .65rem">The number of protons. It identifies the element.</dd><dt><strong>Mass number (A)</strong></dt><dd style="margin:0 0 .65rem">The total number of protons and neutrons in a nucleus.</dd><dt><strong>Isotope</strong></dt><dd style="margin:0 0 .65rem">One of the forms of an element with the same proton count and a different neutron count.</dd><dt><strong>Ion</strong></dt><dd style="margin:0 0 .65rem">An atom or group of atoms that has gained or lost electrons and has a net charge.</dd><dt><strong>Cation and anion</strong></dt><dd style="margin:0 0 .65rem">A cation is a positive ion. An anion is a negative ion.</dd><dt><strong>Relative charge</strong></dt><dd style="margin:0 0 .65rem">Charge measured in units of the elementary charge. A proton has relative charge +1 and an electron −1.</dd><dt><strong>Atomic mass unit (u)</strong></dt><dd style="margin:0 0 .65rem">One twelfth of the mass of a carbon-12 atom.</dd><dt><strong>Molecule</strong></dt><dd style="margin:0 0 .65rem">A group of atoms joined by chemical bonds, such as H₂O.</dd><dt><strong>Electron shell</strong></dt><dd style="margin:0 0 .65rem">A group of electron states with the same principal energy-level number.</dd><dt><strong>Electron configuration</strong></dt><dd style="margin:0 0 .65rem">The arrangement of electrons in the available shells and subshells.</dd><dt><strong>Orbital</strong></dt><dd style="margin:0 0 .65rem">A description of the probability of finding an electron in different regions.</dd><dt><strong>Valence electron</strong></dt><dd style="margin:0 0 .65rem">For the elements used here, an electron in the outermost occupied shell that can affect bonding.</dd><dt><strong>Group</strong></dt><dd style="margin:0 0 .65rem">A column of the periodic table.</dd><dt><strong>Period</strong></dt><dd style="margin:0 0 .65rem">A row of the periodic table.</dd><dt><strong>Quark</strong></dt><dd style="margin:0 0 .65rem">An elementary particle that helps make up protons and neutrons.</dd><dt><strong>Uncertainty</strong></dt><dd style="margin:0 0 .65rem">The estimated range of doubt associated with a measurement.</dd></dl></section>
+</main>
+<footer><div class="wrap"><a href="https://iupac.org/what-we-do/periodic-table-of-elements/">IUPAC periodic table</a></div></footer>
+<script>
+'use strict';
+const atoms = ['H hydrogen','He helium','Li lithium','Be beryllium','B boron','C carbon','N nitrogen','O oxygen','F fluorine','Ne neon','Na sodium','Mg magnesium','Al aluminium','Si silicon','P phosphorus','S sulfur','Cl chlorine','Ar argon','K potassium','Ca calcium'];
+const pages = [...document.querySelectorAll('main > section')];
+const pageLinks = [...document.querySelectorAll('nav a')];
+function showPage(focusHeading = false) {
+  const target = document.getElementById(location.hash.slice(1));
+  const selected = target?.closest('main > section') ?? pages[0];
+  const topic = target && target !== selected && selected.contains(target) ? target : null;
+  for (const page of pages) page.hidden = page !== selected;
+  for (const link of pageLinks) {
+    if (link.hash === '#' + selected.id) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  }
+  if (topic) {
+    if (topic.tagName === 'DETAILS') topic.open = true;
+    topic.scrollIntoView({block: 'start'});
+  }
+  if (focusHeading) {
+    if (!topic) window.scrollTo(0, 0);
+    const heading = topic?.querySelector('summary') ?? topic ?? selected.querySelector('h1, h2');
+    heading.tabIndex = -1;
+    heading.focus({preventScroll: true});
+  }
+}
+window.addEventListener('hashchange', () => {
+  if (location.hash !== '#contingut') showPage(true);
+});
+showPage();
+const languageLink = document.querySelector('.language-link');
+function syncLanguageLink() {
+  languageLink.hash = ['#contingut', '#glossary'].includes(location.hash) ? '#inici' : location.hash;
+}
+window.addEventListener('hashchange', syncLanguageLink);
+syncLanguageLink();
+
+function electronShellCounts(electrons) {
+  let remaining = electrons;
+  return [2, 8, 8, 2].map(capacity => {
+    const count = Math.min(capacity, remaining);
+    remaining -= count;
+    return count;
+  });
+}
+function drawAtom(target, protons, neutrons, electrons) {
+  const visual = document.createDocumentFragment();
+  for (const inset of [33, 23, 13, 3]) {
+    const ring = document.createElement('span');
+    ring.className = 'ring';
+    ring.style.setProperty('--inset', inset + '%');
+    visual.append(ring);
+  }
+  function addParticle(className, radius, angle, layer = visual) {
+    const particle = document.createElement('i');
+    particle.className = className;
+    particle.style.left = (50 + radius * Math.cos(angle)) + '%';
+    particle.style.top = (50 + radius * Math.sin(angle)) + '%';
+    layer.append(particle);
+  }
+  for (let index = 0; index < protons + neutrons; index++) {
+    const isProton = Math.floor((index + 1) * protons / (protons + neutrons)) >
+      Math.floor(index * protons / (protons + neutrons));
+    addParticle(isProton ? 'proton' : 'neutron', 1.8 * Math.sqrt(index), index * 2.4);
+  }
+  electronShellCounts(electrons).forEach((count, shell) => {
+    const layer = document.createElement('span');
+    layer.className = 'shell-motion';
+    layer.style.setProperty('--period', (6 + 3 * shell) + 's');
+    for (let index = 0; index < count; index++) {
+      addParticle('electron', 17 + shell * 10, index * 2 * Math.PI / count + shell, layer);
+    }
+    visual.append(layer);
+  });
+  target.replaceChildren(visual);
+}
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+for (const panel of document.querySelectorAll('.atom-constructor')) {
+  const form = panel.querySelector('[data-constructor]');
+  const plot = panel.querySelector('[data-atom-plot]');
+  const motion = panel.querySelector('[data-motion-toggle]');
+  function setPaused(paused) {
+    plot.toggleAttribute('data-paused', paused);
+    motion.textContent = paused ? 'Resume motion' : 'Pause motion';
+  }
+  function updateAtom() {
+    if (!form.checkValidity()) return;
+    const p = form.querySelector('[data-protons]').valueAsNumber;
+    const n = form.querySelector('[data-neutrons]').valueAsNumber;
+    const e = form.querySelector('[data-electrons]').valueAsNumber;
+    const [symbol, name] = atoms[p - 1].split(' ');
+    const charge = p - e;
+    const type = charge === 0 ? 'Neutral atom' : charge > 0 ? 'Cation' : 'Anion';
+    panel.querySelector('[data-atom-result]').textContent =
+      `${name[0].toUpperCase() + name.slice(1)} (${symbol}). Z = ${p}, A = ${p + n}, charge = ${charge > 0 ? '+' : ''}${charge}. ${type}.`;
+    drawAtom(plot, p, n, e);
+  }
+  setPaused(reducedMotion.matches);
+  reducedMotion.addEventListener('change', event => setPaused(event.matches));
+  motion.addEventListener('click', () => setPaused(!plot.hasAttribute('data-paused')));
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    updateAtom();
+  });
+  updateAtom();
+}
+const massUnit = document.querySelector('.mass-unit');
+const massUnitButton = massUnit.querySelector('button');
+massUnitButton.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') massUnit.setAttribute('data-dismissed', '');
+});
+massUnitButton.addEventListener('click', () => {
+  massUnit.removeAttribute('data-dismissed');
+  massUnitButton.focus();
+});
+massUnitButton.addEventListener('blur', () => massUnit.removeAttribute('data-dismissed'));
+massUnit.addEventListener('pointerleave', () => {
+  if (document.activeElement !== massUnitButton) massUnit.removeAttribute('data-dismissed');
+});
+
+const massForm = document.querySelector('#atom-mass-form');
+const massPlot = document.querySelector('#mass-plot');
+const massResult = document.querySelector('#atom-mass-result');
+const decimal = new Intl.NumberFormat('en-GB', {maximumSignificantDigits: 4});
+function scientific(value) {
+  const [coefficient, exponent] = value.toExponential(3).split('e');
+  const superscript = String(Number(exponent)).replace(/[0-9-]/g, digit => digit === '-' ? '⁻' : '⁰¹²³⁴⁵⁶⁷⁸⁹'[digit]);
+  return decimal.format(Number(coefficient)) + ' × 10' + superscript;
+}
+function updateMass() {
+  if (!massForm.checkValidity()) {
+    massResult.textContent = 'Enter whole numbers within the allowed ranges.';
+    massPlot.replaceChildren();
+    return;
+  }
+  const {protons, neutrons, electrons} = massForm.elements;
+  const p = protons.valueAsNumber;
+  const n = neutrons.valueAsNumber;
+  const e = electrons.valueAsNumber;
+  const kg = (p + n) * 1.67e-27 + e * 9.11e-31;
+  const units = kg / 1.66054e-27;
+  massResult.textContent = `${atoms[p - 1].split(' ')[0]} · Estimated mass: ${scientific(kg)} kg (≈ ${decimal.format(units)} u).`;
+  drawAtom(massPlot, p, n, e);
+}
+massForm.addEventListener('input', updateMass);
+massForm.addEventListener('submit', event => event.preventDefault());
+updateMass();
+
+const waterMassInput = document.querySelector('#water-molecule-mass');
+const dropInputs = [...document.querySelectorAll('.drop-results .drop-mass')];
+function positiveMass(value) {
+  const normalized = value.trim().replace(',', '.');
+  if (!/^(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?$/i.test(normalized)) return NaN;
+  const mass = Number(normalized);
+  return Number.isFinite(mass) && mass > 0 ? mass : NaN;
+}
+function updateDropCount(input) {
+  const result = input.closest('tr').querySelector('output');
+  const mass = positiveMass(input.value);
+  const moleculeMass = positiveMass(waterMassInput.value);
+  const count = mass / moleculeMass;
+  if (!input.value.trim()) result.textContent = '—';
+  else if (!Number.isFinite(mass)) result.textContent = 'Enter a positive mass for the drops.';
+  else if (!Number.isFinite(moleculeMass)) result.textContent = 'Enter the mass of one molecule.';
+  else if (!Number.isFinite(count) || count <= 0) result.textContent = 'Check the masses and exponents.';
+  else result.textContent = scientific(count);
+}
+for (const input of dropInputs) input.addEventListener('input', () => updateDropCount(input));
+waterMassInput.addEventListener('input', () => dropInputs.forEach(updateDropCount));
+
+function createModelScene(model) {
+  const spheres = [];
+  const paths = [];
+  const blue = '#82cfff', orange = '#ff9b70', grey = '#aab9d8';
+  const add = (x, y, z, radius, color, label = '', opacity = 1) =>
+    spheres.push({x, y, z, radius, color, label, opacity});
+  const circle = (radius, count) => {
+    paths.push(Array.from({length: 81}, (_, i) => {
+      const angle = i * Math.PI / 40;
+      return {x: radius * Math.cos(angle), y: 0, z: radius * Math.sin(angle)};
+    }));
+    for (let i = 0; i < count; i++) {
+      const angle = i * 2 * Math.PI / count;
+      add(radius * Math.cos(angle), 0, radius * Math.sin(angle), 8, blue);
+    }
+  };
+  const nucleus = () => {
+    for (let i = 0; i < 8; i++) {
+      add(i & 1 ? 10 : -10, i & 2 ? 10 : -10, i & 4 ? 10 : -10, 12, i % 3 ? orange : grey);
+    }
+  };
+  const cloud = () => {
+    let seed = 11293;
+    const random = () => {
+      seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+      return (seed + 1) / 4294967297;
+    };
+    for (let i = 0; i < 900; i++) {
+      const r = -23 * Math.log(random() * random() * random());
+      const cosine = 2 * random() - 1, phi = 2 * Math.PI * random();
+      if (r > 123) continue;
+      const horizontal = r * Math.sqrt(1 - cosine * cosine);
+      add(horizontal * Math.cos(phi), r * cosine, horizontal * Math.sin(phi), 1.6, blue, '', .25);
+    }
+  };
+  switch (model) {
+    case 'dalton':
+      add(-78, 0, 22, 32, '#ffc76c');
+      add(0, -16, -26, 45, blue);
+      add(78, 11, 9, 37, orange);
+      break;
+    case 'electro':
+      paths.push(Array.from({length: 30}, (_, i) => ({x: -115 + i * 8, y: -48 + .09 * i * i, z: 0})));
+      for (const i of [4, 14, 25]) add(-115 + i * 8, -48 + .09 * i * i, 0, 13, blue, '−');
+      break;
+    case 'thomson':
+      add(0, 0, 0, 83, orange, '', .26);
+      for (let i = 0; i < 8; i++) add(i & 1 ? 33 : -33, i & 2 ? 29 : -29, i & 4 ? 30 : -30, 10, blue);
+      break;
+    case 'rutherford':
+      add(0, 0, 0, 14, orange, '+');
+      add(-102, 23, 5, 8, blue);
+      add(72, -72, 14, 8, blue);
+      add(32, 68, -60, 8, blue);
+      break;
+    case 'bohr':
+      add(0, 0, 0, 17, orange, '+');
+      circle(54, 2);
+      circle(101, 4);
+      break;
+    case 'proto':
+      add(0, 0, 0, 64, orange, '+');
+      break;
+    case 'neutro':
+      add(0, 0, 0, 64, grey, '0');
+      break;
+    case 'schrodinger':
+      add(0, 0, 0, 5, orange);
+      cloud();
+      break;
+    case 'quarks':
+      for (const [center, letters] of [[-91, 'uud'], [91, 'udd']]) {
+        for (const [i, letter] of [...letters].entries()) {
+          const angle = i * 2 * Math.PI / 3;
+          add(center + 30 * Math.cos(angle), 30 * Math.sin(angle), 15 * Math.sin(angle), 18, letter === 'u' ? orange : blue, letter);
+        }
+      }
+      break;
+    case 'actual':
+      nucleus();
+      cloud();
+      break;
+  }
+  return {spheres, paths};
+}
+
+function drawModelView(canvas, scene, angle, faceted) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const {width, height} = canvas;
+  const tilt = .45;
+  function project({x, y, z}) {
+    const rotatedX = x * Math.cos(angle) + z * Math.sin(angle);
+    const rotatedZ = z * Math.cos(angle) - x * Math.sin(angle);
+    const front = rotatedZ * Math.cos(tilt) + y * Math.sin(tilt);
+    const scale = 340 / (340 - front);
+    return {x: width / 2 + rotatedX * scale, y: height / 2 + (y * Math.cos(tilt) - rotatedZ * Math.sin(tilt)) * scale, front, scale};
+  }
+  ctx.clearRect(0, 0, width, height);
+  if (faceted) {
+    const points = [[0,-78,0],[75,0,0],[0,0,75],[-75,0,0],[0,0,-75],[0,78,0]]
+      .map(([x,y,z]) => project({x,y,z}));
+    const faces = [0,5].flatMap(apex => [1,2,3,4].map(i => [apex,i,i === 4 ? 1 : i+1]))
+      .map((face, i) => ({color: ['#ffcb80','#d9945c','#956043','#e4a66d'][i % 4], points: face.map(j => points[j])}));
+    faces.sort((a,b) => a.points.reduce((sum,p) => sum+p.front,0) - b.points.reduce((sum,p) => sum+p.front,0));
+    for (const face of faces) {
+      ctx.beginPath();
+      face.points.forEach((point, i) => i ? ctx.lineTo(point.x, point.y) : ctx.moveTo(point.x, point.y));
+      ctx.closePath();
+      ctx.fillStyle = face.color;
+      ctx.fill();
+    }
+  }
+  ctx.strokeStyle = '#8399c4';
+  ctx.lineWidth = 2;
+  for (const path of scene.paths) {
+    ctx.beginPath();
+    path.map(project).forEach((point,i) => i ? ctx.lineTo(point.x,point.y) : ctx.moveTo(point.x,point.y));
+    ctx.stroke();
+  }
+  const balls = scene.spheres.map(sphere => ({...sphere, ...project(sphere)})).sort((a,b) => a.front-b.front);
+  for (const ball of balls) {
+    const {x,y,color,label,opacity} = ball;
+    const r = ball.radius * ball.scale;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,2*Math.PI);
+    ctx.globalAlpha = opacity;
+    if (r >= 5) {
+      const gradient = ctx.createRadialGradient(x-r*.32,y-r*.32,0,x,y,r);
+      gradient.addColorStop(0,'#fff');
+      gradient.addColorStop(.4,color);
+      gradient.addColorStop(1,'#40517a');
+      ctx.fillStyle = gradient;
+    } else ctx.fillStyle = color;
+    ctx.fill();
+    if (label) {
+      ctx.fillStyle = '#17253c';
+      ctx.font = `bold ${Math.max(12, r)}px system-ui`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label,x,y);
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+for (const trigger of document.querySelectorAll('[data-milestone]')) {
+  const dialog = document.getElementById(trigger.dataset.milestone);
+  const viewer = dialog.querySelector('[data-model-view]');
+  const canvas = viewer.querySelector('canvas');
+  const model = viewer.dataset.modelView;
+  let scene;
+  let angle = .44;
+  function render() {
+    scene ??= createModelScene(model);
+    drawModelView(canvas, scene, angle, model === 'democrit');
+  }
+  for (const button of viewer.querySelectorAll('[data-turn]')) {
+    button.addEventListener('click', () => {
+      angle += Number(button.dataset.turn) * Math.PI / 10;
+      render();
+    });
+  }
+  trigger.addEventListener('click', () => {
+    dialog.showModal();
+    render();
+  });
+  dialog.addEventListener('close', () => trigger.focus());
+}
+
+const shellSelector = document.querySelector('#shell-element');
+const shellPlot = document.querySelector('#shell-plot');
+const shellResult = document.querySelector('#shell-result');
+const exampleMassNumbers = [1, 4, 7, 9, 11, 12, 14, 16, 19, 20, 23, 24, 27, 28, 31, 32, 35, 40, 39, 40];
+for (const [index, atom] of atoms.entries()) {
+  const [symbol, name] = atom.split(' ');
+  shellSelector.add(new Option(`${symbol} · ${name} (Z = ${index + 1})`, String(index + 1)));
+}
+function updateShellExample() {
+  const atomicNumber = Number(shellSelector.value);
+  const occupied = electronShellCounts(atomicNumber).filter(count => count > 0);
+  const massNumber = exampleMassNumbers[atomicNumber - 1];
+  drawAtom(shellPlot, atomicNumber, massNumber - atomicNumber, atomicNumber);
+  shellResult.textContent = `Arrangement: ${occupied.join(', ')}. Occupied shells: ${occupied.length}. Electrons in the outer shell: ${occupied.at(-1)}.`;
+}
+shellSelector.value = '11';
+shellSelector.addEventListener('change', updateShellExample);
+updateShellExample();
+
+const elementData = {
+  Li: ['Lithium', 3, 1, 2, 'Alkali metal. Common ion Li⁺.'],
+  Be: ['Beryllium', 4, 2, 2, 'Alkaline earth metal. Common oxidation state +2.'],
+  F: ['Fluorine', 9, 17, 2, 'Halogen, non-metal. Common ion F⁻.'],
+  Ne: ['Neon', 10, 18, 2, 'Noble gas with very low reactivity.'],
+  Na: ['Sodium', 11, 1, 3, 'Alkali metal. Common ion Na⁺.'],
+  Mg: ['Magnesium', 12, 2, 3, 'Alkaline earth metal. Common ion Mg²⁺.'],
+  Cl: ['Chlorine', 17, 17, 3, 'Halogen, non-metal. Common ion Cl⁻.'],
+  Ar: ['Argon', 18, 18, 3, 'Noble gas with very low reactivity.'],
+  K: ['Potassium', 19, 1, 4, 'Alkali metal. Common ion K⁺.'],
+  Ca: ['Calcium', 20, 2, 4, 'Alkaline earth metal. Common ion Ca²⁺.'],
+  Br: ['Bromine', 35, 17, 4, 'Halogen, non-metal. Common ion Br⁻.'],
+  Kr: ['Krypton', 36, 18, 4, 'Noble gas with low reactivity.']
+};
+const elementButtons = document.querySelectorAll('[data-element]');
+for (const button of elementButtons) {
+  button.addEventListener('click', () => {
+    const symbol = button.dataset.element;
+    const [name, atomicNumber, group, period, properties] = elementData[symbol];
+    for (const item of elementButtons) item.setAttribute('aria-pressed', String(item === button));
+    document.querySelector('#element-result').textContent =
+      `${name} (${symbol}). Z = ${atomicNumber}, group ${group}, period ${period}. ${properties}`;
+  });
+}
+const questions = [
+  ['neutrons', '18', 'Subtract the atomic number from the mass number. 35 − 17 = 18.'],
+  ['model', 'desviacio', 'The large changes in direction suggest that positive charge is concentrated in a small region.'],
+  ['grup', 'grup', 'Na and K are both in group 1 and usually form ions with a charge of +1.']
+];
+document.querySelector('#quiz').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const answers = new FormData(event.currentTarget);
+  const list = document.createElement('ol');
+  let score = 0;
+  for (const [key, correctAnswer, explanation] of questions) {
+    const correct = answers.get(key) === correctAnswer;
+    if (correct) score++;
+    const item = document.createElement('li');
+    item.textContent = `${correct ? 'Correct.' : 'Try again.'} ${explanation}`;
+    list.append(item);
+  }
+  const total = document.createElement('p');
+  total.textContent = `${score} out of ${questions.length} correct.`;
+  document.querySelector('#quiz-result').replaceChildren(total, list);
+});
+</script>
+</body>
+</html>
