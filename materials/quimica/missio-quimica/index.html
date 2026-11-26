@@ -165,6 +165,16 @@
         .map-examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.5rem), 1fr)); gap: .375rem; margin-top: .5rem; }
         .map-example { min-width: 0; padding: .375rem .25rem; border: 1px solid #cbc5ce; border-radius: .5rem; background: #fffdfa; color: #302831; font-size: .75rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; }
         .map-example svg { display: block; width: 100%; max-width: 4rem; height: 2.5rem; margin: 0 auto .25rem; }
+        @media (max-width: 540px) {
+            #tab-mapa .grid-cols-2 .grid-cols-2 { grid-template-columns: minmax(0, 1fr); }
+        }
+        #tab-mapa .grid-cols-2 { min-width: 0; overflow-wrap: anywhere; }
+        .mission-tools { display: flex; flex-wrap: wrap; gap: .5rem; margin-left: auto; }
+        .mission-terms > div { border-bottom: 1px solid #d6cdd0; padding: .75rem 0; }
+        .mission-terms dt { font-weight: 700; }
+        .mission-terms dd { margin-top: .35rem; }
+        .mission-terms dd[lang="en-GB"] { color: #514751; }
+        #mission-glossary { width: min(48rem, calc(100% - 2rem)); }
         @media (prefers-reduced-motion: reduce) { .tab-content { animation: none; } }
     </style>
 </head>
@@ -174,6 +184,10 @@
     <div class="sc-masthead">
         <a class="sc-brand" href="../../../index.html" aria-label="Scienceduca · Inici"><img src="../../../assets/favicon-192.png?v=20261114-cat" width="48" height="48" alt=""></a>
         <a class="sc-subtitle" href="../index.html">Torna a Química</a>
+        <div class="mission-tools">
+            <button type="button" id="language-toggle" class="lego-check" aria-label="Canvia a anglès britànic B2" aria-pressed="false">🇬🇧 English (B2)</button>
+            <button type="button" class="lego-control" onclick="document.getElementById('mission-glossary').showModal()" aria-haspopup="dialog">Glossari / Glossary</button>
+        </div>
     </div>
 
     <section class="air-opening" aria-labelledby="air-question-title">
@@ -1362,8 +1376,17 @@
             if (typeof jsPDF !== 'function') throw new Error('jsPDF unavailable');
             const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
             if (typeof doc.autoTable !== 'function') throw new Error('AutoTable unavailable');
+            // Standard PDF fonts lack subscript glyphs; preserve formulas as H2O, CO2, etc.
+            const pdfText = text => typeof text === 'string' ? missionTranslate(text).replace(/[₀-₉]/g, digit => String('₀₁₂₃₄₅₆₇₈₉'.indexOf(digit))) : text;
+            const originalText = doc.text.bind(doc);
+            doc.text = (text, ...args) => originalText(Array.isArray(text) ? text.map(pdfText) : pdfText(text), ...args);
+            const originalTable = doc.autoTable.bind(doc);
+            doc.autoTable = options => originalTable({...options,
+                head: options.head.map(row => row.map(pdfText)),
+                body: options.body.map(row => row.map(pdfText))
+            });
             const elapsedTime = getFormattedElapsedTime();
-            const currentDate = new Date().toLocaleDateString('ca-ES', {
+            const currentDate = new Date().toLocaleDateString(missionLanguage === 'ca' ? 'ca-ES' : 'en-GB', {
                 day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
             });
 
@@ -1431,7 +1454,7 @@
                 bodyStyles: { fontSize: 8.5, textColor: [30, 41, 59] },
                 didParseCell: function(data) {
                     if (data.section === 'body' && data.column.index === 2) {
-                        if (data.cell.raw === 'Correcte') {
+                        if (data.cell.raw === missionTranslate('Correcte')) {
                             data.cell.styles.textColor = [20, 100, 72];
                             data.cell.styles.fontStyle = 'bold';
                         } else {
@@ -1484,7 +1507,7 @@
                 bodyStyles: { fontSize: 8.5, textColor: [30, 41, 59] },
                 didParseCell: function(data) {
                     if (data.section === 'body' && data.column.index === 2) {
-                        if (data.cell.raw === 'Correcte') {
+                        if (data.cell.raw === missionTranslate('Correcte')) {
                             data.cell.styles.textColor = [20, 100, 72];
                             data.cell.styles.fontStyle = 'bold';
                         } else {
@@ -1520,12 +1543,379 @@
             // Descarregar el fitxer PDF amb nom personalitzat
             const cleanCode = code.replace(/[^a-zA-Z0-9_-]/g, '_');
             const cleanGroup = group.replace(/\s+/g, '_');
-            doc.save(`Informe_Materia_${cleanGroup}_${cleanCode}.pdf`);
+            doc.save(`${missionLanguage === 'ca' ? 'Informe_Materia' : 'Matter_Report'}_${cleanGroup}_${cleanCode}.pdf`);
             } catch (error) {
                 console.error(error);
                 errorEl.textContent = 'Ara mateix no es pot generar el PDF. Mantén aquesta pàgina oberta per conservar les respostes i avisa el professorat.';
             }
         }
     </script>
+<dialog id="mission-glossary" class="air-dialog" aria-labelledby="glossary-title">
+<h2 id="glossary-title" tabindex="-1" autofocus data-bilingual><span lang="ca">Glossari bilingüe</span> / <span lang="en-GB">Bilingual glossary</span></h2>
+<p data-bilingual><span lang="ca">Suport AICLE: compara els termes i utilitza’ls per justificar les teves respostes.</span><br><span lang="en-GB">CLIL support: compare the terms and use them to explain your answers.</span></p>
+<dl class="mission-terms" data-bilingual>
+<div><dt><span lang="ca">Matèria</span> · <span lang="en-GB">Matter</span></dt><dd lang="ca">Tot allò que té massa i ocupa espai.</dd><dd lang="en-GB">Anything that has mass and takes up space.</dd></div>
+<div><dt><span lang="ca">Substància pura</span> · <span lang="en-GB">Pure substance</span></dt><dd lang="ca">Matèria amb composició fixa: un element o un compost.</dd><dd lang="en-GB">Matter with a fixed composition: an element or a compound.</dd></div>
+<div><dt><span lang="ca">Element</span> · <span lang="en-GB">Element</span></dt><dd lang="ca">Substància pura formada per un sol tipus d’àtom, com el coure o l’oxigen.</dd><dd lang="en-GB">A pure substance made of one type of atom, such as copper or oxygen.</dd></div>
+<div><dt><span lang="ca">Compost</span> · <span lang="en-GB">Compound</span></dt><dd lang="ca">Substància pura amb àtoms de diferents elements units químicament en proporcions fixes.</dd><dd lang="en-GB">A pure substance with atoms of different elements chemically bonded in fixed proportions.</dd></div>
+<div><dt><span lang="ca">Àtom</span> · <span lang="en-GB">Atom</span></dt><dd lang="ca">Unitat més petita que conserva la identitat d’un element; una peça en el model LEGO.</dd><dd lang="en-GB">The smallest unit that keeps the identity of an element; one brick in the LEGO model.</dd></div>
+<div><dt><span lang="ca">Molècula</span> · <span lang="en-GB">Molecule</span></dt><dd lang="ca">Grup d’àtoms units químicament, com O₂ o H₂O. No tots els compostos formen molècules: la sal forma una xarxa d’ions.</dd><dd lang="en-GB">A group of chemically bonded atoms, such as O₂ or H₂O. Not all compounds form molecules: salt forms a lattice of ions.</dd></div>
+<div><dt><span lang="ca">Enllaç químic</span> · <span lang="en-GB">Chemical bond</span></dt><dd lang="ca">Unió que manté els àtoms junts en una substància.</dd><dd lang="en-GB">An attraction that holds atoms together in a substance.</dd></div>
+<div><dt><span lang="ca">Ió</span> · <span lang="en-GB">Ion</span></dt><dd lang="ca">Àtom o grup d’àtoms amb càrrega elèctrica; la sal dissolta aporta ions a l’aigua.</dd><dd lang="en-GB">An atom or group of atoms with an electric charge; dissolved salt adds ions to water.</dd></div>
+<div><dt><span lang="ca">Partícula</span> · <span lang="en-GB">Particle</span></dt><dd lang="ca">Terme general per a les unitats petites de la matèria, com àtoms, molècules o ions.</dd><dd lang="en-GB">A general term for small units of matter, such as atoms, molecules or ions.</dd></div>
+<div><dt><span lang="ca">Mescla</span> · <span lang="en-GB">Mixture</span></dt><dd lang="ca">Combinació de dues substàncies o més; les proporcions poden variar.</dd><dd lang="en-GB">Two or more substances combined; their proportions can vary.</dd></div>
+<div><dt><span lang="ca">Mescla homogènia / dissolució</span> · <span lang="en-GB">Homogeneous mixture / solution</span></dt><dd lang="ca">Mescla uniforme amb una sola fase, com l’aire net o la sal totalment dissolta en aigua.</dd><dd lang="en-GB">A uniform mixture with one phase, such as clean air or salt fully dissolved in water.</dd></div>
+<div><dt><span lang="ca">Mescla heterogènia</span> · <span lang="en-GB">Heterogeneous mixture</span></dt><dd lang="ca">Mescla amb dues fases o més, com aigua i oli o gotes d’aigua en l’aire (boira).</dd><dd lang="en-GB">A mixture with two or more phases, such as water and oil or water droplets in air (fog).</dd></div>
+<div><dt><span lang="ca">Fase</span> · <span lang="en-GB">Phase</span></dt><dd lang="ca">Part d’un sistema amb composició i propietats uniformes; l’oli i l’aigua formen dues fases.</dd><dd lang="en-GB">A region with uniform composition and properties; oil and water form two phases.</dd></div>
+<div><dt><span lang="ca">Dissoldre</span> · <span lang="en-GB">Dissolve</span></dt><dd lang="ca">Distribuir un solut en un dissolvent fins a formar una dissolució, com sucre en aigua.</dd><dd lang="en-GB">To spread a solute through a solvent to form a solution, such as sugar in water.</dd></div>
+<div><dt><span lang="ca">Propietat característica</span> · <span lang="en-GB">Characteristic property</span></dt><dd lang="ca">Propietat que ajuda a identificar una substància, com el punt d’ebullició a una pressió determinada.</dd><dd lang="en-GB">A property that helps identify a substance, such as its boiling point at a given pressure.</dd></div>
+<div><dt><span lang="ca">Reacció química</span> · <span lang="en-GB">Chemical reaction</span></dt><dd lang="ca">Procés que transforma substàncies en altres substàncies reorganitzant els àtoms.</dd><dd lang="en-GB">A process that changes substances into other substances by rearranging atoms.</dd></div>
+<div><dt><span lang="ca">Vapor d’aigua</span> · <span lang="en-GB">Water vapour</span></dt><dd lang="ca">Aigua en estat gasós, invisible; la boira conté gotes líquides.</dd><dd lang="en-GB">Water in its invisible gas state; fog contains liquid droplets.</dd></div>
+<div><dt><span lang="ca">Aire net / aire pur</span> · <span lang="en-GB">Clean air / pure air</span></dt><dd lang="ca">En llenguatge quotidià, aire poc contaminat. Químicament continua sent una mescla.</dd><dd lang="en-GB">In everyday language, air with little pollution. Chemically, it is still a mixture.</dd></div>
+</dl><p data-bilingual><span lang="ca">Per justificar: «És un/una… perquè…»</span><br><span lang="en-GB">To explain: “It is a/an… because…” · “It contains… types of particle.” · “Unlike…, it…”</span></p>
+<form method="dialog"><button class="lego-check">Tanca</button></form></dialog>
+
+    <script id="mission-i18n">
+    // Catalan is the default on every visit. Keep form values and activity state intact.
+    let missionLanguage = 'ca';
+    const missionEnglish = {
+        "Missió Química: Classificació de la Matèria (2n ESO) · Scienceduca": "Chemistry Mission: Classifying Matter (2n ESO) · Scienceduca",
+        "Salta al contingut": "Skip to content",
+        "Scienceduca · Inici": "Scienceduca · Home",
+        "Torna a Química": "Back to Chemistry",
+        "Paisatge de muntanya amb una vall verda i el cel blau i serè": "Mountain landscape with a green valley and a clear blue sky",
+        "Està ben dit, vaig a la muntanya a respirar aire pur?": "Is it correct to say, “I go to the mountains to breathe pure air”?",
+        "Resposta": "Answer",
+        "Què vol dir «aire pur»?": "What does “pure air” mean?",
+        "En el llenguatge quotidià, «aire pur» vol dir": "In everyday language, “pure air” means",
+        "aire net, amb poca contaminació": "clean air with little pollution",
+        ". En química, l’aire és una": ". In chemistry, air is a",
+        "mescla homogènia de gasos": "homogeneous mixture of gases",
+        ", fins i tot quan el cel és ben serè.": ", even when the sky is completely clear.",
+        "Composició aproximada de l’aire sec, en volum": "Approximate composition of dry air by volume",
+        "Fórmula i model": "Formula and model",
+        "Abundància": "Abundance",
+        "Dos àtoms de nitrogen units per un enllaç triple": "Two nitrogen atoms joined by a triple bond",
+        "78,08 %": "78.08 %",
+        "Oxigen": "Oxygen",
+        "Dos àtoms d’oxigen units per un enllaç doble": "Two oxygen atoms joined by a double bond",
+        "20,95 %": "20.95 %",
+        "Argó": "Argon",
+        "Un àtom de argó": "One argon atom",
+        "0,93 %": "0.93 %",
+        "Diòxid de carboni": "Carbon dioxide",
+        "Molècula lineal amb un carboni central i un oxigen a cada extrem": "A linear molecule with a central carbon atom and an oxygen atom at each end",
+        "0,04 %": "0.04 %",
+        "Neó": "Neon",
+        "Un àtom de neó": "One neon atom",
+        "0,0018 %": "0.0018 %",
+        "Heli": "Helium",
+        "Un àtom de heli": "One helium atom",
+        "0,00052 %": "0.00052 %",
+        "Metà": "Methane",
+        "Molècula tetraèdrica de metà: un carboni central unit a quatre hidrògens": "A tetrahedral methane molecule: a central carbon atom bonded to four hydrogen atoms",
+        "0,0002 %": "0.0002 %",
+        "Criptó": "Krypton",
+        "Un àtom de criptó": "One krypton atom",
+        "0,00011 %": "0.00011 %",
+        "Colors dels elements": "Element colours",
+        "Els percentatges estan arrodonits. L’aire que respirem també conté": "The percentages are rounded. The air we breathe also contains",
+        "vapor d’aigua (H₂O)": "water vapour (H₂O)",
+        "en una proporció que varia amb la humitat.": "in an amount that varies with humidity.",
+        "Molècula angular amb un oxigen unit a dos hidrògens": "A bent molecule with one oxygen atom bonded to two hydrogen atoms",
+        "Font de les proporcions principals · NASA": "Source for the main proportions · NASA",
+        "Tanca": "Close",
+        "Física i Química • 2n d'ESO": "Physics and Chemistry • 2n ESO",
+        "Missió Química: Què hi ha dins de les coses?": "Chemistry Mission: What are things made of?",
+        "Pensa en el que esmorzes cada matí. Avui farem de detectius per descobrir com s'ordenen les peces invisibles de l'univers!": "Think about your breakfast each morning. Today we will be detectives and discover how the invisible building blocks of the universe are arranged!",
+        "Objectius d'aprenentatge": "Learning objectives",
+        "Diferenciar entre": "Tell the difference between",
+        "substàncies pures": "pure substances",
+        "i": "and",
+        "mescles": "mixtures",
+        "Classificar les pures en": "Classify pure substances as",
+        "elements": "elements",
+        "compostos": "compounds",
+        "Identificar mescles": "Identify mixtures as",
+        "homogènies": "homogeneous",
+        "heterogènies": "heterogeneous",
+        "Identificació de l'alumnat": "Student details",
+        "Identificació del detectiu/va": "Detective details",
+        "Escriu les teves dades abans de començar els reptes": "Enter your details before starting the challenges",
+        "Codi d'alumne": "Student code",
+        "Codi d'alumne (ex: AL-14)": "Student code (e.g. AL-14)",
+        "Grup classe": "Class group",
+        "Grup classe...": "Class group...",
+        "Dades registrades": "Details saved",
+        "1. Analogia LEGO": "1. LEGO analogy",
+        "2. Mapa Mental": "2. Mind map",
+        "3. Posa't a prova!": "3. Test yourself!",
+        "4. Tria la teva aventura": "4. Choose your adventure",
+        "La Gran Analogia: El Món dels LEGO": "The big analogy: The world of LEGO",
+        "Per entendre de què està feta la matèria, imaginarem que tot l'univers està construït amb peces de": "To understand what matter is made of, imagine that the whole universe is built from",
+        "(que representen els": "(representing",
+        "àtoms": "atoms",
+        "). Observa les quatre targetes i compara els dibuixos.": "). Look at the four cards and compare the drawings.",
+        "Substància Pura": "Pure substance",
+        "1. ELEMENT": "1. ELEMENT",
+        "Visió microscòpica: Àtoms iguals": "Microscopic view: Identical atoms",
+        "🧱 Analogia LEGO:": "🧱 LEGO analogy:",
+        "Una capsa plena de peces": "A box full of bricks that are",
+        "exactament iguals": "exactly the same",
+        "(ex: totes vermelles de 2 punts).": "(e.g. all red with two studs).",
+        "Quatre peces vermelles iguals, cadascuna amb dos sortints.": "Four identical red bricks, each with two studs.",
+        "👁️ A simple vista:": "👁️ To the naked eye:",
+        "Aspecte uniforme. No es pot separar en res més senzill.": "It looks uniform. It cannot be broken down into simpler substances.",
+        "Exemples: Or (Au) i coure (Cu). L’oxigen gasós (O₂) també és un element: cada molècula té dos àtoms d’oxigen.": "Examples: Gold (Au) and copper (Cu). Oxygen gas (O₂) is also an element: each molecule has two oxygen atoms.",
+        "2. COMPOST": "2. COMPOUND",
+        "Visió microscòpica: Molècules idèntiques": "Microscopic view: Identical molecules",
+        "Una capsa plena de": "A box full of",
+        "minifigures idèntiques": "identical minifigures",
+        "(1 peça blava i 2 grogues enganxades).": "(one blue brick and two yellow bricks joined together).",
+        "Dos muntatges idèntics, cadascun amb una peça blava i dues de grogues unides.": "Two identical models, each with one blue brick joined to two yellow bricks.",
+        "Aspecte uniforme. Només se separa trencant les peces (reacció química).": "It looks uniform. The joined parts can only be separated by breaking chemical bonds (a chemical reaction).",
+        "Exemples: Aigua destil·lada (H₂O), Sal pura (NaCl), CO₂.": "Examples: Distilled water (H₂O), pure salt (NaCl), CO₂.",
+        "Mescla (Dissolució)": "Mixture (solution)",
+        "3. MESCLA HOMOGÈNIA": "3. HOMOGENEOUS MIXTURE",
+        "Visió microscòpica: Partícules diferents ben barrejades": "Microscopic view: Different particles mixed evenly",
+        "Peces vermelles i blaves tan ben remenades i petites que de lluny sembla un sol color lila.": "Red and blue bricks so small and well mixed that they look purple from a distance.",
+        "Peces vermelles i blaves soltes, intercalades per tota la capsa.": "Separate red and blue bricks mixed evenly throughout the box.",
+        "🔎 Com és?": "🔎 What is it like?",
+        "És uniforme i presenta una sola fase.": "It is uniform and has a single phase.",
+        "Exemples: Aigua amb sal, Aire net, Acer inoxidable.": "Examples: Salt water, clean air, stainless steel.",
+        "Mescla": "Mixture",
+        "4. MESCLA HETEROGÈNIA": "4. HETEROGENEOUS MIXTURE",
+        "Visió microscòpica: Zones separades": "Microscopic view: Separate regions",
+        "Un munt de peces grogues a un costat de la capsa i un munt de rodes a l'altre.": "A pile of yellow bricks on one side of the box and a pile of wheels on the other.",
+        "Peces grogues agrupades a l’esquerra i rodes negres agrupades a la dreta.": "Yellow bricks grouped on the left and black wheels grouped on the right.",
+        "Presenta dues fases o més. De vegades cal observar-la amb més detall.": "It has two or more phases. Sometimes you need to examine it more closely.",
+        "Exemples: Aigua amb oli, Cereals amb llet, Granit, Amanida.": "Examples: Water and oil, cereal with milk, granite, salad.",
+        "El Mapa Mental de la Matèria (Assistent de Classificació)": "The matter mind map (classification guide)",
+        "Tens dubtes amb algun material? Segueix aquestes preguntes pas a pas com si fos un joc de pistes per descobrir què és!": "Unsure how to classify a material? Follow these questions step by step, like clues, to find out!",
+        "LA MATÈRIA (Qualsevol cosa que ens envolta)": "MATTER (The things around us)",
+        "❓ Està formada per un SOL tipus de substància amb propietats fixes?": "❓ Is it made of just ONE substance with fixed properties?",
+        "(És a dir, una sola capsa de LEGO sense barrejar)": "(That is, one type of LEGO model, without mixing types)",
+        "SÍ": "YES",
+        "SUBSTÀNCIA PURA": "PURE SUBSTANCE",
+        "❓ Es pot descompondre en substàncies més simples?": "❓ Can it be broken down into simpler substances?",
+        "Àtoms iguals ordenats en una xarxa": "Identical atoms arranged in a lattice",
+        "Or (Au)": "Gold (Au)",
+        "Dos àtoms d’oxigen units": "Two oxygen atoms bonded together",
+        "Oxigen (O₂)": "Oxygen (O₂)",
+        "COMPOST": "COMPOUND",
+        "Un àtom d’oxigen unit a dos d’hidrogen": "One oxygen atom bonded to two hydrogen atoms",
+        "Aigua (H₂O)": "Water (H₂O)",
+        "Un àtom de carboni unit a dos d’oxigen": "One carbon atom bonded to two oxygen atoms",
+        "Diòxid de carboni (CO₂)": "Carbon dioxide (CO₂)",
+        "MESCLA": "MIXTURE",
+        "❓ La mescla és uniforme i presenta una sola fase?": "❓ Is the mixture uniform, with a single phase?",
+        "HOMOGÈNIA": "HOMOGENEOUS",
+        "Ions de la sal distribuïts per tota l’aigua": "Salt ions distributed throughout the water",
+        "Aigua amb sal totalment dissolta": "Water with salt fully dissolved",
+        "HETEROGÈNIA": "HETEROGENEOUS",
+        "Gotes líquides separades i disperses": "Separate liquid droplets spread out",
+        "Boira (gotes d’aigua en l’aire)": "Fog (water droplets in air)",
+        "Nivell 1": "Level 1",
+        "🔍 L'ull del detectiu (Classificació visual)": "🔍 The detective’s eye (visual classification)",
+        "💡 Pista: Fixa't en el dibuix microscòpic!": "💡 Hint: Look closely at the microscopic drawing!",
+        "Mostra quotidiana": "Everyday sample",
+        "Visió Microscòpica": "Microscopic view",
+        "La teva classificació": "Your classification",
+        "Estat": "Status",
+        "Comprova el Nivell 1": "Check Level 1",
+        "Nivell 2": "Level 2",
+        "🧠 Raonament científic (Completa les frases)": "🧠 Scientific reasoning (complete the sentences)",
+        "Banc de paraules:": "Word bank:",
+        "homogènia": "homogeneous",
+        "compost": "compound",
+        "heterogènia": "heterogeneous",
+        "element": "element",
+        "propietats": "properties",
+        "1. L'or (Au) és un": "1. Gold (Au) is an",
+        "-- tria --": "-- choose --",
+        "perquè està format per un sol tipus d'": "because it contains only identical",
+        "2. El diòxid de carboni (CO₂) és un": "2. Carbon dioxide (CO₂) is a",
+        "perquè està format per carboni i oxigen units químicament.": "because it is made of carbon and oxygen chemically bonded together.",
+        "3. Si barregem aigua i sucre i ho remenem bé, obtenim una mescla": "3. If we mix water and sugar and stir well, we obtain a mixture that is",
+        "perquè no podem veure el sucre.": "because we cannot see the dissolved sugar.",
+        "4. Una pizza és una mescla": "4. A pizza is a mixture that is",
+        "perquè podem veure clarament el formatge, el tomàquet i la massa.": "because we can clearly see the cheese, tomato and base.",
+        "5. Les substàncies pures tenen unes": "5. Pure substances have",
+        "(com la temperatura a la qual bullen) que mai canvien.": "(such as their boiling point) that remain fixed under the same conditions.",
+        "Comprova el Nivell 2": "Check Level 2",
+        "🧱 Repte LEGO · Construeix un model": "🧱 LEGO challenge · Build a model",
+        "Tria el model que vols construir.": "Choose the model you want to build.",
+        "Selecciona una peça i toca una casella. Repeteix-ho fins a omplir el tauler.": "Select a brick and tap a slot. Repeat until the board is full.",
+        "Comprova el resultat.": "Check the result.",
+        "Què vols construir?": "What do you want to build?",
+        "Una substància pura: un element": "A pure substance: an element",
+        "Una substància pura: un compost": "A pure substance: a compound",
+        "Una mescla": "A mixture",
+        "Safata de peces": "Brick tray",
+        "Vermella 1 × 1": "Red 1 × 1",
+        "Blanca 2 × 1": "White 2 × 1",
+        "Vermella + blanca unides": "Red + white joined",
+        "Esborra": "Erase",
+        "Capsa de la mostra": "Sample box",
+        "Buit": "Empty",
+        "Comprova el model": "Check the model",
+        "Buida el tauler": "Clear the board",
+        "Pista": "Hint",
+        "Cada bloc, tingui un sortint o dos, representa": "Each brick, whether it has one stud or two, represents",
+        "un àtom": "one atom",
+        ". Dos blocs units representen una molècula. Observa quants tipus de partícules diferents hi ha a la capsa. Una parella unida compta com un sol tipus de partícula.": ". Two joined bricks represent a molecule. Look at how many different types of particle are in the box. A joined pair counts as one type of particle.",
+        "Nivell 3 • Expressió i Acció (DUA)": "Level 3 • Expression and action (UDL)",
+        "🚀 Tria la teva aventura!": "🚀 Choose your adventure!",
+        "Per demostrar que has entès la diferència entre els 4 tipus de matèria,": "To show that you understand the difference between the four types of matter,",
+        "tria NOMÉS UNA": "choose ONLY ONE",
+        "de les següents opcions per presentar-la a classe o al Classroom:": "of these options to present in class or on Classroom:",
+        "Opció A: Còmic Visual": "Option A: Visual comic",
+        "Dibuixa un còmic de 4 vinyetes on els protagonistes siguin peces de LEGO o personatges que representin un": "Draw a four-panel comic with LEGO bricks or characters representing an",
+        "Element": "Element",
+        ", un": ", a",
+        "Compost": "Compound",
+        ", una": ", a",
+        "Mescla Homogènia": "Homogeneous Mixture",
+        "i una": "and a",
+        "Mescla Heterogènia": "Heterogeneous Mixture",
+        "preparant un berenar.": "preparing a snack.",
+        "Ideal si t'agrada dibuixar": "Ideal if you enjoy drawing",
+        "Opció B: Reporter a la Cuina": "Option B: Kitchen reporter",
+        "Grava un àudio o un vídeo curt (màxim 1 minut, estil Reel/TikTok educatiu) anant per la cuina de casa teva, ensenyant 4 productes reals (un de cada tipus) i explicant per què pertanyen a cada grup.": "Record a short audio or video (up to one minute, in the style of an educational Reel/TikTok) in your kitchen. Show four real products, one of each type, and explain why each belongs to its group.",
+        "Ideal si t'agrada explicar-ho parlant": "Ideal if you enjoy explaining things aloud",
+        "Opció C: Anàlisi Escrita": "Option C: Written analysis",
+        "Escriu una taula comparativa analitzant els ingredients d'un esmorzar (llet amb cacau, torrada amb mantega, suc de taronja amb polpa i una cullera d'acer) classificant cada element i justificant la resposta.": "Create a comparison table for a breakfast: milk with cocoa, toast with butter, orange juice with pulp, and a steel spoon. Classify each item and explain your answer.",
+        "Ideal si prefereixes redactar": "Ideal if you prefer writing",
+        "Missió acceptada!": "Mission accepted!",
+        "Semàfor d'Autoavaluació": "Self-assessment traffic light",
+        "Com et sents respecte al que has après avui? Fes clic al teu color:": "How do you feel about what you have learnt today? Choose your colour:",
+        "VERD": "GREEN",
+        "Ho he entès perfectament! Sabria explicar-ho a un company/a.": "I understand it fully! I could explain it to a classmate.",
+        "GROC": "AMBER",
+        "Ho entenc bastant, però dubto una mica entre compost i mescla homogènia.": "I mostly understand it, but I am still unsure about compounds and homogeneous mixtures.",
+        "VERMELL": "RED",
+        "Necessito que el professor/a m'ho torni a explicar amb altres exemples.": "I need my teacher to explain it again with different examples.",
+        "Finalitza i descarrega el teu informe": "Finish and download your report",
+        "Es generarà un document PDF oficial amb les teves respostes, intents i temps emprat per lliurar-lo al professor/a.": "A PDF report will be created with your answers, attempts and time spent, ready to hand in to your teacher.",
+        "Recorda escriure el teu codi d'alumne i grup classe a la part superior abans de descarregar!": "Remember to enter your student code and class group at the top before downloading!",
+        "Descarrega Informe (PDF)": "Download report (PDF)",
+        "Construeix una substància pura que sigui un element.": "Build a pure substance that is an element.",
+        "Omple la capsa amb peces soltes totes del mateix tipus: quatre vermelles o quatre blanques.": "Fill the box with separate bricks of the same type: four red or four white.",
+        "Construeix una substància pura que sigui un compost.": "Build a pure substance that is a compound.",
+        "Omple la capsa amb quatre parelles idèntiques. Cada parella té una peça vermella i una de blanca unides.": "Fill the box with four identical pairs. Each pair has one red and one white brick joined together.",
+        "Construeix una mescla amb almenys dos tipus de partícules.": "Build a mixture with at least two types of particle.",
+        "Pots combinar peces soltes dels dos tipus, o bé peces soltes amb parelles unides.": "You can combine separate bricks of both types, or separate bricks and joined pairs.",
+        "Has construït un element. Hi ha un sol tipus de partícula i totes representen àtoms del mateix element.": "You have built an element. There is just one type of particle, and each represents an atom of the same element.",
+        "Has construït un compost. Hi ha un sol tipus de partícula: totes les parelles són iguals i contenen àtoms de dos elements units.": "You have built a compound. There is just one type of particle: all the pairs are identical and contain bonded atoms of two elements.",
+        "Has construït una mescla. A la capsa hi ha més d’un tipus de partícula.": "You have built a mixture. There is more than one type of particle in the box.",
+        "Parella vermella i blanca unida": "Joined red and white pair",
+        "Omple les quatre caselles abans de comprovar el model.": "Fill all four slots before checking the model.",
+        "Has buidat el tauler.": "You have cleared the board.",
+        "No seleccionada": "Not selected",
+        "No seleccionat": "Not selected",
+        "1. Un filferro de coure (Cu)": "1. A copper wire (Cu)",
+        "2. Aigua destil·lada (H₂O)": "2. Distilled water (H₂O)",
+        "3. Un bol de cereals amb llet": "3. A bowl of cereal with milk",
+        "4. L'aire que respirem (N₂, O₂, CO₂...)": "4. The air we breathe (N₂, O₂, CO₂...)",
+        "5. Un got d'aigua amb oli": "5. A glass of water and oil",
+        "6. Sal de taula pura (NaCl)": "6. Pure table salt (NaCl)",
+        "-- Selecciona una opció --": "-- Select an option --",
+        "Substància Pura: ELEMENT": "Pure substance: ELEMENT",
+        "Substància Pura: COMPOST": "Pure substance: COMPOUND",
+        "Mescla HOMOGÈNIA": "HOMOGENEOUS mixture",
+        "Mescla HETEROGÈNIA": "HETEROGENEOUS mixture",
+        "✓ Correcte": "✓ Correct",
+        "Revisa-ho": "Try again",
+        "Sense resposta": "Not answered",
+        "Opció B: Vídeo / Àudio Reporter": "Option B: Video / Audio reporter",
+        "Opció C: Anàlisi d'Esmorzar": "Option C: Breakfast analysis",
+        "VERD (Ho he entès perfectament)": "GREEN (I understand it fully)",
+        "GROC (Ho entenc bastant, amb algun dubte)": "AMBER (I mostly understand, with some doubts)",
+        "VERMELL (Necessito ajuda del professor/a)": "RED (I need my teacher’s help)",
+        "Genial!": "Great!",
+        "Ja estàs preparat/da per passar a la pestanya 4 i triar la teva aventura creativa.": "You are ready to go to tab 4 and choose your creative adventure.",
+        "Bon treball!": "Good work!",
+        "Recorda el truc: al": "Remember the trick: in a",
+        "les peces estan enganxades formant una sola peça nova (ex: H₂O), mentre que a la": "the bricks are joined to form one new unit (e.g. H₂O), while in a",
+        "mescla homogènia": "homogeneous mixture",
+        "estan soltes però molt ben barrejades.": "they are separate but evenly mixed.",
+        "Cap problema!": "No problem!",
+        "Aixeca la mà o avisa el professor/a; repassarem junts l'analogia dels LEGO amb nous exemples.": "Raise your hand or ask your teacher. We will review the LEGO analogy together with new examples.",
+        "FÍSICA I QUÍMICA • 2n D'ESO • INFORME D'ACTIVITAT": "PHYSICS AND CHEMISTRY • 2n ESO • ACTIVITY REPORT",
+        "Missió Química: Classificació de la Matèria": "Chemistry Mission: Classifying Matter",
+        "1. Resultats Nivell 1: L'ull del detectiu": "1. Level 1 results: The detective’s eye",
+        "(Sense resposta)": "(Not answered)",
+        "Correcte": "Correct",
+        "Incorrecte": "Incorrect",
+        "Resposta de l'alumne": "Student answer",
+        "Resultat": "Result",
+        "2. Resultats Nivell 2: Raonament científic": "2. Level 2 results: Scientific reasoning",
+        "Frase 1 (Or - tipus de substància)": "Sentence 1 (Gold - type of substance)",
+        "Frase 1 (Or - partícules)": "Sentence 1 (Gold - particles)",
+        "Frase 2 (Diòxid de carboni)": "Sentence 2 (Carbon dioxide)",
+        "Frase 3 (Aigua i sucre)": "Sentence 3 (Water and sugar)",
+        "Frase 4 (Pizza)": "Sentence 4 (Pizza)",
+        "Frase 5 (Substàncies pures)": "Sentence 5 (Pure substances)",
+        "Ítem avaluat": "Assessed item",
+        "Paraula triada": "Chosen word",
+        "3. Projecte Creatiu (DUA) i Autoavaluació": "3. Creative project (UDL) and self-assessment",
+        "Ara mateix no es pot generar el PDF. Mantén aquesta pàgina oberta per conservar les respostes i avisa el professorat.": "The PDF cannot be created right now. Keep this page open to save your answers and tell your teacher."
+};
+    const missionPatterns = [["Casella {0}. {1}", "Slot {0}. {1}"], ["Correcte! {0}", "Correct! {0}"], ["{0} Revisa l’objectiu. {1}", "{0} Check the goal. {1}"], ["🎉 Excel·lent! Has encertat {0} de {1}. Ets un autèntic detectiu químic!", "🎉 Excellent! You got {0} out of {1} right. You are a true chemistry detective!"], ["Has encertat {0} de {1}. Revisa les que tenen la creu vermella!", "You got {0} out of {1} right. Review the answers with a red cross!"], ["🌟 Perfecte! {0}/{1} encerts. Domines el vocabulari científic!", "🌟 Perfect! {0}/{1} correct. You know your scientific vocabulary!"], ["Tens {0} de {1} buits correctes. Fes servir el banc de paraules per corregir-ho!", "You completed {0} out of {1} gaps correctly. Use the word bank to try again!"], ["Has triat: {0}. Prepara el teu treball per lliurar-lo al professor/a!", "You chose: {0}. Prepare your work to hand in to your teacher!"], ["Codi d'alumne: {0}   |   Grup classe: {1}   |   Data: {2}", "Student code: {0}   |   Class group: {1}   |   Date: {2}", false], ["Temps des que s’ha obert l’activitat: {0}", "Time since opening the activity: {0}"], ["Intents Nivell 1: {0}   |   Intents Nivell 2: {1}", "Level 1 attempts: {0}   |   Level 2 attempts: {1}"], ["Puntuació Nivell 1: {0} / {1} encerts", "Level 1 score: {0} / {1} correct"], ["Puntuació Nivell 2: {0} / {1} encerts", "Level 2 score: {0} / {1} correct"], ["• Aventura triada (Nivell 3): {0}", "• Chosen adventure (Level 3): {0}"], ["• Semàfor d'autoavaluació: {0}", "• Self-assessment traffic light: {0}"]].map(([ca, en, translateValues = true]) => ({
+        regex: new RegExp('^' + ca.split(/\{\d+\}/).map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('(.*?)') + '$'),
+        en, translateValues
+    }));
+    function missionTranslate(text) {
+        if (missionLanguage === 'ca' || typeof text !== 'string') return text;
+        if (Object.hasOwn(missionEnglish, text)) return missionEnglish[text];
+        for (const {regex, en, translateValues} of missionPatterns) {
+            const match = text.match(regex);
+            if (match) return en.replace(/\{(\d+)\}/g, (_, n) => translateValues ? missionTranslate(match[Number(n) + 1]) : match[Number(n) + 1]);
+        }
+        return text;
+    }
+    const missionSources = new WeakMap();
+    const missionAttributes = ['aria-label', 'title', 'alt', 'placeholder'];
+    function localiseMission() {
+        missionObserver.disconnect();
+        const walk = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_TEXT);
+        while (walk.nextNode()) {
+            const node = walk.currentNode;
+            if (node.parentElement.closest('script, style, [data-bilingual], #language-toggle')) continue;
+            if (node.parentElement.closest('#student-badge-text') && (document.getElementById('student-code').value.trim() || document.getElementById('student-group').value)) continue;
+            let saved = missionSources.get(node);
+            if (!saved || node.nodeValue !== saved.last) saved = {ca: node.nodeValue};
+            const core = saved.ca.trim();
+            saved.last = core ? saved.ca.replace(core, () => missionTranslate(core)) : saved.ca;
+            if (node.nodeValue !== saved.last) node.nodeValue = saved.last;
+            missionSources.set(node, saved);
+        }
+        document.querySelectorAll('[aria-label], [title], [alt], [placeholder]').forEach(el => {
+            if (el.closest('[data-bilingual], #language-toggle')) return;
+            let saved = missionSources.get(el) || {};
+            missionAttributes.forEach(attr => {
+                if (!el.hasAttribute(attr)) return;
+                const value = el.getAttribute(attr);
+                if (!saved[attr] || value !== saved[attr].last) saved[attr] = {ca: value};
+                saved[attr].last = missionTranslate(saved[attr].ca);
+                if (value !== saved[attr].last) el.setAttribute(attr, saved[attr].last);
+            });
+            missionSources.set(el, saved);
+        });
+        missionObserver.observe(document.documentElement, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: missionAttributes});
+    }
+    const missionObserver = new MutationObserver(localiseMission);
+    document.getElementById('language-toggle').addEventListener('click', () => {
+        missionLanguage = missionLanguage === 'ca' ? 'en-GB' : 'ca';
+        document.documentElement.lang = missionLanguage;
+        const button = document.getElementById('language-toggle');
+        button.textContent = missionLanguage === 'ca' ? '🇬🇧 English (B2)' : '🇬🇧 Català';
+        button.setAttribute('aria-label', missionLanguage === 'ca' ? 'Canvia a anglès britànic B2' : 'Switch to Catalan');
+        button.setAttribute('aria-pressed', String(missionLanguage === 'en-GB'));
+        localiseMission();
+    });
+    localiseMission();
+    </script>
 </body>
 </html>
+
